@@ -66,12 +66,12 @@ export const theme = {
     },
   },isV3:true}),
   colors: {
-    primary:"#E81046",
-    secondary:"#FF0E5A",
-    tertiary:"#AC002B",
-    outlineVariant:"#d7d7d7",
-    textInvert:"#FFFAFA",
-    backdrop:"#FFFFFF",
+    primary: "#111111", // Black
+    secondary: "#F5F5F5", // White
+    tertiary: "#FF0000", // Red
+    outlineVariant: "#CCCCCC", // Light Gray
+    textInvert: "#FFFFFF", // White
+    backdrop: "#F5F5F5", // Light Gray
   },
   roundness:10
 };
