@@ -4,7 +4,7 @@ import {
     fetchBaseQuery
 } from "@reduxjs/toolkit/query/react";
 import { env } from "@/config/app.config";
-import { getAuth } from "@firebase/auth";
+import { getAuth } from "@react-native-firebase/auth";
 
 const baseQuery = fetchBaseQuery({
     baseUrl: env.apiUrl,

@@ -2285,6 +2285,13 @@
     firebase "10.13.2"
     superstruct "^0.6.2"
 
+"@react-native-firebase/auth@^21.0.0":
+  version "21.0.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/auth/-/auth-21.0.0.tgz#7e73b70bec8cffb71dfe4905239b0d1cc8700dd7"
+  integrity sha512-aCWg60DmbeZio6m8/tN2wBU3uMmYUzlAqP5DMlA3r8FrKTmmtVTrnDjY1PAyC+0yRTAOH2fbKW6HN5kRKndGLQ==
+  dependencies:
+    plist "^3.1.0"
+
 "@react-native-firebase/messaging@^21.0.0":
   version "21.0.0"
   resolved "https://registry.yarnpkg.com/@react-native-firebase/messaging/-/messaging-21.0.0.tgz#6229a0c3cc4ad4fadd5032a643d1bd4eb7355f0f"
@@ -7540,7 +7547,7 @@ pkg-dir@^4.2.0:
   dependencies:
     find-up "^4.0.0"
 
-plist@^3.0.5:
+plist@^3.0.5, plist@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/plist/-/plist-3.1.0.tgz#797a516a93e62f5bde55e0b9cc9c967f860893c9"
   integrity sha512-uysumyrvkUX0rX/dEVqt8gC3sTBzd4zoWfLeS29nb53imdaXVvLINYXTI2GNqzaMuvacNx4uJQ8+b3zXR0pkgQ==

@@ -10,6 +10,7 @@ import * as Notifications from "expo-notifications";
 import { handleRemoteMessage } from "@/utils/notification/notification-manager";
 import { Platform } from "react-native";
 import Constants from "expo-constants";
+import { getAuth } from '@react-native-firebase/auth';
 
 SplashScreen.preventAutoHideAsync().then(r => console.log(r));
 
@@ -57,7 +58,7 @@ export default function RootLayout() {
       if (!isRunningInExpoGo) {
         // Register this things only when using a physical device or emulator, but not Expo Go
         messaging().getToken().then(token => {console.log(token);});
-        messaging().onTokenRefresh(token => {console.log(token);});
+       // messaging().onTokenRefresh(token => {console.log(token);});
         messaging().subscribeToTopic('test').then(() => console.log('Subscribed to topic!'));
         messaging().subscribeToTopic('discount').then(() => console.log('Subscribed to discounts topic!'));
         messaging().subscribeToTopic('delivery').then(() => console.log('Subscribed to delivery topic!'));
@@ -73,7 +74,8 @@ export default function RootLayout() {
   useEffect(() => {
     if (loaded) {
       SplashScreen.hideAsync().then(r => console.log(r));
-      router.push("/(tabs)");
+      if (getAuth().currentUser) router.push("/(tabs)");
+      else router.push("/login");
     }
   }, [loaded]);
 
@@ -85,6 +87,7 @@ export default function RootLayout() {
       <PaperProvider theme={theme} settings={{rippleEffectEnabled:false}}>
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="login" />
           <Stack.Screen name="+not-found" />
         </Stack>
       </PaperProvider>

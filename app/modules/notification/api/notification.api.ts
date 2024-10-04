@@ -8,7 +8,16 @@ const notificationApi = api.injectEndpoints({
                 method: 'GET',
             }),
         }),
+        testAuth: builder.mutation({
+            query: ()=>({
+                url: '/firebase/auth/test',
+                method: 'GET',
+            }),
+        })
     })
 });
 
-export const {useSendTestNotificationMutation} = notificationApi;
+export const {
+    useSendTestNotificationMutation,
+    useTestAuthMutation
+} = notificationApi;

@@ -1,7 +1,8 @@
-import { getAuth, signInWithEmailAndPassword } from "@firebase/auth";
+import { getAuth, signInWithEmailAndPassword } from "@react-native-firebase/auth";
 import { useState } from "react";
 import { User } from "@/modules/auth/models/auth.model";
 import { View, Text, TextInput, Button, ActivityIndicator } from 'react-native';
+import { router } from 'expo-router';
 
 const LoginScreen = () => {
   const auth = getAuth();
@@ -16,6 +17,7 @@ const LoginScreen = () => {
       await signInWithEmailAndPassword(auth, user.email, user.password);
       //get firebase user auth token
       console.log(auth.currentUser);
+      router.push("/(tabs)");
       // Handle successful login
     } catch (err) {
       // @ts-ignore
