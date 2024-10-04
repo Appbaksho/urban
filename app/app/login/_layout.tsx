@@ -14,6 +14,8 @@ const LoginScreen = () => {
     setError(null);
     try {
       await signInWithEmailAndPassword(auth, user.email, user.password);
+      //get firebase user auth token
+      console.log(auth.currentUser);
       // Handle successful login
     } catch (err) {
       // @ts-ignore
