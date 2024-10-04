@@ -5,6 +5,7 @@ import { handleRemoteMessage } from "@/utils/notification/notification-manager";
 import { App } from "expo-router/build/qualified-entry";
 import 'expo-router/entry';
 import Constants from 'expo-constants'
+import ReactApp from "@/app";
 
 // Polyfill global URL and URLSearchParams
 global.URL = URL;
@@ -31,4 +32,4 @@ if (!isRunningInExpoGo) {
   console.log("Device is Expo Go");
 }
 // Register the main application component
-AppRegistry.registerComponent('main', () => App);
+AppRegistry.registerComponent('main', () => ReactApp);
