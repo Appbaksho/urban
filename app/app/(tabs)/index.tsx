@@ -5,11 +5,13 @@ import { getAuth, onAuthStateChanged} from '@react-native-firebase/auth';
 import NotificationComponent from "@/components/notification/notification-component";
 import useLogout from '@/hooks/useLogout';
 import { User } from '@firebase/auth';
+import { useTestAuthMutation } from '@/modules/notification/api/notification.api';
 
 export default function HomeScreen() {
   const [user, setUser] = useState<any>();
   const logout = useLogout();
   const auth = getAuth();
+  const [testAuth,{data,error}] = useTestAuthMutation();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser: any) => {
@@ -23,9 +25,15 @@ export default function HomeScreen() {
     return () => unsubscribe();
   }, [auth]);
 
+  useEffect(() => {
+    console.log(data,error);
+  }, [data,error]);
+
   return (
     <View>
       <NotificationComponent />
+      <View className={"mt-10"} />
+      <Button onPress={() => testAuth("")}>Test Auth</Button>
       <View className={"mt-10"} />
       {user && (
         <View>
