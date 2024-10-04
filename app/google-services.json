@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "104142048212",
+    "project_id": "urban-c348d",
+    "storage_bucket": "urban-c348d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:104142048212:android:2c60476ffed888f17c6441",
+        "android_client_info": {
+          "package_name": "com.appbaksho.urban"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTdqiYe4aubkdCKWwZiMsOxxN6kin0LCI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
