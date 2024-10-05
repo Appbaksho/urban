@@ -1,0 +1,22 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Customer {
+  firebaseId       String    @id @map("_id")
+  name             String
+  dateOfBirth      DateTime?
+  email            String?
+  photoUrl         String?
+  homeAddress      String?
+  permanentAddress String?
+  shippingAddress  String?
+  phoneNumbers     String[]
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+}
