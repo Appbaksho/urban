@@ -1,50 +1,83 @@
-import { Tabs } from 'expo-router';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { Drawer } from 'expo-router/drawer';
 import React from 'react';
-import TabBarIcon from '@expo/vector-icons/AntDesign'
-import {CircleUserRound, House, Map} from "lucide-react-native";
-import {theme} from "@/theme/theme";
+import { Text } from 'react-native';
+import { CircleUserRound, House, Map } from "lucide-react-native";
+import { theme } from "@/theme/theme";
+import CustomDrawerContent from '@/components/drawer/custom-drawer-content';
 
-export default function TabLayout() {
+export default function Layout() {
   return (
-    <Tabs
-      screenOptions={{
-        headerShown: false,
-        tabBarStyle:{
-            height: 55,
-        },
-        tabBarActiveTintColor: theme.colors.primary,
-      }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Home',
-          tabBarShowLabel: false,
-          tabBarIcon: ({ color, focused }) => (
-              <House size={28} color={color}/>
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="explore"
-        options={{
-          title: 'Explore',
-          tabBarShowLabel: false,
-          tabBarIcon: ({ color, focused }) => (
-            <Map size={28} color={color}/>
-          ),
-        }}
-      />
-      <Tabs.Screen
-            name="profile"
-            options={{
-                title: 'Profile',
-                tabBarShowLabel: false,
-                tabBarIcon: ({ color, focused }) => (
-                    <CircleUserRound size={28} color={color}/>
-                ),
-            }}
-      />
-    </Tabs>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <Drawer drawerContent={CustomDrawerContent}>
+      <Drawer.Screen
+          name="profile"
+          options={{
+            drawerLabel: 'Profile',
+            title: 'Profile',
+            drawerActiveTintColor: theme.colors.primary,
+            drawerLabelStyle: {
+              fontFamily: 'poppins',
+            },
+          }
+        }
+        />
+        <Drawer.Screen
+          name="index"
+          options={{
+            drawerLabel: 'Home',
+            title: 'Home',
+            drawerActiveTintColor: theme.colors.primary,
+            drawerLabelStyle: {
+              fontFamily: 'poppins',
+            },
+          }}
+        />
+        <Drawer.Screen
+          name="cart"
+          options={{
+            drawerLabel: 'Cart',
+            title: 'Cart',
+            drawerActiveTintColor: theme.colors.primary,
+            drawerLabelStyle: {
+              fontFamily: 'poppins',
+            },
+          }}
+        />
+        <Drawer.Screen
+          name="explore"
+          options={{
+            drawerLabel: 'Explore',
+            title: 'Explore',
+            drawerActiveTintColor: theme.colors.primary,
+            drawerLabelStyle: {
+              fontFamily: 'poppins',
+            },
+          }}
+        />
+        <Drawer.Screen
+          name="favourites"
+          options={{
+            drawerLabel: 'Favourites',
+            title: 'Favourites',
+            drawerActiveTintColor: theme.colors.primary,
+            drawerLabelStyle: {
+              fontFamily: 'poppins',
+            },
+          }}
+        />
+        <Drawer.Screen
+          name="settings"
+          options={{
+            drawerLabel: 'Settings',
+            title: 'Settings',
+            drawerActiveTintColor: theme.colors.primary,
+            drawerLabelStyle: {
+              fontFamily: 'poppins',
+            },
+          }}
+          />  
+      </Drawer>
+    </GestureHandlerRootView>
   );
 }
-
