@@ -8,15 +8,164 @@ datasource db {
 }
 
 model Customer {
-  firebaseId       String    @id @map("_id")
+  firebaseId       String                       @id @map("_id")
   name             String
   dateOfBirth      DateTime?
-  email            String?
+  email            String
   photoUrl         String?
   homeAddress      String?
   permanentAddress String?
   shippingAddress  String?
-  phoneNumbers     String[]
-  createdAt        DateTime  @default(now())
-  updatedAt        DateTime  @updatedAt
+  shippingLocation Location?                    @relation(fields: [locationId], references: [id])
+  contactNumbers   String[]
+  gender           Gender
+  createdAt        DateTime                     @default(now())
+  updatedAt        DateTime                     @updatedAt
+  locationId       String?
+  interests        CustomerInterestOnCustomer[]
+
+  Cart Cart?
+}
+
+model CustomerInterest {
+  name      String                       @id @map("_id")
+  customers CustomerInterestOnCustomer[]
+}
+
+model CustomerInterestOnCustomer {
+  id                   String           @id @default(cuid()) @map("_id")
+  customerId           String
+  customerInterestName String
+  customer             Customer         @relation(fields: [customerId], references: [firebaseId])
+  customerInterest     CustomerInterest @relation(fields: [customerInterestName], references: [name])
+
+  @@unique([customerId, customerInterestName])
+}
+
+model Cart {
+  id         String      @id @default(cuid()) @map("_id")
+  customerId String      @unique
+  items      OrderItem[]
+  customer   Customer    @relation(fields: [customerId], references: [firebaseId])
+}
+
+model OrderItem {
+  id             String               @id @default(cuid()) @map("_id")
+  productId      String
+  quantity       Int
+  cartId         String
+  isCheckedOut   Boolean              @default(false)
+  deliveryStatus DeliveryStatus
+  paymentStatus  PaymentStatus
+  orderStatus    OrderStatus
+  deliveryCharge Float                @default(0)
+  transaction    TransactionHistory[]
+  product        Product              @relation(fields: [productId], references: [id])
+  cart           Cart                 @relation(fields: [cartId], references: [id])
+}
+
+model TransactionHistory {
+  id            String    @id @default(cuid()) @map("_id")
+  orderItemId   String
+  timestamp     DateTime  @default(now())
+  amount        Float
+  paymentMethod String
+  orderItem     OrderItem @relation(fields: [orderItemId], references: [id])
+}
+
+model Discount {
+  id          String              @id @default(cuid()) @map("_id")
+  name        String
+  description String
+  percentage  Float
+  bannerUrl   String
+  startDate   DateTime
+  endDate     DateTime
+  products    DiscountOnProduct[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model DiscountOnProduct {
+  id         String   @id @default(cuid()) @map("_id")
+  discountId String
+  productId  String
+  discount   Discount @relation(fields: [discountId], references: [id])
+  product    Product  @relation(fields: [productId], references: [id])
+
+  @@unique([discountId, productId])
+}
+
+model Product {
+  id          String   @id @default(cuid()) @map("_id")
+  name        String
+  description String
+  imageUrl    String[]
+  category    String
+  subCategory String
+  stock       Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  OrderItem  OrderItem[]
+  variants   ProductVariant[]
+  Category   Category?           @relation(fields: [categoryId], references: [id])
+  categoryId String?
+  discounts  DiscountOnProduct[]
+}
+
+model ProductVariant {
+  id             String  @id @default(cuid()) @map("_id")
+  additionalName String
+  size           String
+  color          String
+  gender         Gender
+  stock          Int
+  price          Float
+  productId      String
+  product        Product @relation(fields: [productId], references: [id])
+}
+
+model Category {
+  id               String     @id @default(cuid()) @map("_id")
+  name             String
+  description      String
+  imageUrl         String
+  parentCategoryId String?
+  parentCategory   Category?  @relation("CategoryHierarchy", fields: [parentCategoryId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  childCategories  Category[] @relation("CategoryHierarchy")
+  products         Product[]
+}
+
+model Location {
+  id        String     @id @default(cuid()) @map("_id")
+  latitude  Float
+  longitude Float
+  Customer  Customer[]
+}
+
+enum Gender {
+  MALE
+  FEMALE
+}
+
+enum DeliveryStatus {
+  PENDING
+  DISPATCHED
+  DELIVERED
+  CANCELLED
+}
+
+enum OrderStatus {
+  PENDING
+  CHECKED_OUT
+  CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  REFUNDED
+  CANCELLED
 }
