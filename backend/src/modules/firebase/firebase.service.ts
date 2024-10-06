@@ -1,24 +1,24 @@
-import {Injectable, UnauthorizedException} from "@nestjs/common";
-import admin, { messaging } from "firebase-admin";
+import { Injectable, UnauthorizedException } from '@nestjs/common';
+import admin, { messaging } from 'firebase-admin';
 import Message = messaging.Message;
 
 @Injectable()
 export class FirebaseService {
   async sayMyName() {
     const message: Message = {
-      topic: "test",
+      topic: 'test',
       android: {
-        priority: "high"
+        priority: 'high',
       },
       data: {
-        test: "Hello, World!"
-      }
+        test: 'Hello, World!',
+      },
     };
     return await admin
       .messaging()
       .send(message)
       .then((response) => {
-        return { message: "Successfully sent message:", response: response };
+        return { message: 'Successfully sent message:', response: response };
       });
   }
 
@@ -28,69 +28,72 @@ export class FirebaseService {
       .verifyIdToken(token)
       .then((decodedToken) => {
         console.log(decodedToken);
-        return true
+        return true;
       })
       .catch((error) => {
-        throw new UnauthorizedException({ message: "Unauthorized", error: error });
+        throw new UnauthorizedException({
+          message: 'Unauthorized',
+          error: error,
+        });
       });
   }
 
   async sendNotificationToTopic(
     topic: string,
     data: any,
-    notification?: { title: string; body: string; imageUrl?: string }
+    notification?: { title: string; body: string; imageUrl?: string },
   ) {
     const message: Message = {
       topic: topic,
       android: {
-        priority: "high"
+        priority: 'high',
       },
       data: data,
-      notification: notification
+      notification: notification,
     };
     return await admin
       .messaging()
       .send(message)
       .then((response) => {
-        return { message: "Successfully sent message:", response: response };
+        return { message: 'Successfully sent message:', response: response };
       });
   }
   async sendTestNotification() {
     const message: Message = {
-      topic: "test",
+      topic: 'test',
       android: {
-        priority: "high"
+        priority: 'high',
       },
       notification: {
-        title: "Hello, World!",
-        body: "This is a test notification!"
-      }
+        title: 'Hello, World!',
+        body: 'This is a test notification!',
+      },
     };
     return await admin
       .messaging()
       .send(message)
       .then((response) => {
-        return { message: "Successfully sent message:", response: response };
+        return { message: 'Successfully sent message:', response: response };
       });
   }
   async sendNotificationToToken(
     token: string,
     data: any,
-    notification?: { title: string; body: string; imageUrl?: string }
+    notification?: { title: string; body: string; imageUrl?: string },
   ) {
     const message: Message = {
       token: token,
       android: {
-        priority: "high"
+        priority: 'high',
       },
       data: data,
-      notification: notification
+      notification: notification,
     };
     return await admin
       .messaging()
       .send(message)
       .then((response) => {
-        return { message: "Successfully sent message:", response: response };
+        return { message: 'Successfully sent message:', response: response };
       });
   }
 }
