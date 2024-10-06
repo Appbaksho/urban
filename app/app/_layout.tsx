@@ -74,7 +74,11 @@ export default function RootLayout() {
   useEffect(() => {
     if (loaded) {
       SplashScreen.hideAsync().then(r => console.log(r));
-      if (getAuth().currentUser) router.push("/(tabs)");
+      if (getAuth().currentUser) {
+        if (getAuth().currentUser?.displayName) {
+          router.push("/(tabs)");
+        }else router.push("/create-profile");
+      }
       else router.push("/login");
     }
   }, [loaded]);
@@ -88,6 +92,8 @@ export default function RootLayout() {
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="login" />
+          <Stack.Screen name="register" />
+          <Stack.Screen name="create-profile" />
           <Stack.Screen name="+not-found" />
         </Stack>
       </PaperProvider>

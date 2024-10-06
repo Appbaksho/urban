@@ -42,8 +42,10 @@ export class CustomerService {
     return `This action returns all customer`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} customer`;
+  async findOne(id: string) {
+    return this.databaseService.customer.findUnique({
+      where: { firebaseId: id },
+    });
   }
 
   update(id: number, updateCustomerDto: UpdateCustomerDto) {

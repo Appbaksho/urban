@@ -20,19 +20,22 @@ export class CustomerController {
 
   @Post()
   @UseGuards(AccessTokenGuard)
-  create(@Body() createCustomerDto: CreateCustomerDto, @User() firebaseUser) {
+  async create(
+    @Body() createCustomerDto: CreateCustomerDto,
+    @User() firebaseUser,
+  ) {
     console.log(firebaseUser);
     return this.customerService.create(firebaseUser, createCustomerDto);
   }
 
   @Get()
-  findAll() {
+  async findAll() {
     return this.customerService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.customerService.findOne(+id);
+  @Get(':firebaseId')
+  async findOne(@Param('id') id: string) {
+    return this.customerService.findOne(id);
   }
 
   @Patch(':id')
