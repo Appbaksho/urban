@@ -1,27 +1,14 @@
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Drawer } from 'expo-router/drawer';
 import React from 'react';
-import { Text } from 'react-native';
-import { CircleUserRound, House, Map } from "lucide-react-native";
 import { theme } from "@/theme/theme";
+import {Earth, Heart, House, Settings} from "lucide-react-native"
 import CustomDrawerContent from '@/components/drawer/custom-drawer-content';
 
 export default function Layout() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <Drawer drawerContent={CustomDrawerContent}>
-      <Drawer.Screen
-          name="profile"
-          options={{
-            drawerLabel: 'Profile',
-            title: 'Profile',
-            drawerActiveTintColor: theme.colors.primary,
-            drawerLabelStyle: {
-              fontFamily: 'poppins',
-            },
-          }
-        }
-        />
         <Drawer.Screen
           name="index"
           options={{
@@ -31,17 +18,9 @@ export default function Layout() {
             drawerLabelStyle: {
               fontFamily: 'poppins',
             },
-          }}
-        />
-        <Drawer.Screen
-          name="cart"
-          options={{
-            drawerLabel: 'Cart',
-            title: 'Cart',
-            drawerActiveTintColor: theme.colors.primary,
-            drawerLabelStyle: {
-              fontFamily: 'poppins',
-            },
+            drawerIcon: ({ color, size }) => (
+              <House className={'mr-[-16] mt-[-3]'} color={color}/>
+            ),
           }}
         />
         <Drawer.Screen
@@ -53,6 +32,9 @@ export default function Layout() {
             drawerLabelStyle: {
               fontFamily: 'poppins',
             },
+            drawerIcon: ({ color, size }) => (
+              <Earth className={'mr-[-16] mt-[-3]'} color={color}/>
+            ),
           }}
         />
         <Drawer.Screen
@@ -64,6 +46,9 @@ export default function Layout() {
             drawerLabelStyle: {
               fontFamily: 'poppins',
             },
+            drawerIcon: ({ color, size }) => (
+              <Heart className={'mr-[-16] mt-[-3]'} color={color}/>
+            ),
           }}
         />
         <Drawer.Screen
@@ -75,8 +60,11 @@ export default function Layout() {
             drawerLabelStyle: {
               fontFamily: 'poppins',
             },
+            drawerIcon: ({ color, size }) => (
+              <Settings className={'mr-[-16] mt-[-3]'} color={color}/>
+            ),
           }}
-          />  
+          />
       </Drawer>
     </GestureHandlerRootView>
   );

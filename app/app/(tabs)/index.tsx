@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { Text, View } from 'react-native';
 import { Button } from 'react-native-paper';
 import { getAuth, onAuthStateChanged} from '@react-native-firebase/auth';
@@ -6,12 +6,22 @@ import NotificationComponent from "@/components/notification/notification-compon
 import useLogout from '@/hooks/useLogout';
 import { User } from '@firebase/auth';
 import { useTestAuthMutation } from '@/modules/notification/api/notification.api';
+import { useNavigation } from 'expo-router';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import TopBar from '@/components/drawer/top-bar';
 
 export default function HomeScreen() {
   const [user, setUser] = useState<any>();
+  const navigation =  useNavigation()
   const logout = useLogout();
   const auth = getAuth();
   const [testAuth,{data,error}] = useTestAuthMutation();
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: false,
+    });
+  }, [navigation]);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser: any) => {
@@ -30,7 +40,8 @@ export default function HomeScreen() {
   }, [data,error]);
 
   return (
-    <View>
+    <SafeAreaView>
+      <TopBar name='Home'/>
       <NotificationComponent />
       <View className={"mt-10"} />
       <Button onPress={() => testAuth("")}>Test Auth</Button>
@@ -42,6 +53,6 @@ export default function HomeScreen() {
         </View>
       )}
       <Button onPress={logout}>Logout</Button>
-    </View>
+    </SafeAreaView>
   );
 }

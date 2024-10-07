@@ -8,9 +8,10 @@ import { theme } from "@/theme/theme";
 import messaging from "@react-native-firebase/messaging";
 import * as Notifications from "expo-notifications";
 import { handleRemoteMessage } from "@/utils/notification/notification-manager";
-import { Platform } from "react-native";
+import { Platform, StatusBar } from "react-native";
 import Constants from "expo-constants";
 import { getAuth } from '@react-native-firebase/auth';
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 SplashScreen.preventAutoHideAsync().then(r => console.log(r));
 
@@ -89,10 +90,13 @@ export default function RootLayout() {
 
   return(
       <PaperProvider theme={theme} settings={{rippleEffectEnabled:false}}>
+        <StatusBar backgroundColor="white" barStyle="dark-content" />
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="login" />
           <Stack.Screen name="register" />
+          <Stack.Screen name="profile" />
+          <Stack.Screen name="cart" />
           <Stack.Screen name="create-profile" />
           <Stack.Screen name="+not-found" />
         </Stack>
