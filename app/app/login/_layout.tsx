@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
+import { getAuth } from '@react-native-firebase/auth';
 
 const LoginScreen = () => {
     const [user, setUser] = useState({ email: '', password: '' });
@@ -13,6 +14,8 @@ const LoginScreen = () => {
         setError('');
 
         try {
+            await getAuth().signInWithEmailAndPassword(user.email, user.password);
+            router.push('/(tabs)');
             // Handle successful login
         } catch (err) {
             // @ts-ignore
