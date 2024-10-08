@@ -7895,7 +7895,7 @@ react-native-paper-dates@^0.22.25:
   dependencies:
     color "^4.2.3"
 
-react-native-paper-tabs@0.10.4:
+react-native-paper-tabs@^0.10.4:
   version "0.10.4"
   resolved "https://registry.yarnpkg.com/react-native-paper-tabs/-/react-native-paper-tabs-0.10.4.tgz#29eaa455aa0f7c6877c1b0d46914fa4a33f8e8c5"
   integrity sha512-sIBau/9PdLhNUw4TvnHLvVy4NXwrv82r3r2ZGs7ng+Jr445YLPCfwq09u34pnCOCp7Z2JRv1UPQlqAHbXUcvMQ==
