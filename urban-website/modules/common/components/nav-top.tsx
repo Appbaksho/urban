@@ -4,7 +4,7 @@ import React from 'react'
 import {Separator} from '@/components/ui/separator'
 const NavbarTop = () => {
   return (
-    <div className='bg-secondary md:px-20 px-5 py-2 flex items-center justify-between text-xs'>
+    <div className='hidden bg-secondary md:px-20 px-5 py-2 md:flex items-center justify-between text-xs'>
         <p></p>
         <ul className='flex items-center gap-2 [&>li>a]:text-xs [&>li>a]:font-semibold [&>li>a]:transition-all [&>li>a]:ease-in-out [&>li>a]:duration-150 hover:[&>li>a]:opacity-60'>
             <li>

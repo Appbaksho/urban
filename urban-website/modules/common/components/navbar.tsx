@@ -1,11 +1,15 @@
 import React from 'react'
 import NavbarTop from './nav-top'
+import BaseNavbar from './base-navbar'
+import TopAnnounce from './top-announce'
 
 const Navbar = () => {
   return (
-    <div>
+    <React.Fragment>
         <NavbarTop/>
-        Navbar</div>
+        <BaseNavbar/>
+        <TopAnnounce/>
+    </React.Fragment>
   )
 }
 
