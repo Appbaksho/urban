@@ -37,9 +37,9 @@ export default function RootLayout({
         className={inter.className}
       >
         <ReduxWrapper>
-          <Navbar/>
+          
           {children}
-          <Footer/>
+          
         </ReduxWrapper>
       </body>
     </html>
