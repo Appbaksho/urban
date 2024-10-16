@@ -17,7 +17,7 @@ export const theme = {
     },
     titleMedium: {
       fontFamily: "poppinsMedium",
-      fontSize: 20,
+      fontSize: 18,
       fontWeight: "500",
       letterSpacing: 0.1,
       lineHeight: 24,
@@ -30,7 +30,7 @@ export const theme = {
       lineHeight: 28,
     },
     bodySmall: {
-      fontFamily: "poppinsMedium",
+      fontFamily: "poppins",
       fontSize: 13,
       fontWeight: "500",
       letterSpacing: 0.1,
@@ -45,7 +45,7 @@ export const theme = {
     },
     bodyLarge: {
       fontFamily: "poppins",
-      fontSize: 20,
+      fontSize: 18,
       fontWeight: "400",
       letterSpacing: 0.1,
       lineHeight: 28,
@@ -64,6 +64,13 @@ export const theme = {
       letterSpacing: 0.1,
       lineHeight: 20,
     },
+    labelSmall: {
+      fontFamily: "poppinsMedium",
+      fontSize: 13,
+      fontWeight: "500",
+      letterSpacing: 0.1,
+      lineHeight: 20,
+    }
   },isV3:true}),
   colors: {
     primary: "#111111", // Black

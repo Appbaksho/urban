@@ -1,5 +1,6 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react';
-import {ScrollView, View, Text} from 'react-native';
+import {ScrollView, View } from 'react-native';
+import { Text } from 'react-native-paper';
 import { getAuth, onAuthStateChanged } from '@react-native-firebase/auth';
 import useLogout from '@/hooks/useLogout';
 import { useTestAuthMutation } from '@/modules/notification/api/notification.api';
@@ -7,6 +8,8 @@ import { useNavigation } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import TopBar from '@/components/drawer/top-bar';
 import Chip from '@/components/home/chip';
+import ProductSectionHorizontal from '@/components/home/product-section';
+import { theme } from '@/theme/theme';
 
 export default function HomeScreen() {
   const [user, setUser] = useState<any>();
@@ -47,7 +50,7 @@ export default function HomeScreen() {
       <TopBar name='Home' />
       <View className={'flex-1 w-[90vw]'}>
         <View className={'flex-row pt-3 pb-5'}>
-          {['Men', 'Women', 'Kids'].map((label) => (
+          {['Men', 'Women', 'Anime'].map((label) => (
             <Chip
               key={label}
               label={label}
@@ -57,8 +60,13 @@ export default function HomeScreen() {
           ))}
         </View>
         <View className={'w-full bg-gray-300'} style={{height:1}}/>
-        <ScrollView className={'flex-1 mt-4'}>
-            <Text className={'text-lg'} style={{fontFamily:'poppins'}}> this is {selectedChip}</Text>
+        <ScrollView className={'flex-1 w-full mt-4'}>
+            <ProductSectionHorizontal 
+              title={'Top picks for You'} 
+              subtitle={'Recommended products'} 
+              products={['as','as','asas','asas']} 
+              preview={true}
+              />
         </ScrollView>
       </View>
     </SafeAreaView>
