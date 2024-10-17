@@ -6,7 +6,7 @@ import { opacity } from "react-native-reanimated/lib/typescript/reanimated2/Colo
 
 interface ProductSectionProps {
     title: string
-    subtitle: string
+    subtitle?: string
     products?: any[]
     preview?: boolean
     isCategoryList?: boolean
@@ -27,7 +27,6 @@ const ProductSectionHorizontal = (props:ProductSectionProps) => {
                 { id: '6', name: 'Casual Demin', category:"Men's Demin", price: 5000, image:"https://img.drz.lazcdn.com/static/bd/p/53e72a92469dc5f08a5fec41a743e89c.jpg_720x720q80.jpg"},
                 { id: '7', name: 'Tokyo Ghoul Hoodie', category:"Men's Hoodie", price: 5000, image:"https://m.media-amazon.com/images/I/B1i3u9-Q-KS._CLa%7C2140%2C2000%7CB1OmqTjzswL.png%7C0%2C0%2C2140%2C2000%2B0.0%2C0.0%2C2140.0%2C2000.0_AC_SL1500_.png" },
                 { id: '8', name: 'Casual Demin', category:"Men's Demin", price: 5000, image:"https://img.drz.lazcdn.com/static/bd/p/53e72a92469dc5f08a5fec41a743e89c.jpg_720x720q80.jpg"},
-                
             ]
             setProducts(products)
         }

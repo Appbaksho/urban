@@ -70,6 +70,8 @@ export default function HomeScreen() {
               preview={true}
               />
             <ProductSectionHolder />
+            <ProductGrid  title={'Upcoming'} />
+            <ProductSectionHorizontal title={'Shop by category'} isCategoryList={true} preview={true}/>
             <ProductGrid  title={'New Arrivals'} />
             <View className={'w-full'} style={{height:30}}/>  
         </ScrollView>
