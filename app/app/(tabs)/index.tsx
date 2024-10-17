@@ -10,6 +10,8 @@ import TopBar from '@/components/drawer/top-bar';
 import Chip from '@/components/home/chip';
 import ProductSectionHorizontal from '@/components/home/product-section';
 import { theme } from '@/theme/theme';
+import ProductSectionHolder from '@/components/home/product-section-holder';
+import ProductGrid from '@/components/home/product-grid';
 
 export default function HomeScreen() {
   const [user, setUser] = useState<any>();
@@ -48,8 +50,8 @@ export default function HomeScreen() {
   return (
     <SafeAreaView className={'h-full bg-white items-center'}>
       <TopBar name='Home' />
-      <View className={'flex-1 w-[90vw]'}>
-        <View className={'flex-row pt-3 pb-5'}>
+      <View className={'flex-1'}>
+        <View className={'flex-row pt-3 pb-5 mx-4'}>
           {['Men', 'Women', 'Anime'].map((label) => (
             <Chip
               key={label}
@@ -59,14 +61,17 @@ export default function HomeScreen() {
             />
           ))}
         </View>
-        <View className={'w-full bg-gray-300'} style={{height:1}}/>
-        <ScrollView className={'flex-1 w-full mt-4'}>
+        <View className={'w-[100vw] bg-gray-300'} style={{height:1}}/>
+        <ScrollView showsVerticalScrollIndicator={false} className={'flex-1 w-full'}>
             <ProductSectionHorizontal 
               title={'Top picks for You'} 
               subtitle={'Recommended products'} 
               products={['as','as','asas','asas']} 
               preview={true}
               />
+            <ProductSectionHolder />
+            <ProductGrid  title={'New Arrivals'} />
+            <View className={'w-full'} style={{height:30}}/>  
         </ScrollView>
       </View>
     </SafeAreaView>

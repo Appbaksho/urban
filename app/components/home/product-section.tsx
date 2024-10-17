@@ -10,7 +10,6 @@ interface ProductSectionProps {
     products?: any[]
     preview?: boolean
     isCategoryList?: boolean
-    categoryList?: any[]
 }
 
 const ProductSectionHorizontal = (props:ProductSectionProps) => {
@@ -35,25 +34,30 @@ const ProductSectionHorizontal = (props:ProductSectionProps) => {
     }, [])
 
     return (
-        <View>
+        <View className={'mx-4 mt-4'}>
             <Text variant={'titleMedium'} style={{color:theme.colors.primary}}>{props.title}</Text> 
-            <Text variant={'bodyLarge'} className={'opacity-75 mt-'} style={{color:theme.colors.primary}}>{props.subtitle}</Text>  
+            {!props.isCategoryList&&<Text variant={'bodyLarge'} className={'opacity-75 mt-'} style={{color:theme.colors.primary}}>{props.subtitle}</Text>}  
             <View className="mt-3"/>
             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} className={'flex-row gap-3'}>
                 {products&&products.map((product, index) => (
                     <View key={index}>
-                        <Image className={'w-36 h-48 rounded-lg'} source={{uri:product.image}}/>
+                        {!props.isCategoryList&&<Image className={'w-36 h-48 rounded-lg mb-1'} source={{uri:product.image}}/>}
+                        {props.isCategoryList&&<Image className={'w-36 h-36 rounded-lg mb-2'} source={{uri:product.image}}/>}
                         <Text variant={'labelSmall'}  style={{color:theme.colors.primary}}>{product.name}</Text>
-                        <Text variant={'bodySmall'} className={'opacity-75'} style={{color:theme.colors.primary}}>{product.category}</Text>
-                        <Text variant={'labelSmall'} style={{color:theme.colors.primary}}>BDT {
-                            //commafy the price
-                            product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                            }</Text>
+                        {!props.isCategoryList && (
+                            <>
+                                <Text variant={'bodySmall'} className={'opacity-75'} style={{color:theme.colors.primary}}>{product.category}</Text>
+                                <Text variant={'labelSmall'} style={{color:theme.colors.primary}}>BDT {
+                                    //commafy the price
+                                    product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                                }</Text>
+                            </>
+                        )}
                     </View>
-                    
                 ))}
             </ScrollView> 
         </View>
     )
 }
+
 export default ProductSectionHorizontal
