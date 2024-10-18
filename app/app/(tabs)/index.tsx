@@ -1,21 +1,25 @@
-import { useEffect, useLayoutEffect, useState } from 'react';
-import { Text, View } from 'react-native';
-import { Button } from 'react-native-paper';
-import { getAuth, onAuthStateChanged} from '@react-native-firebase/auth';
-import NotificationComponent from "@/components/notification/notification-component";
+import React, { useEffect, useLayoutEffect, useState } from 'react';
+import {ScrollView, View } from 'react-native';
+import { Text } from 'react-native-paper';
+import { getAuth, onAuthStateChanged } from '@react-native-firebase/auth';
 import useLogout from '@/hooks/useLogout';
-import { User } from '@firebase/auth';
 import { useTestAuthMutation } from '@/modules/notification/api/notification.api';
 import { useNavigation } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import TopBar from '@/components/drawer/top-bar';
+import Chip from '@/components/home/chip';
+import ProductSectionHorizontal from '@/components/home/product-section';
+import { theme } from '@/theme/theme';
+import ProductSectionHolder from '@/components/home/product-section-holder';
+import ProductGrid from '@/components/home/product-grid';
 
 export default function HomeScreen() {
   const [user, setUser] = useState<any>();
-  const navigation =  useNavigation()
+  const [selectedChip, setSelectedChip] = useState<string>('Men');
+  const navigation = useNavigation();
   const logout = useLogout();
   const auth = getAuth();
-  const [testAuth,{data,error}] = useTestAuthMutation();
+  const [testAuth, { data, error }] = useTestAuthMutation();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -36,23 +40,42 @@ export default function HomeScreen() {
   }, [auth]);
 
   useEffect(() => {
-    console.log(data,error);
-  }, [data,error]);
+    console.log(data, error);
+  }, [data, error]);
+
+    useEffect(() => {
+        console.log('selectedChip: ', selectedChip);
+    }, [selectedChip]);
 
   return (
-    <SafeAreaView>
-      <TopBar name='Home'/>
-      <NotificationComponent />
-      <View className={"mt-10"} />
-      <Button onPress={() => testAuth("")}>Test Auth</Button>
-      <View className={"mt-10"} />
-      {user && (
-        <View>
-          <Text>User ID: {user.uid}</Text>
-          <Text>Email: {user.email}</Text>
+    <SafeAreaView className={'h-full bg-white items-center'}>
+      <TopBar name='Home' />
+      <View className={'flex-1'}>
+        <View className={'flex-row pt-3 pb-5 mx-4'}>
+          {['Men', 'Women', 'Anime'].map((label) => (
+            <Chip
+              key={label}
+              label={label}
+              selected={selectedChip === label}
+              onPress={() => setSelectedChip(label)}
+            />
+          ))}
         </View>
-      )}
-      <Button onPress={logout}>Logout</Button>
+        <View className={'w-[100vw] bg-gray-300'} style={{height:1}}/>
+        <ScrollView showsVerticalScrollIndicator={false} className={'flex-1 w-full'}>
+            <ProductSectionHorizontal 
+              title={'Top picks for You'} 
+              subtitle={'Recommended products'} 
+              products={['as','as','asas','asas']} 
+              preview={true}
+              />
+            <ProductSectionHolder />
+            <ProductGrid  title={'Upcoming'} />
+            <ProductSectionHorizontal title={'Shop by category'} isCategoryList={true} preview={true}/>
+            <ProductGrid  title={'New Arrivals'} />
+            <View className={'w-full'} style={{height:30}}/>  
+        </ScrollView>
+      </View>
     </SafeAreaView>
   );
 }
