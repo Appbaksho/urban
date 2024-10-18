@@ -28,7 +28,7 @@ const ProductGrid = (props:ProductGridProps) => {
 
     return (
         <View className={'mx-4  mt-8 items-center'}>
-             <Text variant={'titleMedium'} style={{color:theme.colors.primary}}>{props.title}</Text>
+            <Text className={'w-full'} variant={'titleMedium'} style={{color:theme.colors.primary}}>{props.title}</Text>
             <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', marginTop: 28, marginBottom:20, width: '100%' }}>
                 {products.map((product) => (
                     <View key={product.id} style={{ width: '31%', marginBottom: 16 }}>

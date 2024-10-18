@@ -64,6 +64,13 @@ export const theme = {
       letterSpacing: 0.1,
       lineHeight: 20,
     },
+    displayLarge:{
+      fontFamily: "poppinsBold",
+      fontSize: 32,
+      fontWeight: "500",
+      letterSpacing: 0.1,
+      lineHeight: 40,
+    },
     labelSmall: {
       fontFamily: "poppinsMedium",
       fontSize: 13,
