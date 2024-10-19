@@ -97,6 +97,7 @@ export default function RootLayout() {
           <Stack.Screen name="register" />
           <Stack.Screen name="profile" />
           <Stack.Screen name="cart" />
+          <Stack.Screen name="product" />
           <Stack.Screen name="create-profile" />
           <Stack.Screen name="+not-found" />
         </Stack>

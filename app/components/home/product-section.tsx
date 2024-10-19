@@ -1,4 +1,5 @@
 import { theme } from "@/theme/theme"
+import { router } from "expo-router"
 import { useEffect, useState } from "react"
 import { ScrollView, View, Image } from "react-native"
 import { Text } from "react-native-paper"
@@ -39,7 +40,12 @@ const ProductSectionHorizontal = (props:ProductSectionProps) => {
             <View className="mt-3"/>
             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} className={'flex-row gap-3'}>
                 {products&&products.map((product, index) => (
-                    <View key={index}>
+                    <View key={index} onTouchEndCapture={
+                        ()=>{
+                            console.log('product clicked');
+                            if(!props.isCategoryList)router.push(`product?productId=${product.id}`);
+                        }
+                    }>
                         {!props.isCategoryList&&<Image className={'w-36 h-48 rounded-lg mb-1'} source={{uri:product.image}}/>}
                         {props.isCategoryList&&<Image className={'w-36 h-36 rounded-lg mb-2'} source={{uri:product.image}}/>}
                         <Text variant={'labelSmall'}  style={{color:theme.colors.primary}}>{product.name}</Text>
