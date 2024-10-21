@@ -49,6 +49,14 @@ const CartScreen = () => {
                                     <View className={'flex-1'}/>
                                     <Text className={'text-sm opacity-100'} style={{fontFamily:'poppins',fontWeight:'semibold'}}>BDT {item.price}</Text>
                                 </View>
+                                <View className={'mt-4'}/>
+                                {item.id===cartItems[cartItems.length-1].id ? null :
+                                    //if last item then no need to show the divider
+                                    <View className={'flex-col'}>
+                                    <View className={'bg-gray-300'} style={{width: "100%", height: 1}}/>
+                                    <View className={'mt-4'}/>
+                                    </View>
+                                }
                             </View>
                         </View>
                     ))}

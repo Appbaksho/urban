@@ -2,7 +2,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Drawer } from 'expo-router/drawer';
 import React from 'react';
 import { theme } from "@/theme/theme";
-import {Earth, Heart, House, Settings} from "lucide-react-native"
+import {Earth, Heart, House, Settings, ShoppingBag, Store} from "lucide-react-native"
 import CustomDrawerContent from '@/components/drawer/custom-drawer-content';
 
 export default function Layout() {
@@ -24,16 +24,16 @@ export default function Layout() {
           }}
         />
         <Drawer.Screen
-          name="explore"
+          name="shop"
           options={{
-            drawerLabel: 'Explore',
-            title: 'Explore',
+            drawerLabel: 'Shop',
+            title: 'Shop',
             drawerActiveTintColor: theme.colors.primary,
             drawerLabelStyle: {
               fontFamily: 'poppins',
             },
             drawerIcon: ({ color, size }) => (
-              <Earth className={'mr-[-16] mt-[-3]'} color={color}/>
+              <Store className={'mr-[-16] mt-[-3]'} color={color}/>
             ),
           }}
         />

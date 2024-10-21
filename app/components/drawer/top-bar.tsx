@@ -1,7 +1,7 @@
 import { theme } from "@/theme/theme";
 import { DrawerActions } from "@react-navigation/native";
 import { router, useNavigation } from "expo-router";
-import { Menu, ShoppingCart } from "lucide-react-native";
+import { Menu, ShoppingBag, ShoppingCart } from "lucide-react-native";
 import React from "react";
 import { Text, View, StyleSheet } from 'react-native';
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -26,7 +26,7 @@ const TopBar = (props: Props) => {
                 <TouchableOpacity onPress={() => {
                     router.push('/cart');
                 }}>
-                    <ShoppingCart color={theme.colors.primary} />
+                    <ShoppingBag color={theme.colors.primary} />
                 </TouchableOpacity>
                 {cartItemCount > 0 && (
                     <View style={styles.badge}>

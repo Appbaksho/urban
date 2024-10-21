@@ -7,7 +7,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { router, useNavigation } from "expo-router";
 import { DrawerActions } from "@react-navigation/native";
 import { theme } from "@/theme/theme";
-import { BadgeHelp, LogOut, Phone, ShoppingCart } from "lucide-react-native";
+import { BadgeHelp, LogOut, Phone, ShoppingBag, ShoppingCart } from "lucide-react-native";
 const CustomDrawerContent = (props: any) => {
     const navigation = useNavigation();
     const profileImageUri = "https://i.pinimg.com/736x/d3/68/50/d36850a37f999852c69a34b2cad4b35d.jpg"; // Replace with actual image URI
@@ -25,9 +25,9 @@ const CustomDrawerContent = (props: any) => {
                 <View className={"mt-3.5"}/>
             </TouchableOpacity>
             <DrawerItemList {...props} />
-            <DrawerItem label="Cart" 
+            <DrawerItem label="Bag" 
                 activeTintColor={theme.colors.primary}
-                icon={({color, size}) => <ShoppingCart color={color} className={'mr-[-16] mt-[-3]'} />}
+                icon={({color, size}) => <ShoppingBag color={color} className={'mr-[-16] mt-[-3]'} />}
                 labelStyle={{fontFamily: 'poppins'}}
                 onPress={() => {
                     navigation.dispatch(DrawerActions.closeDrawer());
