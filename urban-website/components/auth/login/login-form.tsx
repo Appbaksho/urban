@@ -7,11 +7,40 @@ import { Label } from '@/components/ui/label'
 import { Loader, Loader2 } from 'lucide-react'
 import React, { useState } from 'react'
 import GoogleIcon from './google-icon'
+import { auth } from '@/firebase/firebase'
+import { AuthError, signInWithEmailAndPassword } from 'firebase/auth'
+import { toast } from '@/hooks/use-toast'
 
 const LoginForm = () => {
     const [showPass, setshowPass] = useState<boolean>(false)
     const [email, setemail] = useState<string>('')
     const [password, setpassword] = useState<string>('')
+    const [loading, setloading] = useState<boolean>(false)
+
+    const loginUser = ()=>{
+      setloading(true)
+      signInWithEmailAndPassword(auth,email,password).then((user)=>{
+        if(user){
+
+        }
+        else{
+          toast({
+            title:'User not found',
+            description:'Cannot find user associated with this credentials',
+            variant:'destructive'
+          })
+        }
+      }).catch((err:AuthError)=>{
+        toast({
+          title:"Auth Error",
+          description:err.message,
+          variant:'destructive'
+        })
+      })
+      .finally(()=>{
+        setloading(false )
+      })
+    }
   return (
     <div className="w-[350px]">
       <CardHeader>
@@ -22,19 +51,19 @@ const LoginForm = () => {
         <form>
           <div className="grid w-full items-center gap-4">
             <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="name">E-mail</Label>
-              <Input id="name" placeholder="johndoe@example.com" />
+              <Label htmlFor="email">E-mail</Label>
+              <Input id="email" value={email} onChange={e=> setemail(e.target.value)} placeholder="johndoe@example.com" />
             </div>
             <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="framework">Password</Label>
-            <Input placeholder='Password' type={showPass?"text":"password"} />
+              <Label htmlFor="password">Password</Label>
+            <Input placeholder='Password' id="password" value={password} onChange={e=> setpassword(e.target.value)} type={showPass?"text":"password"} />
             </div>
             <div className="flex items-center gap-1">
                 <Checkbox id="showPass" onCheckedChange={()=> setshowPass(p=>!p)}/>
                 <Label htmlFor="showPass">Show Password</Label>
             </div>
             <div className="flex justify-end">
-                <Button type='submit'><Loader2 size={15} className='animate-spin mr-1'/> Login</Button>
+                <Button type='submit' onClick={loginUser} disabled={!email||!password||loading}>{loading&&<Loader2 size={15} className='animate-spin mr-1'/>} Login</Button>
             </div>
           </div>
         </form>
