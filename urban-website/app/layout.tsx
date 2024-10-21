@@ -35,9 +35,7 @@ export default function RootLayout({
         className={inter.className}
       >
         <ReduxWrapper>
-          
           {children}
-          
         </ReduxWrapper>
       </body>
     </html>
