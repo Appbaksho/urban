@@ -6,11 +6,14 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Loader, Loader2 } from 'lucide-react'
 import React, { useState } from 'react'
+import GoogleIcon from './google-icon'
 
 const LoginForm = () => {
     const [showPass, setshowPass] = useState<boolean>(false)
+    const [email, setemail] = useState<string>('')
+    const [password, setpassword] = useState<string>('')
   return (
-    <Card className="w-[350px]">
+    <div className="w-[350px]">
       <CardHeader>
         <CardTitle className='font-bold text-xl'>Login</CardTitle>
         <CardDescription className='text-xs'>Login to your account</CardDescription>
@@ -38,12 +41,15 @@ const LoginForm = () => {
         
         <p className="text-center text-xs mt-5">Other Options</p>
         <div className="flex justify-center mt-3">
-        <Button variant="outline" onClick={() => console.log('Login with Google')}>
+        <Button variant="outline" onClick={() => console.log('Login with Google')} className='text-xs text-gray-500 rounded-none'>
+          <GoogleIcon/>
+          <span className="pl-1">
             Login with Google
+          </span>
         </Button>
         </div>
       </CardContent>
-    </Card>
+    </div>
   )
 }
 
