@@ -3,7 +3,12 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
-const BaseNavbar = () => {
+interface BaseNavbarProps {
+    open:boolean
+    setOpen:React.Dispatch<React.SetStateAction<boolean>>
+}
+
+const BaseNavbar = (props:BaseNavbarProps) => {
   return (
     <div className='w-full bg-white px-5 md:px-20 py-3 grid md:grid-cols-5 grid-cols-2'>
         <Image src='/logo.png' width={60} height={30} alt='logo'/>
@@ -30,7 +35,7 @@ const BaseNavbar = () => {
             </li>
         </ul>
         <div className="flex items-center justify-end gap-3">
-            <div className="hidden md:flex rounded-full bg-secondary hover:bg-gray-200">
+            <div className="hidden md:flex rounded-full bg-secondary hover:bg-gray-200" onClick={e=> props.setOpen(true)}>
                 <div className="rounded-full p-1.5">
                     <SearchIcon size={18}/>
                 </div>
