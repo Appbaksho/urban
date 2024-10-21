@@ -93,7 +93,7 @@ const Footer = () => {
       <div className="md:col-span-2">
 
       </div>
-      <p className="col-span-1 md:cwol-span-3 lg:col-span-5 mt-3 text-xs text-gray-600">
+      <p className="col-span-1 md:col-span-3 lg:col-span-5 mt-3 text-xs text-gray-600">
         © {new Date().getFullYear()} Urban. All Rights Reserved 
       </p>
     </div>

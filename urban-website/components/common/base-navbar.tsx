@@ -2,6 +2,7 @@ import { Heart, Menu, SearchIcon, ShoppingBag, User } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
+import SearchContainer from './search-container'
 
 interface BaseNavbarProps {
     open:boolean
@@ -56,6 +57,7 @@ const BaseNavbar = (props:BaseNavbarProps) => {
                     </button>
             </div>
         </div>
+        {/* <SearchContainer/> */}
     </div>
   )
 }
