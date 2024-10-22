@@ -36,7 +36,7 @@ const ProductSectionHorizontal = (props:ProductSectionProps) => {
     return (
         <View className={'mx-4 mt-4'}>
             <Text variant={'titleMedium'} style={{color:theme.colors.primary,marginVertical:props.isCategoryList?8:0}}>{props.title}</Text> 
-            {!props.isCategoryList&&<Text variant={'bodyLarge'} className={'opacity-75'} style={{color:theme.colors.primary}}>{props.subtitle}</Text>}  
+            {!props.subtitle&&<Text variant={'bodyLarge'} className={'opacity-75'} style={{color:theme.colors.primary}}>{props.subtitle}</Text>}  
             <View className="mt-3"/>
             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} className={'flex-row gap-3'}>
                 {products&&products.map((product, index) => (

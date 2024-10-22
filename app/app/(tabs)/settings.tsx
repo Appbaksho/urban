@@ -1,13 +1,16 @@
 import TopBar from '@/components/drawer/top-bar';
 import { useNavigation } from 'expo-router';
 import React, { useLayoutEffect } from 'react';
-import { View, Text, Switch } from 'react-native';
+import { View, Switch } from 'react-native';
+import { Text } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const SettingsScreen: React.FC = () => {
     const [isEnabled, setIsEnabled] = React.useState(false);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
     const navigation = useNavigation()
+
+
     useLayoutEffect(() => {
         navigation.setOptions({
           headerShown: false,
@@ -15,19 +18,18 @@ const SettingsScreen: React.FC = () => {
       }, [navigation]);
 
     return (
-        <SafeAreaView className="flex-1 items-center bg-gray-100">
+        <SafeAreaView className="flex-1 flex-col bg-white">
             <TopBar name='Settings'/>
-            <Text className="mt-20 text-2xl font-bold mb-4">Settings</Text>
-            <View className="flex-row items-center">
-                <Text className="text-lg">Enable Notifications</Text>
-                <Switch
-                    trackColor={{ false: "#767577", true: "#81b0ff" }}
-                    thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
-                    ios_backgroundColor="#3e3e3e"
-                    onValueChange={toggleSwitch}
-                    value={isEnabled}
-                />
+
+            {/* Email text */}
+            <View className='flex-row w-full'>
+                <Text className='ml-4' variant='labelMedium'>Email</Text>
+                <View className='flex-1'/>
+                <Text className='mr-4' variant='bodyMedium'>mibnzaman02@gmail.com</Text>
             </View>
+
+            {/* Devider  */}
+            
         </SafeAreaView>
     );
 };
