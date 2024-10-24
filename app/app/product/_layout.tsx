@@ -1,4 +1,3 @@
-import ButtonBordered from "@/components/core/btn-border";
 import { ButtonWide } from "@/components/core/btn-wide";
 import TopBarV2 from "@/components/drawer/top-bar-v2";
 import ProductSectionHorizontal from "@/components/home/product-section";
@@ -143,7 +142,7 @@ const ProductLayout = () => {
                         <View className="flex-1"/>
                      </TouchableOpacity>   
                      <View className="mt-4 h-[1] mr-4 bg-gray-200"/>
-                     <View className="mt-8"/>
+                     <View className="mt-4"/>
                      <ProductSectionHorizontal title={'You Might Also Like'} isCategoryList={false} preview={true}/>
                     <View className="h-16"/>    
                 </View>
