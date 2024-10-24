@@ -38,10 +38,10 @@ export const theme = {
     },
     bodyMedium: {
       fontFamily: "poppins",
-      fontSize: 16,
+      fontSize: 15,
       fontWeight: "400",
       letterSpacing: 0.1,
-      lineHeight: 24,
+      lineHeight: 20,
     },
     bodyLarge: {
       fontFamily: "poppins",
@@ -70,6 +70,13 @@ export const theme = {
       fontWeight: "500",
       letterSpacing: 0.1,
       lineHeight: 40,
+    },
+    labelMedium: {
+      fontFamily: "poppinsMedium",
+      fontSize: 15,
+      fontWeight: "500",
+      letterSpacing: 0.1,
+      lineHeight: 24,
     },
     labelSmall: {
       fontFamily: "poppinsMedium",
