@@ -14,7 +14,7 @@ export default function Home() {
     <Navbar/>
     <HeroSection/>
     <LatestAndGreatest/>
-    <ShopOurIcons/>
+    <ShopOurIcons/> 
     <NewInThisWeek/>
     <ExploreMore/>
     <Footer/>
