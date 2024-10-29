@@ -3,6 +3,7 @@ import { View, Text, FlatList } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';// Adjust the import path as necessary
 import TopBar from '@/components/drawer/top-bar';
+import ProductGrid2 from '@/components/favourute/product-grid-2';
 
 const FavouritesScreen = () => {
     const navigation = useNavigation();
@@ -30,14 +31,7 @@ const FavouritesScreen = () => {
             <View className="w-full flex-col">
                 <TopBar name="Favourites" />
             </View>
-            <View className="flex-1 p-4">
-                <Text className="text-2xl font-bold mb-4">Favourites</Text>
-                <FlatList
-                    data={data}
-                    renderItem={renderItem}
-                    keyExtractor={item => item.id}
-                />
-            </View>
+            <ProductGrid2 title="Favourites" />
         </SafeAreaView>
     );
 };
