@@ -10,18 +10,25 @@ import GoogleIcon from './google-icon'
 import { auth } from '@/firebase/firebase'
 import { AuthError, signInWithEmailAndPassword } from 'firebase/auth'
 import { toast } from '@/hooks/use-toast'
+import { useRouter } from 'next/navigation'
 
 const LoginForm = () => {
     const [showPass, setshowPass] = useState<boolean>(false)
     const [email, setemail] = useState<string>('')
     const [password, setpassword] = useState<string>('')
     const [loading, setloading] = useState<boolean>(false)
+    const router = useRouter()
 
     const loginUser = ()=>{
       setloading(true)
       signInWithEmailAndPassword(auth,email,password).then((user)=>{
         if(user){
-
+          toast({
+            title:'Login Success',
+            description:'You have successfully logged in',
+            className:"bg-green-500 text-white"
+          })
+          router.push('/profile')
         }
         else{
           toast({
@@ -42,7 +49,7 @@ const LoginForm = () => {
       })
     }
   return (
-    <div className="w-[350px]">
+    <Card className="w-[350px]">
       <CardHeader>
         <CardTitle className='font-bold text-xl'>Login</CardTitle>
         <CardDescription className='text-xs'>Login to your account</CardDescription>
@@ -78,7 +85,7 @@ const LoginForm = () => {
         </Button>
         </div>
       </CardContent>
-    </div>
+    </Card>
   )
 }
 
