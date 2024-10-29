@@ -4,6 +4,7 @@ import Image from "next/image";
 import Footer from "@/components/common/footer";
 import HeroSection from "@/components/home/hero-section";
 import LatestAndGreatest from "@/components/home/latest-and-greatest";
+import ShopOurIcons from "@/components/home/shop-our-icons";
 
 export default function Home() {
   return (
@@ -11,6 +12,7 @@ export default function Home() {
     <Navbar/>
     <HeroSection/>
     <LatestAndGreatest/>
+    <ShopOurIcons/>
     <Footer/>
     </>
   );
