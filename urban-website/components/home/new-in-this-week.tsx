@@ -7,6 +7,7 @@ import CategoryBanner from './category-banner';
 import { Button } from '../ui/button';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import CategoryContainer from './category-container';
+import ProductCard from './product-card';
 
 const NewInThisWeek = () => {
     const swiper = React.useRef<SwiperRef>(null)
@@ -42,7 +43,7 @@ const NewInThisWeek = () => {
       }}
     >
         {Array(10).fill("_").map((v,i)=>{
-            return <SwiperSlide key={i}><CategoryContainer/></SwiperSlide>
+            return <SwiperSlide key={i}><ProductCard/></SwiperSlide>
         })}
       
     </Swiper>
