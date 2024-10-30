@@ -3,10 +3,13 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import SearchContainer from './search-container'
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '../ui/sheet'
 
 interface BaseNavbarProps {
     open:boolean
     setOpen:React.Dispatch<React.SetStateAction<boolean>>
+    sheet:boolean
+    setSheet:React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const BaseNavbar = (props:BaseNavbarProps) => {
@@ -49,7 +52,7 @@ const BaseNavbar = (props:BaseNavbarProps) => {
                     <button className="block md:hidden rounded-full p-1.5 hover:bg-gray-200">
                         <User size={20} strokeWidth={1}/>
                     </button>
-                    <button className="rounded-full p-1.5 hover:bg-gray-200">
+                    <button onClick={()=>props.setSheet(true)} className="rounded-full p-1.5 hover:bg-gray-200">
                         <ShoppingBag size={20} strokeWidth={1}/>
                     </button>
                     <button className="block md:hidden rounded-full p-1.5 hover:bg-gray-200">
@@ -58,6 +61,7 @@ const BaseNavbar = (props:BaseNavbarProps) => {
             </div>
         </div>
         {/* <SearchContainer/> */}
+        
     </div>
   )
 }
