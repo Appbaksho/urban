@@ -2,8 +2,6 @@ import { Heart, Menu, SearchIcon, ShoppingBag, User } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
-import SearchContainer from './search-container'
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '../ui/sheet'
 
 interface BaseNavbarProps {
     open:boolean
@@ -39,7 +37,7 @@ const BaseNavbar = (props:BaseNavbarProps) => {
             </li>
         </ul>
         <div className="flex items-center justify-end gap-3">
-            <div className="hidden md:flex rounded-full bg-secondary hover:bg-gray-200" onClick={e=> props.setOpen(true)}>
+            <div className="hidden md:flex rounded-full bg-secondary hover:bg-gray-200" onClick={()=> props.setOpen(true)}>
                 <div className="rounded-full p-1.5">
                     <SearchIcon size={18}/>
                 </div>

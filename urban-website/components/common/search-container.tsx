@@ -1,5 +1,5 @@
 import gsap from 'gsap'
-import { SearchIcon } from 'lucide-react'
+// import { SearchIcon } from 'lucide-react'
 import Image from 'next/image'
 import React, { useEffect, useRef } from 'react'
 import { Input } from '../ui/input'
@@ -7,10 +7,10 @@ import { Input } from '../ui/input'
 const SearchContainer = () => {
     const container = useRef(null)
     const logo = useRef(null)
-    const items = useRef(null)
-    const search = useRef(null)
-    const close = useRef(null)
-    const input = useRef(null)
+    // const items = useRef(null)
+    // const search = useRef(null)
+    // const close = useRef(null)
+    // const input = useRef(null)
     const backdrop = useRef(null)
 
     useEffect(() => {
