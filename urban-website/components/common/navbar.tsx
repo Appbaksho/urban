@@ -13,7 +13,7 @@ const Navbar = () => {
     const [bottomvisible, setbottomvisible] = useState<boolean>(false)
     const [searchOpen, setsearchOpen] = useState<boolean>(false)
     // const [searchQuery, setsearchQuery] = useState<string>('')
-    const [cartOpen, setcartOpen] = useState<boolean>(false)
+    const [cartOpen, setcartOpen] = useState<boolean>(false) 
     
     useEffect(() => {
         const handleScroll = () => {
