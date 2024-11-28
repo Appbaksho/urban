@@ -1,12 +1,9 @@
 "use client"
 import React from 'react'
-import { Swiper, SwiperRef, SwiperSlide, useSwiper } from 'swiper/react';
-import {Navigation} from 'swiper/modules'
+import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react';
 import 'swiper/css'
-import CategoryBanner from './category-banner';
 import { Button } from '../ui/button';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import CategoryContainer from './category-container';
 import ProductCard from './product-card';
 
 const NewInThisWeek = () => {

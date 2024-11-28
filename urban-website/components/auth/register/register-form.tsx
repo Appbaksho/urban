@@ -1,5 +1,5 @@
 "use client"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card} from '@/components/ui/card'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -11,7 +11,7 @@ import {zodResolver} from '@hookform/resolvers/zod'
 import { Button } from '@/components/ui/button'
 const RegisterForm = () => {
     const [showPass, setshowPass] = useState<boolean>(false)
-    const {register,formState:{errors},reset,handleSubmit,getValues} = useForm<RegistrationSchemaType>({
+    const {register,formState:{errors}} = useForm<RegistrationSchemaType>({
         resolver: zodResolver(registerSchema)
     })
   return (

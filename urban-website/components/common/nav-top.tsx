@@ -1,7 +1,6 @@
 
 import Link from 'next/link'
 import React from 'react'
-import {Separator} from '@/components/ui/separator'
 const NavbarTop = () => {
   return (
     <div className='hidden bg-secondary md:px-20 px-5 py-2 md:flex items-center justify-between text-xs'>

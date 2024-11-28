@@ -1,15 +1,42 @@
 "use client"
 import React from 'react'
-import { Swiper, SwiperRef, SwiperSlide, useSwiper } from 'swiper/react';
-import {Navigation} from 'swiper/modules'
+import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react';
+
 import 'swiper/css'
-import CategoryBanner from './category-banner';
+import  { Category } from './category-banner';
 import { Button } from '../ui/button';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import CategoryContainer from './category-container';
 
 const ExploreMore = () => {
     const swiper = React.useRef<SwiperRef>(null)
+    const sampleCategories:Category[] = [
+      {
+        src:'/products/kids.webp',
+        name:'Kids',
+        url:'/category/hoodie'
+      },
+      {
+        src:'/products/kids-1.jpg',
+        name:'Kids Jackets',
+        url:'/category/jackets'
+      },
+      {
+        src:'/products/hoodie-3.png',
+        name:'Cotton Hoodie',
+        url:'/category/joggers'
+      },
+      {
+        src:'/products/hoodie-4.jpg',
+        name:'Olive Hoodie',
+        url:'/category/sweatshirt'
+      },
+      {
+        src:'/products/hoodie-5.webp',
+        name:'Orange Hoodie',
+        url:'/category/sweatshirt'
+      }
+    ]
   return (
     <div className='py-10'>
         <div className="flex items-center justify-between px-5 md:px-10">
@@ -41,9 +68,11 @@ const ExploreMore = () => {
         },
       }}
     >
-        {Array(10).fill("_").map((v,i)=>{
-            return <SwiperSlide key={i}><CategoryContainer/></SwiperSlide>
-        })}
+        {
+          sampleCategories.map((v,i)=>{
+            return <SwiperSlide key={i}><CategoryContainer {...v}/></SwiperSlide>
+        })
+        }
       
     </Swiper>
     </div>

@@ -12,7 +12,7 @@ import CartProduct from '../cart/cart-product'
 const Navbar = () => {
     const [bottomvisible, setbottomvisible] = useState<boolean>(false)
     const [searchOpen, setsearchOpen] = useState<boolean>(false)
-    const [searchQuery, setsearchQuery] = useState<string>('')
+    // const [searchQuery, setsearchQuery] = useState<string>('')
     const [cartOpen, setcartOpen] = useState<boolean>(false)
     
     useEffect(() => {
