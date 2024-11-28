@@ -26,6 +26,7 @@ const ExploreMore = () => {
         <Swiper
         ref={swiper}
         centeredSlides
+        loop
         className='mt-5'
       spaceBetween={20}
       breakpoints={{

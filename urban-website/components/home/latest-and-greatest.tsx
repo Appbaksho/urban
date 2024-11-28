@@ -25,6 +25,7 @@ const LatestAndGreatest = () => {
         <Swiper
         ref={swiper}
         centeredSlides
+        loop={true}
         className='mt-5'
       spaceBetween={20}
       breakpoints={{
