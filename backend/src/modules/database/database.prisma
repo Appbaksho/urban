@@ -133,6 +133,8 @@ model Category {
   description      String
   imageUrl         String
   parentCategoryId String?
+  genderSpecific   Boolean   @default(false)
+  gender           Gender?  
   parentCategory   Category?  @relation("CategoryHierarchy", fields: [parentCategoryId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   childCategories  Category[] @relation("CategoryHierarchy")
   products         Product[]
