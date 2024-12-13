@@ -99,19 +99,19 @@ model DiscountOnProduct {
 
 model Product {
   id          String   @id @default(cuid()) @map("_id")
+
+  //input
   name        String
   description String
-  imageUrl    String[]
-  category    String
-  subCategory String
-  stock       Int
+  categoryId String?
+
+  //automated
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-
+  continued   Boolean  @default(true)
   OrderItem  OrderItem[]
   variants   ProductVariant[]
   Category   Category?           @relation(fields: [categoryId], references: [id])
-  categoryId String?
   discounts  DiscountOnProduct[]
 }
 
@@ -120,7 +120,8 @@ model ProductVariant {
   additionalName String
   size           String
   color          String
-  gender         Gender
+  imageUrl    String[]
+  gender         Gender?
   stock          Int
   price          Float
   productId      String
