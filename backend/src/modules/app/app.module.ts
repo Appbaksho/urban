@@ -5,6 +5,8 @@ import { ConfigModule } from '@nestjs/config';
 
 import { FirebaseModule } from '../firebase/firebase.module';
 import { CustomerModule } from '../customer/customer.module';
+import { CategoryModule } from '../category/category.module';
+import { ProductModule } from '../product/product.module';
 @Module({
   imports: [
     //ConfigModule.forRoot(),MongooseModule.forRoot(process.env.MONGO_URL),MulterModule.register({ dest: './uploads', }),
@@ -14,6 +16,8 @@ import { CustomerModule } from '../customer/customer.module';
     }),
     CustomerModule,
     FirebaseModule,
+    CategoryModule,
+    ProductModule,
   ],
   controllers: [AppController],
   providers: [AppService],

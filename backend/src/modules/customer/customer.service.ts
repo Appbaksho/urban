@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CreateCustomerDto } from './dto/create-customer.dto';
-import { UpdateCustomerDto } from './dto/update-customer.dto';
+// import { UpdateCustomerDto } from './dto/update-customer.dto';
 import { DatabaseService } from '../database/database.service';
 import { Location } from '@prisma/client';
 
@@ -48,11 +48,11 @@ export class CustomerService {
     });
   }
 
-  update(id: number, updateCustomerDto: UpdateCustomerDto) {
-    return `This action updates a #${id} customer`;
-  }
+  // update(id: number, updateCustomerDto: UpdateCustomerDto) {
+  //   return `This action updates a #${id} customer`;
+  // }
 
-  remove(id: number) {
-    return `This action removes a #${id} customer`;
-  }
+  // remove(id: number) {
+  //   return `This action removes a #${id} customer`;
+  // }
 }

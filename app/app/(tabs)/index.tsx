@@ -5,7 +5,6 @@ import FeaturedCard from "@/components/home/featured-card";
 import ProductSectionHorizontal from "@/components/home/product-section";
 import { useNavigation } from "expo-router";
 import { useLayoutEffect } from "react";
-import { View } from "react-native";
 import { ScrollView } from "react-native";
 import { Text } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
