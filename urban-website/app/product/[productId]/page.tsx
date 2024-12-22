@@ -2,7 +2,15 @@
 import Footer from '@/components/common/footer';
 import Navbar from '@/components/common/navbar';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-
+import {
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbList,
+    BreadcrumbPage,
+    BreadcrumbSeparator,
+  } from "@/components/ui/breadcrumb"
+  
 import { useParams } from 'next/navigation';
 import React from 'react';
 import 'tailwindcss/tailwind.css';
@@ -23,14 +31,25 @@ const ProductPage = () => {
     ];
     return (
     <>
+    
         <Navbar/>
-        <div className={'ms-[10vw] mt-4 h-fit'}>
-                <span className="text-sm text-gray-500">Home</span> | 
-                <span className="text-sm text-gray-500"> Man</span> | 
-                <span className="text-sm text-gray-500"> Sherwani</span> | 
-                <span className="text-sm text-gray-500"> Platinum </span> | 
-                <span className="text-sm font-semibold text-gray-700"> {productId}</span>
-            </div>
+        <div className='px-5 md:px-10 lg:px-20'>
+        <Breadcrumb>
+            <BreadcrumbList>
+                <BreadcrumbItem>
+                <BreadcrumbLink href="/">Home</BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                <BreadcrumbLink href="/components">Categories</BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                <BreadcrumbPage>Panjabis</BreadcrumbPage>
+                </BreadcrumbItem>
+            </BreadcrumbList>
+            </Breadcrumb>
+
         <div className={'mt-6 flex flex-row h-[80vh] mx-[10vw] gap-12'}>
             <div className={'h-full flex-1'}>
                 <div className="relative h-full w-fit">
@@ -46,6 +65,7 @@ const ProductPage = () => {
                     <div className="text-sm mt-3 text-gray-950 font-bold"> BDT 17,750 </div>
                 </div>
             </div>
+        </div>
         </div>
         <Footer/>
     </>
