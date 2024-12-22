@@ -12,16 +12,24 @@ import {
     navigationMenuTriggerStyle,
     NavigationMenuViewport,
   } from "@/components/ui/navigation-menu"
+  import {
+    Sheet,
+    SheetContent,
+    SheetDescription,
+    SheetHeader,
+    SheetTitle,
+    SheetTrigger,
+  } from "@/components/ui/sheet"
   
 import React from 'react'
 import { cn } from '@/lib/utils'
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../ui/accordion'
 
 const components: { title: string; href: string; description: string }[] = [
     {
       "title": "Winter Collection",
       "href": "/winter-collection",
       "description": "Cozy up with our latest winter styles.",
-      "image": "/fashion/winter-collection-banner.png"
     },
     {
       "title": "New Arrivals",
@@ -57,7 +65,7 @@ interface BaseNavbarProps {
 const BaseNavbar = (props:BaseNavbarProps) => {
   return (
     <div className='w-full bg-white px-5 md:px-20 py-3 flex justify-between items-center'>
-        <Image src='/logo.png' width={60} height={30} alt='logo'/>
+        <Image src='/logo.PNG' width={60} height={30} alt='logo'/>
         
     <NavigationMenu className='hidden md:flex md:col-span-4'>
       <NavigationMenuList>
@@ -167,9 +175,94 @@ const BaseNavbar = (props:BaseNavbarProps) => {
                     <button onClick={()=>props.setSheet(true)} className="rounded-full p-1.5 hover:bg-gray-200">
                         <ShoppingBag size={20} strokeWidth={1}/>
                     </button>
-                    <button className="block md:hidden rounded-full p-1.5 hover:bg-gray-200">
-                        <Menu size={20} strokeWidth={1}/>
-                    </button>
+                    <Sheet>
+  <SheetTrigger className="block md:hidden rounded-full p-1.5 hover:bg-gray-200">
+    <Menu size={20} strokeWidth={1}/>
+  </SheetTrigger>
+  <SheetContent>
+    <SheetHeader>
+      <SheetTitle className='flex items-center'>
+        <Image src='/logo.PNG' width={60} height={30} alt='logo'/>
+      </SheetTitle>
+      <SheetDescription>
+        <ul>
+            <Accordion type="single" collapsible>
+              <AccordionItem value="item-1">
+                <AccordionTrigger>
+                    <Link href='/winter-collection' className='text-black font-semibold'>Winter Collection</Link>
+                </AccordionTrigger>
+                <AccordionContent>
+                    <ul>
+                        <li className='py-2 text-right'>
+                            <Link href='/categories/new-arrivals' className='text-black font-semibold'>New Arrivals</Link>
+                        </li>
+                        <li className='py-2 text-right'>
+                            <Link href='/categories/winter-accessories' className='text-black font-semibold'>Winter Accessories</Link>
+                        </li>
+                        <li className='py-2 text-right'>
+                            <Link href='/categories/outerwear' className='text-black font-semibold'>Outerwear</Link>
+                        </li>
+                        <li className='py-2 text-right'>
+                            <Link href='/categories/knitwear' className='text-black font-semibold'>Knitwear</Link>
+                        </li>
+                    </ul>      
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="item-2">
+                <AccordionTrigger>
+                    <Link href='/men' className='text-black font-semibold'>Men</Link>
+                </AccordionTrigger>
+                <AccordionContent>
+                    <ul>
+                        {components.map((component,i) => (
+                            <li className='py-2 text-right' key={i}>
+                                <Link href={component.href} className='text-black font-semibold'>{component.title}</Link>
+                            </li>
+                        ))}
+                    </ul>      
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="item-3">
+                <AccordionTrigger>
+                    <Link href='/women' className='text-black font-semibold'>Women</Link>
+                </AccordionTrigger>
+                <AccordionContent>
+                    <ul>
+                        {components.map((component,i) => (
+                            <li className='py-2 text-right' key={i}>
+                                <Link href={component.href} className='text-black font-semibold'>{component.title}</Link>
+                            </li>
+                        ))}
+                    </ul>      
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="item-4">
+                <AccordionTrigger>
+                    <Link href='/kids' className='text-black font-semibold'>Kids</Link>
+                </AccordionTrigger>
+                <AccordionContent>
+                    <ul>
+                        {components.map((component,i) => (
+                            <li className='py-2 text-right' key={i}>
+                                <Link href={component.href} className='text-black font-semibold'>{component.title}</Link>
+                            </li>
+                        ))}
+                    </ul>      
+                </AccordionContent>
+              </AccordionItem>
+
+            </Accordion>
+            
+        </ul>
+      </SheetDescription>
+    </SheetHeader>
+  </SheetContent>
+</Sheet>
+
+
             </div>
         </div>
         {/* <SearchContainer/> */}
