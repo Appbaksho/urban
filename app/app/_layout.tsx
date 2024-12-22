@@ -101,6 +101,7 @@ export default function RootLayout() {
           <Stack.Screen name="product" />
           <Stack.Screen name="create-profile" />
           <Stack.Screen name="batch-view" />
+          <Stack.Screen name="orders" />
           <Stack.Screen name="+not-found" />
         </Stack>
       </PaperProvider>
