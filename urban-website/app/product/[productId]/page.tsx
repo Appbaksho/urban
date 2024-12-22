@@ -14,6 +14,8 @@ import {
 import { useParams } from 'next/navigation';
 import React from 'react';
 import 'tailwindcss/tailwind.css';
+import ProductImageSlider from '@/components/product-page/image-slider';
+import ProductDescriptionSingle from '@/components/product-page/product-description';
 
 const ProductPage = () => {
     const { productId } = useParams();
@@ -50,21 +52,9 @@ const ProductPage = () => {
             </BreadcrumbList>
             </Breadcrumb>
 
-        <div className={'mt-6 flex flex-row h-[80vh] mx-[10vw] gap-12'}>
-            <div className={'h-full flex-1'}>
-                <div className="relative h-full w-fit">
-                    <ChevronLeft size={40} className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-25 p-2  cursor-pointer" />
-                    <img src={imageUrls1[0]} className="h-full w-fit object-contain" />
-                    <ChevronRight size={40} className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-25 p-2  cursor-pointer" />
-                </div>
-            </div>
-            <div className={'h-full flex-1 flex'}>
-                <div className={""}>
-                    <div className="text-sm text-gray-950 font-semibold">Platinum Panjabi</div> 
-                    <div className="text-sm text-gray-500">{productId}</div> 
-                    <div className="text-sm mt-3 text-gray-950 font-bold"> BDT 17,750 </div>
-                </div>
-            </div>
+        <div className='grid grid-cols-1 md:grid-cols-2 mt-10 gap-10'>
+            <ProductImageSlider/>
+            <ProductDescriptionSingle/>
         </div>
         </div>
         <Footer/>
