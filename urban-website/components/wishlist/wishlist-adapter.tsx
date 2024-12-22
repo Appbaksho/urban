@@ -5,13 +5,14 @@ import Image from 'next/image'
 import { Button } from '../ui/button'
 import { Heart } from 'lucide-react'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '../ui/dialog'
+import Link from 'next/link'
 
 const WishlistAdapter = () => {
     const [removeOpen, setremoveOpen] = useState<boolean>(false)
   return (
     <div>
         <div className="w-full mb-5 relative">
-          <AspectRatio ratio={4 / 5}>
+          <AspectRatio ratio={3 / 4}>
             <Image width={400} height={400} src="/1.jpg" alt="Image" className="object-cover" />
           </AspectRatio>
           
@@ -19,7 +20,7 @@ const WishlistAdapter = () => {
             <Heart size={17} className='text-red-500'/>
           </Button>
         </div>
-        <p className="pt-5 font-semibold">Random Product</p>
+        <Link href="/product/random" className="pt-5 mt-5 font-semibold">Random Product</Link>
         <p className="text-gray-500 text-sm">Variant</p>
         <p className="text-sm font-semibold mt-3">$190</p>
 
