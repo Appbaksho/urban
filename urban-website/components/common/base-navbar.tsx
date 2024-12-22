@@ -65,7 +65,9 @@ interface BaseNavbarProps {
 const BaseNavbar = (props:BaseNavbarProps) => {
   return (
     <div className='w-full bg-white px-5 md:px-20 py-3 flex justify-between items-center'>
+      <Link href='/'>
         <Image src='/logo.PNG' width={60} height={30} alt='logo'/>
+      </Link>
         
     <NavigationMenu className='hidden md:flex md:col-span-4'>
       <NavigationMenuList>
@@ -182,7 +184,9 @@ const BaseNavbar = (props:BaseNavbarProps) => {
   <SheetContent>
     <SheetHeader>
       <SheetTitle className='flex items-center'>
-        <Image src='/logo.PNG' width={60} height={30} alt='logo'/>
+        <Link href='/'>
+          <Image src='/logo.PNG' width={60} height={30} alt='logo'/>
+        </Link>
       </SheetTitle>
       <SheetDescription>
         <ul>

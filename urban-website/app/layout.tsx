@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import ReduxWrapper from "@/redux/redux-wrapper";
-import {Inter} from 'next/font/google'
+import {Poppins} from 'next/font/google'
 // const geistSans = localFont({
 //   src: "./fonts/GeistVF.woff",
 //   variable: "--font-geist-sans",
@@ -13,7 +13,7 @@ import {Inter} from 'next/font/google'
 //   weight: "100 900",
 // });
 
-const inter = Inter({
+const poppins = Poppins({
   weight:["100","200","300","400","500","600","700","800","900"],
   subsets:["latin"],
 })
@@ -31,7 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={inter.className}
+        className={poppins.className}
       >
         <ReduxWrapper>
           
