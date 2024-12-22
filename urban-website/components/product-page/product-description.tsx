@@ -58,6 +58,33 @@ const ProductDescriptionSingle = () => {
             <Button size="lg"><ShoppingBag size={16} className='mr-2'/> Add to Cart</Button>
             <Button size="icon" variant="outline"><Heart size={17}/></Button>
         </div>
+        <div className="mt-10">
+            <p className='font-semibold'>Description</p>
+            <p className="text-sm text-gray-600 mt-2">
+                The Pookie Hoodie is the perfect blend of comfort and style. Made from high-quality materials, this hoodie is designed to keep you warm and cozy during the colder months. It features a modern, relaxed fit that is perfect for everyday wear. The Pookie Hoodie comes in a variety of sizes to ensure a perfect fit for everyone. Whether you're lounging at home or out and about, this hoodie is a versatile addition to your wardrobe. With its stylish design and comfortable feel, the Pookie Hoodie is sure to become your go-to choice for any casual occasion.
+            </p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-10">
+            <div>
+                <p className='font-semibold'>Details</p>
+                <ul className='mt-2 list-disc list-inside'>
+                    <li className='text-sm text-gray-600'>Material: 100% Cotton</li>
+                    <li className='text-sm text-gray-600'>Fit: Relaxed</li>
+                    <li className='text-sm text-gray-600'>Style: Casual</li>
+                    <li className='text-sm text-gray-600'>Care: Machine Wash</li>
+                </ul>
+            </div>
+            <div>
+                <p className='font-semibold'>Size Description</p>
+                <ul className='mt-2 list-disc list-inside'>
+                    <li className='text-sm text-gray-600'>S: Chest 36" Length 26"</li>
+                    <li className='text-sm text-gray-600'>M: Chest 38" Length 27"</li>
+                    <li className='text-sm text-gray-600'>L: Chest 40" Length 28"</li>
+                    <li className='text-sm text-gray-600'>XL: Chest 42" Length 29"</li>
+                    <li className='text-sm text-gray-600'>XXL: Chest 44" Length 30"</li>
+                </ul>
+            </div>
+        </div>
     </div>
   )
 }
