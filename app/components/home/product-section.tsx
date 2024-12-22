@@ -43,7 +43,8 @@ const ProductSectionHorizontal = (props:ProductSectionProps) => {
                     <View key={index} onTouchEndCapture={
                         ()=>{
                             console.log('product clicked');
-                            if(!props.isCategoryList)router.push(`product?productId=${product.id}`);
+                            if(!props.isCategoryList)router.push(`/product?productId=${product.id}`);
+                            else router.push(`/batch-view?title=${product.name}&category=${product.category}`);
                         }
                     }>
                         {!props.isCategoryList&&<Image className={'w-36 h-48 rounded-lg mb-1'} source={{uri:product.image}}/>}
