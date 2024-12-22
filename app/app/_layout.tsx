@@ -76,9 +76,10 @@ export default function RootLayout() {
     if (loaded) {
       SplashScreen.hideAsync().then(r => console.log(r));
       if (getAuth().currentUser) {
-        if (getAuth().currentUser?.displayName) {
-          router.push("/(tabs)");
-        }else router.push("/create-profile");
+        // if (getAuth().currentUser?.displayName) {
+        //   router.push("/(tabs)");
+        // }else router.push("/create-profile");
+        router.push("/(tabs)");
       }
       else router.push("/login");
     }

@@ -36,7 +36,7 @@ const CreateProfileLayout = () => {
             if(!error)
             getAuth().currentUser?.updateProfile({
                 displayName: formData.name,
-                photoURL: formData.photoUrl
+                photoURL: formData.photoUrl,
             }).then(r => {
                 router.push('/(tabs)');
             });
