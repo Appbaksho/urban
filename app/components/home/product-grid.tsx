@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { View, Image } from "react-native";
 import { Text } from "react-native-paper";
 import ButtonBordered from "../core/btn-border";
+import { router } from "expo-router";
 
 interface ProductGridProps {
     products?: any[];
@@ -31,7 +32,11 @@ const ProductGrid = (props:ProductGridProps) => {
             <Text className={'w-full'} variant={'titleMedium'} style={{color:theme.colors.primary}}>{props.title}</Text>
             <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', marginTop: 28, marginBottom:20, width: '100%' }}>
                 {products.map((product) => (
-                    <View key={product.id} style={{ width: '31%', marginBottom: 16 }}>
+                    <View
+                     onTouchEnd={() => {
+                        router.push(`/product?productId=${product.id}`);
+                     }}
+                     key={product.id} style={{ width: '31%', marginBottom: 16 }}>
                         <Image source={{ uri: product.image }} style={{ width: '100%', height: 120, borderRadius: 2 }} />
                         <Text variant="labelSmall" style={{ marginTop: 8 }}>{product.name}</Text>
                         <Text variant="bodySmall" style={{ color: 'gray' }}>{product.category}</Text>
@@ -39,9 +44,10 @@ const ProductGrid = (props:ProductGridProps) => {
                     </View>
                 ))}
             </View>
-            <ButtonBordered text="View All" onPress={function (): void {
-                console.log('View All Pressed');
-            } } />
+            <ButtonBordered text="View All" onPress={
+                () => {
+                    router.push(`/batch-view?title=${props.title}`);
+            }} />
         </View>
     )
 };

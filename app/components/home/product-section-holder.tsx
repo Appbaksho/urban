@@ -1,4 +1,5 @@
 import { theme } from "@/theme/theme";
+import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import { ImageBackground, TouchableOpacity, View } from "react-native";
 import { Text } from "react-native-paper";
@@ -38,7 +39,11 @@ const ProductSectionHolder = (props:ProductSectionHolderProps) => {
                             {index ===0 && (
                                 <View style={{ height: 6 , marginVertical: 0 }} />
                             )}
-                            <TouchableOpacity className={'mx-4 my-6'}>
+                            <TouchableOpacity className={'mx-4 my-6'}
+                                onPress={() => {
+                                    router.push(`/batch-view?title=${section}`);
+                                }}
+                            >
                                 <Text  variant={'titleMedium'} style={{color:theme.colors.textInvert}}>{section}</Text>
                             </TouchableOpacity>
                             {index !== sections.length - 1 && (
