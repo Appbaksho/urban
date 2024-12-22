@@ -1,5 +1,5 @@
 import React, { useLayoutEffect } from "react";
-import { useNavigation} from "expo-router";
+import { router, useNavigation} from "expo-router";
 import {  SafeAreaView } from "react-native-safe-area-context";
 import { ScrollView, Text, Image, View, TouchableOpacity } from "react-native";
 import TopBarV2 from "@/components/drawer/top-bar-v2";
@@ -33,25 +33,25 @@ export default function ProfileTab() {
             </View> 
             <View className={'mt-8'}/>
             <View className={'flex-row justify-center'}>
-                <View className={'flex-col items-center'}>
+                <TouchableOpacity onPress={()=>{router.push("/cart")}} className={'flex-col items-center'}>
                    <ShoppingCart size={30} strokeWidth={1} className={'opacity-95'} color={theme.colors.primary}/>
                    <Text className={'mt-1 text-sm'} style={{fontFamily:'poppins',fontWeight:"semibold"}}>Cart</Text>
-                </View>
+                </TouchableOpacity>
                 <View className={'bg-gray-300'} style={{width: 1, height: 32, marginHorizontal: 20}}/>
-                <View className={'flex-col items-center'}>
+                <TouchableOpacity onPress={()=>{router.push("/orders")}} className={'flex-col items-center'}>
                    <Package size={30} className={'opacity-95'} strokeWidth={1} color={theme.colors.primary}/>
                    <Text className={'mt-1 text-sm'} style={{fontFamily:'poppins',fontWeight:"semibold"}}>Orders</Text>
-                </View>
+                </TouchableOpacity>
                 <View className={'bg-gray-300'} style={{width: 1, height: 32, marginHorizontal: 20}}/>
-                <View className={'flex-col items-center'}>
+                <TouchableOpacity onPress={()=>{router.push("/batch-view?title=Event%20Specials")}} className={'flex-col items-center'}>
                    <Calendar strokeWidth={1} size={30} className={'opacity-95'} color={theme.colors.primary}/>
                    <Text className={'mt-1 text-sm'} style={{fontFamily:'poppins',fontWeight:"semibold"}}>Events</Text>
-                </View>
+                </TouchableOpacity>
                 <View className={'bg-gray-300'} style={{width: 1, height: 32, marginHorizontal: 20}}/>
-                <View className={'flex-col items-center'}>
+                <TouchableOpacity onPress={()=>{router.push("/(tabs)/settings")}} className={'flex-col items-center'}>
                    <Settings strokeWidth={1} size={30} className={'opacity-95'} color={theme.colors.primary}/>
                    <Text className={'mt-1 text-sm'} style={{fontFamily:'poppins',fontWeight:"semibold"}}>Settings</Text>
-                </View>
+                </TouchableOpacity>
             </View>
             <View className={'mt-8'}/>
             <View className={"bg-gray-300 mx-4 h-full"} style={{ height: 1}}/>
@@ -68,7 +68,7 @@ export default function ProfileTab() {
             <View className={'mt-8'}/>
             <View className={"bg-gray-300 mx-4 h-full"} style={{ height: 1}}/>
             <View className={'mt-8'}/>
-            <View className={'flex-row items-center mx-4'}>
+            <TouchableOpacity onPress={()=>{router.push("/(tabs)/favourites")}} className={'flex-row items-center mx-4'}>
               <View className={'flex-col'}>
               <Text className={'text-base'} style={{fontFamily:'poppins',fontWeight:"semibold",color:theme.colors.primary}}>Your Favourites</Text>
               <View className={'mt-2'}/>
@@ -78,7 +78,7 @@ export default function ProfileTab() {
               <TouchableOpacity>
               <Text className={'text-sm'} style={{fontFamily:'poppins',fontWeight:"semibold",color:theme.colors.primary}}>Edit</Text>
               </TouchableOpacity>
-            </View>
+            </TouchableOpacity>
             <View className={'mt-8'}/>
             <View className={"bg-gray-300 mx-4 h-full"} style={{ height: 1}}/>
             <View className={'mt-8'}/>

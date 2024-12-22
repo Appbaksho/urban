@@ -1,4 +1,5 @@
 import TopBarV2 from "@/components/drawer/top-bar-v2";
+import ProductGrid2 from "@/components/favourute/product-grid-2";
 import Chip from "@/components/home/chip";
 import { useLocalSearchParams, useNavigation } from "expo-router";
 import { useEffect, useLayoutEffect, useState } from "react";
@@ -54,7 +55,7 @@ const BatchViewLayout = () => {
             {/* Product section */}
 
             <ScrollView className={'h-full w-full'} showsVerticalScrollIndicator={false}>
-           
+            <ProductGrid2 title={''} />
             
             </ScrollView>
         </SafeAreaView>

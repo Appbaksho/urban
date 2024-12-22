@@ -14,7 +14,7 @@ const cartItems = [
     { id: '3', name: 'Premium Panjabi - 230045', category:"Men's pabjabi",color:"Dark Charcoal",size:"XL",price: 3450 },
     { id: '4', name: 'Premium Panjabi - 230045', category:"Men's pabjabi",color:"Dark Charcoal",size:"XL",price: 3450 }
 ];
-const productImage = "https://i0.wp.com/pristineshop.com.bd/wp-content/uploads/2024/03/Square-21.jpg?fit=2037%2C2037&ssl=1";
+export const productImage = "https://i0.wp.com/pristineshop.com.bd/wp-content/uploads/2024/03/Square-21.jpg?fit=2037%2C2037&ssl=1";
 
 const CartScreen = () => {
     const total = cartItems.reduce((sum, item) => sum + item.price, 0);

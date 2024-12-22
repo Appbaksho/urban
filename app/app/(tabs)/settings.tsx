@@ -35,10 +35,6 @@ const SettingsScreen: React.FC = () => {
             <SettingComponent label='📤   Share' value='>' isDeviderInvissible />
             <View className='flex-1'/>
             <SettingComponent label=' Logout' value='' isRed/>
-            
-
-
-            
         </SafeAreaView>
     );
 };

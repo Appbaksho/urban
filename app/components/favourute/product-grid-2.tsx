@@ -1,4 +1,5 @@
 import { theme } from "@/theme/theme";
+import { router } from "expo-router";
 import { Heart } from "lucide-react-native";
 import { useEffect, useState } from "react";
 import { View, Image, ScrollView, ImageBackground, TouchableOpacity } from "react-native";
@@ -36,10 +37,10 @@ const ProductGrid2 = (props:ProductGrid2Props) => {
         <ScrollView >
             <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', width: '100%' }}>
                 {products.map((product) => (
-                    <View key={product.id} style={{ width: '49%',  marginBottom: 16 }}>
+                    <TouchableOpacity onPress={()=>{router.push(`/product?productId=${product.id}`)}} key={product.id} style={{ width: '49%',  marginBottom: 16 }}>
                         <ImageBackground  source={{ uri: product.image }} className="w-full h-[48vw]" style={{ borderRadius: 2 }}>
                             <TouchableOpacity className="absolute top-2 right-2  bg-white rounded-full p-1" >
-                            <Heart size={20} color="white" fill={theme.colors.primary} />
+                            {props.title!==''&&<Heart size={20} color="white" fill={theme.colors.primary} />}
                             </TouchableOpacity>
                          </ImageBackground>
                         <View className="ml-2">
@@ -47,7 +48,7 @@ const ProductGrid2 = (props:ProductGrid2Props) => {
                         <Text variant="bodySmall" style={{ color: 'gray' }}>{product.category}</Text>
                         <Text variant="labelSmall" style={{ marginTop: 4, color: theme.colors.primary }}>${product.price}</Text>
                         </View>
-                    </View>
+                    </TouchableOpacity>
                 ))}
             </View>
         </ScrollView>

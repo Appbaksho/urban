@@ -76,9 +76,10 @@ export default function RootLayout() {
     if (loaded) {
       SplashScreen.hideAsync().then(r => console.log(r));
       if (getAuth().currentUser) {
-        if (getAuth().currentUser?.displayName) {
-          router.push("/(tabs)");
-        }else router.push("/create-profile");
+        // if (getAuth().currentUser?.displayName) {
+        //   router.push("/(tabs)");
+        // }else router.push("/create-profile");
+        router.push("/(tabs)");
       }
       else router.push("/login");
     }
@@ -100,6 +101,7 @@ export default function RootLayout() {
           <Stack.Screen name="product" />
           <Stack.Screen name="create-profile" />
           <Stack.Screen name="batch-view" />
+          <Stack.Screen name="orders" />
           <Stack.Screen name="+not-found" />
         </Stack>
       </PaperProvider>

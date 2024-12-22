@@ -19,8 +19,9 @@
     "android": {
       "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/images/urban_logo.png",
+        "backgroundColor": "#ffffff",
+        "scale": 0.8
       },
       "permissions": [
         "android.permission.NOTIFICATIONS",
