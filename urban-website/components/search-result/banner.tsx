@@ -1,13 +1,13 @@
+"use client"
+import { useSearchParams } from 'next/navigation'
 import React from 'react'
 
-interface SeachResultProps{
-    query: string
-}
 
-const SearchResultBanner = (props:SeachResultProps) => {
+const SearchResultBanner = () => {
+    const params = useSearchParams()
   return (
     <div>
-        <p className='font-medium text-lg'>Search Result For: <span className='font-bold'>{props.query}</span></p>
+        <p className='font-medium text-lg'>Search Result For: <span className='font-bold'>{params}</span></p>
     </div>
   )
 }

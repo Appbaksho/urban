@@ -4,15 +4,16 @@ import Navbar from '@/components/common/navbar'
 import SearchResultBanner from '@/components/search-result/banner'
 import SearchResultProducts from '@/components/search-result/result'
 import { useSearchParams } from 'next/navigation'
-import React from 'react'
+import React, { Suspense } from 'react'
 
 const SearchPage = () => {
-    const params = useSearchParams()
   return (
     <>
     <Navbar/>
     <div className="px-3 md:px-10">
-    <SearchResultBanner query={String(params.get('query'))}/>
+        <Suspense fallback={<p>Loading...</p>}>
+        <SearchResultBanner/>
+        </Suspense>
     <SearchResultProducts/>
     </div>
     <Footer/>
