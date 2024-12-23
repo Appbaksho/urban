@@ -33,22 +33,22 @@ const components: { title: string; href: string; description: string }[] = [
     },
     {
       "title": "New Arrivals",
-      "href": "/categories/new-arrivals",
+      "href": "/category/new-arrivals",
       "description": "Fresh fashion pieces for the season."
     },
     {
       "title": "Winter Accessories",
-      "href": "/categories/winter-accessories",
+      "href": "/category/winter-accessories",
       "description": "Scarves, gloves, and more to keep you warm."
     },
     {
       "title": "Outerwear",
-      "href": "/categories/outerwear",
+      "href": "/category/outerwear",
       "description": "Jackets, coats, and layers for chilly days."
     },
     {
       "title": "Knitwear",
-      "href": "/categories/knitwear",
+      "href": "/category/knitwear",
       "description": "Comfortable and stylish sweaters for winter."
     }
   ]
@@ -92,13 +92,13 @@ const BaseNavbar = (props:BaseNavbarProps) => {
           </div>
         </NavigationMenuLink>
       </li>
-      <ListItem href="/categories/new-arrivals" title="New Arrivals">
+      <ListItem href="/category/new-arrivals" title="New Arrivals">
         Fresh fashion pieces for the season.
       </ListItem>
-      <ListItem href="/categories/winter-accessories" title="Winter Accessories">
+      <ListItem href="/category/winter-accessories" title="Winter Accessories">
         Scarves, gloves, and more to keep you warm.
       </ListItem>
-      <ListItem href="/categories/outerwear" title="Outerwear">
+      <ListItem href="/category/outerwear" title="Outerwear">
         Jackets, coats, and layers for chilly days.
       </ListItem>
     </ul>
@@ -198,16 +198,16 @@ const BaseNavbar = (props:BaseNavbarProps) => {
                 <AccordionContent>
                     <ul>
                         <li className='py-2 text-right'>
-                            <Link href='/categories/new-arrivals' className='text-black font-semibold'>New Arrivals</Link>
+                            <Link href='/category/new-arrivals' className='text-black font-semibold'>New Arrivals</Link>
                         </li>
                         <li className='py-2 text-right'>
-                            <Link href='/categories/winter-accessories' className='text-black font-semibold'>Winter Accessories</Link>
+                            <Link href='/category/winter-accessories' className='text-black font-semibold'>Winter Accessories</Link>
                         </li>
                         <li className='py-2 text-right'>
-                            <Link href='/categories/outerwear' className='text-black font-semibold'>Outerwear</Link>
+                            <Link href='/category/outerwear' className='text-black font-semibold'>Outerwear</Link>
                         </li>
                         <li className='py-2 text-right'>
-                            <Link href='/categories/knitwear' className='text-black font-semibold'>Knitwear</Link>
+                            <Link href='/category/knitwear' className='text-black font-semibold'>Knitwear</Link>
                         </li>
                     </ul>      
                 </AccordionContent>
