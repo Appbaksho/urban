@@ -171,9 +171,9 @@ const BaseNavbar = (props:BaseNavbarProps) => {
                     <Link href="/wishlist" className="rounded-full p-1.5 hover:bg-gray-200">
                         <Heart size={20} strokeWidth={1}/>
                     </Link>
-                    <button className="block md:hidden rounded-full p-1.5 hover:bg-gray-200">
+                    <Link href="/user" className="rounded-full p-1.5 hover:bg-gray-200">
                         <User size={20} strokeWidth={1}/>
-                    </button>
+                    </Link>
                     <button onClick={()=>props.setSheet(true)} className="rounded-full p-1.5 hover:bg-gray-200">
                         <ShoppingBag size={20} strokeWidth={1}/>
                     </button>
