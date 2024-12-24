@@ -10,8 +10,8 @@ const ProductDescriptionSingle = () => {
   return (
     <div className=''>
         <h1 className='text-3xl md:text-4xl font-extrabold'>Pookie Hoodie</h1>
-        <div className="grid grid-cols-5">
-            <div className='col-span-4'>
+        <div className="grid  grid-cols-1 md:grid-cols-5">
+            <div className='md:col-span-4'>
                 <p className='mt-5 text-sm'>Available Sizes</p>
                     <div className="grid grid-cols-4 md:grid-cols-8 gap-2 mt-2">
                     <Card className={`p-2 font-regular transition-all ease-in-out duration-300 text-sm text-center rounded-md  ${size=="s"&&"font-extrabold border-primary/50 bg-primary/10"}`} onClick={

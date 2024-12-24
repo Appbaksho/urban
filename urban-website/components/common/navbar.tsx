@@ -8,6 +8,8 @@ import { Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetT
 import { ScrollArea } from '../ui/scroll-area'
 import { Button } from '../ui/button'
 import CartProduct from '../cart/cart-product'
+import { Input } from '../ui/input'
+import { Search } from 'lucide-react'
 
 const Navbar = () => {
     const [bottomvisible, setbottomvisible] = useState<boolean>(false)
@@ -39,10 +41,15 @@ const Navbar = () => {
         <Dialog open={searchOpen} onOpenChange={e=> setsearchOpen(e)}>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Are you sure absolutely sure?</DialogTitle>
+              <DialogTitle>Search</DialogTitle>
               <DialogDescription>
-                This action cannot be undone. This will permanently delete your account
-                and remove your data from our servers.
+                Search for your favorite products
+                <form className="flex items-center mt-3" method='get' action='/search'>
+                  <Input placeholder='Search..' className='border-primary/50' name='query'/>
+                  <Button type='submit' size='icon' className='ml-1' onClick={e=> setsearchOpen(false)}>
+                    <Search size={17}/>
+                  </Button>
+                </form>
               </DialogDescription>
             </DialogHeader>
           </DialogContent>
