@@ -25,6 +25,17 @@ model Customer {
   interests        CustomerInterestOnCustomer[]
 
   Cart Cart?
+  favorites Favorite[]
+}
+
+model Favorite {
+  id             String           @id @default(cuid()) @map("_id")
+  customerId       String
+  productVariantId String
+  customer         Customer       @relation(fields: [customerId], references: [firebaseId])
+  productVariant   ProductVariant @relation(fields: [productVariantId], references: [id])
+
+  @@unique([customerId, productVariantId])
 }
 
 model CustomerInterest {
@@ -45,22 +56,24 @@ model CustomerInterestOnCustomer {
 model Cart {
   id         String      @id @default(cuid()) @map("_id")
   customerId String      @unique
+  deliveryCharge Float   @default(60)
   items      OrderItem[]
   customer   Customer    @relation(fields: [customerId], references: [firebaseId])
 }
 
 model OrderItem {
   id             String               @id @default(cuid()) @map("_id")
-  productId      String
+  productVariantId      String
   quantity       Int
   cartId         String
+
   isCheckedOut   Boolean              @default(false)
-  deliveryStatus DeliveryStatus
-  paymentStatus  PaymentStatus
-  orderStatus    OrderStatus
-  deliveryCharge Float                @default(0)
+  deliveryStatus DeliveryStatus       @default(PENDING)
+  paymentStatus  PaymentStatus        @default(PENDING)
+  orderStatus    OrderStatus          @default(PENDING)
+
   transaction    TransactionHistory[]
-  product        Product              @relation(fields: [productId], references: [id])
+  productVariant        ProductVariant              @relation(fields: [productVariantId], references: [id])
   cart           Cart                 @relation(fields: [cartId], references: [id])
 }
 
@@ -69,7 +82,7 @@ model TransactionHistory {
   orderItemId   String
   timestamp     DateTime  @default(now())
   amount        Float
-  paymentMethod String
+  paymentMethod PaymentMethod @default(CASH_ON_DELIVERY)
   orderItem     OrderItem @relation(fields: [orderItemId], references: [id])
 }
 
@@ -109,7 +122,7 @@ model Product {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   continued   Boolean  @default(true)
-  OrderItem  OrderItem[]
+
   variants   ProductVariant[]
   Category   Category?           @relation(fields: [categoryId], references: [id])
   discounts  DiscountOnProduct[]
@@ -120,12 +133,15 @@ model ProductVariant {
   additionalName String
   size           String
   color          String
-  imageUrl    String[]
+  imageUrl       String[]
   gender         Gender?
   stock          Int
   price          Float
   productId      String
   product        Product @relation(fields: [productId], references: [id])
+
+  Favorite Favorite[]
+  OrderItem  OrderItem[]
 }
 
 model Category {
@@ -171,4 +187,12 @@ enum PaymentStatus {
   PAID
   REFUNDED
   CANCELLED
+}
+
+enum PaymentMethod {
+  CASH_ON_DELIVERY
+  CREDIT_CARD
+  DEBIT_CARD
+  MOBILE_BANKING
+  OTHER
 }
