@@ -6,10 +6,11 @@ import TopAnnounce from './top-announce'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle } from '../ui/sheet'
 import { ScrollArea } from '../ui/scroll-area'
-import { Button } from '../ui/button'
+import { Button, buttonVariants } from '../ui/button'
 import CartProduct from '../cart/cart-product'
 import { Input } from '../ui/input'
 import { Search } from 'lucide-react'
+import Link from 'next/link'
 
 const Navbar = () => {
     const [bottomvisible, setbottomvisible] = useState<boolean>(false)
@@ -70,7 +71,7 @@ const Navbar = () => {
                 <SheetDescription className='font-semibold'>$190</SheetDescription>
               </div>
               <SheetFooter className='flex items-center justify-between gap-1'>
-                <Button className='flex-1'>Checkout</Button>
+                <Link href="/checkout" className={buttonVariants({class:'flex-1'})}>Checkout</Link>
               </SheetFooter>
             </SheetHeader>
           </SheetContent>
