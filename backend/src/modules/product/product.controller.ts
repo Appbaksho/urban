@@ -1,11 +1,24 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  Put,
+  Req,
+} from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
-import { UpdateProductDto } from './dto/update-product.dto';
+import { Request } from 'express';
+import { FirebaseService } from '../firebase/firebase.service';
 
 @Controller('product')
 export class ProductController {
-  constructor(private readonly productService: ProductService) {}
+  constructor(
+    private readonly productService: ProductService,
+    private readonly firebaseService: FirebaseService,
+  ) {}
 
   @Post()
   async create(@Body() createProductDto: CreateProductDto) {
@@ -13,7 +26,7 @@ export class ProductController {
   }
 
   @Get()
-  findAll() {
+  async findAll() {
     return this.productService.findAll();
   }
 
@@ -22,9 +35,13 @@ export class ProductController {
     return this.productService.findOne(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
-    return this.productService.update(+id, updateProductDto);
+  @Put('add-to-favorite/:productVariantId')
+  async addToFavorite(
+    @Param('productVariantId') productVariantId: string,
+    @Req() req: Request,
+  ) {
+    const customerId = await this.firebaseService.getCustomerIdFromToken(req);
+    return this.productService.addToFavorite(productVariantId, customerId);
   }
 
   @Delete(':id')

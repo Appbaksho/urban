@@ -1,34 +1,69 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  UseGuards,
+  Req,
+  Put,
+} from '@nestjs/common';
 import { CartService } from './cart.service';
-import { CreateCartDto } from './dto/create-cart.dto';
-import { UpdateCartDto } from './dto/update-cart.dto';
+import { UpdateCartItemDto } from './dto/update-cart.dto';
+import { AccessTokenGuard } from 'src/middlewares/access-token.guard';
+import { Request } from 'express';
+import { FirebaseService } from '../firebase/firebase.service';
+import { AddToCartDto } from './dto/create-cart.dto';
 
 @Controller('cart')
 export class CartController {
-  constructor(private readonly cartService: CartService) {}
+  constructor(
+    private readonly cartService: CartService,
+    private readonly firebaseService: FirebaseService,
+  ) {}
 
   @Post()
-  create(@Body() createCartDto: CreateCartDto) {
-    return this.cartService.create(createCartDto);
+  @UseGuards(AccessTokenGuard)
+  async create(@Req() request: Request) {
+    const customerId =
+      await this.firebaseService.getCustomerIdFromToken(request);
+    return this.cartService.createIfNotFound(customerId);
   }
 
   @Get()
-  findAll() {
-    return this.cartService.findAll();
+  @UseGuards(AccessTokenGuard)
+  async findOne(@Param('id') id: string, @Req() request: Request) {
+    const customerId =
+      await this.firebaseService.getCustomerIdFromToken(request);
+    return this.cartService.createIfNotFound(customerId);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.cartService.findOne(+id);
+  @Put(':orderItemId')
+  async update(
+    @Param('orderItemId') orderItemId: string,
+    @Body() updateCartDto: UpdateCartItemDto,
+  ) {
+    return this.cartService.update(orderItemId, updateCartDto);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCartDto: UpdateCartDto) {
-    return this.cartService.update(+id, updateCartDto);
+  @Post('checkout')
+  async checkout(@Body() checkoutDto: any, @Req() request: Request) {
+    const customerId =
+      await this.firebaseService.getCustomerIdFromToken(request);
+    return this.cartService.checkout(customerId, checkoutDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.cartService.remove(+id);
+  @Post('add-to-cart')
+  @UseGuards(AccessTokenGuard)
+  async addToCart(@Body() addToCartDto: AddToCartDto, @Req() request: Request) {
+    const customerId =
+      await this.firebaseService.getCustomerIdFromToken(request);
+    return this.cartService.addToCart(customerId, addToCartDto);
+  }
+
+  @Delete(':orderItemId')
+  async remove(@Param('orderItemId') orderItemId: string) {
+    return this.cartService.remove(orderItemId);
   }
 }

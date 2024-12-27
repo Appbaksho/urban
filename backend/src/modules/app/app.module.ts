@@ -7,6 +7,7 @@ import { FirebaseModule } from '../firebase/firebase.module';
 import { CustomerModule } from '../customer/customer.module';
 import { CategoryModule } from '../category/category.module';
 import { ProductModule } from '../product/product.module';
+import { CartModule } from '../cart/cart.module';
 @Module({
   imports: [
     //ConfigModule.forRoot(),MongooseModule.forRoot(process.env.MONGO_URL),MulterModule.register({ dest: './uploads', }),
@@ -18,6 +19,7 @@ import { ProductModule } from '../product/product.module';
     FirebaseModule,
     CategoryModule,
     ProductModule,
+    CartModule,
   ],
   controllers: [AppController],
   providers: [AppService],

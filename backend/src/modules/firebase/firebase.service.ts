@@ -1,6 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import admin, { messaging } from 'firebase-admin';
 import Message = messaging.Message;
+import { Request } from 'express';
 
 @Injectable()
 export class FirebaseService {
@@ -29,6 +30,22 @@ export class FirebaseService {
       .then((decodedToken) => {
         console.log(decodedToken);
         return true;
+      })
+      .catch((error) => {
+        throw new UnauthorizedException({
+          message: 'Unauthorized',
+          error: error,
+        });
+      });
+  }
+
+  async getCustomerIdFromToken(request: Request) {
+    const token = request.headers['authorization'].split(' ')[1];
+    return await admin
+      .auth()
+      .verifyIdToken(token)
+      .then((decodedToken) => {
+        return decodedToken.uid;
       })
       .catch((error) => {
         throw new UnauthorizedException({

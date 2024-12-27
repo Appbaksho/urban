@@ -1,8 +1,8 @@
-import { Injectable } from "@nestjs/common";
-import { UpdateCartItemDto } from "./dto/update-cart.dto";
-import { DatabaseService } from "../database/database.service";
-import { OrderStatus, PaymentStatus } from "@prisma/client";
-import { AddToCartDto } from "./dto/create-cart.dto";
+import { Injectable } from '@nestjs/common';
+import { UpdateCartItemDto } from './dto/update-cart.dto';
+import { DatabaseService } from '../database/database.service';
+import { OrderStatus, PaymentStatus } from '@prisma/client';
+import { AddToCartDto } from './dto/create-cart.dto';
 
 @Injectable()
 export class CartService {
@@ -29,7 +29,7 @@ export class CartService {
                       },
                       orderBy: {
                         discount: {
-                          createdAt: "desc",
+                          createdAt: 'desc',
                         },
                       },
                       take: 1,
@@ -68,7 +68,7 @@ export class CartService {
                       },
                       orderBy: {
                         discount: {
-                          createdAt: "desc",
+                          createdAt: 'desc',
                         },
                       },
                       take: 1,
@@ -98,12 +98,12 @@ export class CartService {
     });
 
     return {
-      message: "Product added to cart",
+      message: 'Product added to cart',
       orderItem: cartItem,
     };
   }
 
-  update(orderItemId: string, updateCartItemDto: UpdateCartItemDto) {
+  async update(orderItemId: string, updateCartItemDto: UpdateCartItemDto) {
     const updatedCartItem = this.databaseService.orderItem.update({
       where: {
         id: orderItemId,
@@ -111,7 +111,7 @@ export class CartService {
       data: updateCartItemDto,
     });
     return {
-      message: "Cart item updated",
+      message: 'Cart item updated',
       orderItem: updatedCartItem,
     };
   }
@@ -146,7 +146,7 @@ export class CartService {
     });
 
     return {
-      message: "Cart checked out",
+      message: 'Cart checked out',
     };
   }
 
@@ -158,7 +158,7 @@ export class CartService {
     });
 
     return {
-      message: "Cart item removed",
+      message: 'Cart item removed',
     };
   }
 }

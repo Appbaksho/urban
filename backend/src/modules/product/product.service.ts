@@ -1,6 +1,6 @@
-import { Injectable } from "@nestjs/common";
-import { CreateProductDto } from "./dto/create-product.dto";
-import { DatabaseService } from "../database/database.service";
+import { Injectable } from '@nestjs/common';
+import { CreateProductDto } from './dto/create-product.dto';
+import { DatabaseService } from '../database/database.service';
 
 @Injectable()
 export class ProductService {
@@ -40,7 +40,7 @@ export class ProductService {
     });
 
     return {
-      message: "Product created successfully",
+      message: 'Product created successfully',
       product: productWithVariants,
     };
   }
@@ -72,7 +72,7 @@ export class ProductService {
     });
 
     return {
-      message: "Product added to favorite successfully",
+      message: 'Product added to favorite successfully',
       favorite: favorite,
     };
   }
