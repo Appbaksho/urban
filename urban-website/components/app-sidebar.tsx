@@ -33,7 +33,7 @@ const data = {
   projects: [
     {
       name: "User Profile",
-      url: "/user/profile",
+      url: "/user",
       icon: User2,
     },
     {
@@ -50,7 +50,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarContent>
         <NavProjects projects={data.projects} />
       </SidebarContent>
-     
       <SidebarRail />
     </Sidebar>
   )
