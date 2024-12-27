@@ -18,7 +18,7 @@ const CategoryBanner = (props:Category) => {
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
-                  <BreadcrumbLink className='hover:text-gray-200' href="/category">Categories</BreadcrumbLink>
+                  <BreadcrumbLink className='hover:text-gray-200' href="#">Categories</BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>

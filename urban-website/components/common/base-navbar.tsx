@@ -80,7 +80,7 @@ const BaseNavbar = (props:BaseNavbarProps) => {
           <div className="h-full w-full relative bg-[url('/products/hoodie-3.png')] bg-cover rounded-md">
             <Link
               className="flex h-full absolute top-0 left-0 right-0 bottom-0 w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-transparent to-black p-6 no-underline outline-none focus:shadow-md"
-              href="/winter-collection"
+              href="/category/winter-collection"
             >
               <div className="mb-2 mt-4 text-lg font-medium text-white">
                 Winter Collection

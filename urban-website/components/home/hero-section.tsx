@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import React from 'react'
-import { Button } from '../ui/button'
+import { Button, buttonVariants } from '../ui/button'
+import Link from 'next/link'
 
 const HeroSection = () => {
   return (
@@ -12,7 +13,7 @@ const HeroSection = () => {
             Embrace the elements with style.
         </p>
         <div className="flex mt-5">
-        <Button variant="secondary" className='rounded-full'>Explore</Button>
+        <Link href="/category/winter-collection" className={buttonVariants({variant:'secondary',className:'rounded-full'})}>Explore</Link>
         </div>
         
         </div>
