@@ -19,7 +19,7 @@ const ProductCard = () => {
         <Badge variant="outline">Women</Badge>
         </div>
 
-        <p className="font-bold text-right pr-3 mt-3">2000 BDT</p>
+        <p className="font-bold text-right pr-3 mt-3 mb-5">2000 BDT</p>
         </div>
     </div>
   )

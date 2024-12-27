@@ -12,8 +12,9 @@ const HeroSection = () => {
         <p className="text-white text-lg mt-5">
             Embrace the elements with style.
         </p>
-        <div className="flex mt-5">
+        <div className="flex mt-5 gap-3">
         <Link href="/category/winter-collection" className={buttonVariants({variant:'secondary',className:'rounded-full'})}>Explore</Link>
+        <Link href="/product" className={buttonVariants({variant:'default',className:'rounded-full'})}>All Products</Link>
         </div>
         
         </div>

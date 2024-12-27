@@ -28,7 +28,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '..
 const components: { title: string; href: string; description: string }[] = [
     {
       "title": "Winter Collection",
-      "href": "/winter-collection",
+      "href": "/category/winter-collection",
       "description": "Cozy up with our latest winter styles.",
     },
     {
@@ -66,7 +66,7 @@ const BaseNavbar = (props:BaseNavbarProps) => {
   return (
     <div className='w-full bg-white px-5 md:px-20 py-3 flex justify-between items-center'>
       <Link href='/'>
-        <Image src='/logo.PNG' width={60} height={30} alt='logo'/>
+        <Image src='/logo.png' width={30} height={30} alt='logo' className='w-[30px]'/>
       </Link>
         
     <NavigationMenu className='hidden md:flex md:col-span-4'>
