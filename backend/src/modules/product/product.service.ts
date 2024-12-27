@@ -1,7 +1,6 @@
-import { Injectable } from '@nestjs/common';
-import { CreateProductDto } from './dto/create-product.dto';
-import { UpdateProductDto } from './dto/update-product.dto';
-import { DatabaseService } from '../database/database.service';
+import { Injectable } from "@nestjs/common";
+import { CreateProductDto } from "./dto/create-product.dto";
+import { DatabaseService } from "../database/database.service";
 
 @Injectable()
 export class ProductService {
@@ -41,7 +40,7 @@ export class ProductService {
     });
 
     return {
-      message: 'Product created successfully',
+      message: "Product created successfully",
       product: productWithVariants,
     };
   }
@@ -61,8 +60,21 @@ export class ProductService {
     });
   }
 
-  update(id: number, updateProductDto: UpdateProductDto) {
-    return `This action updates a #${id} product`;
+  async addToFavorite(productVariantId: string, customerId: string) {
+    const favorite = await this.databaseService.favorite.create({
+      data: {
+        productVariantId: productVariantId,
+        customerId: customerId,
+      },
+      include: {
+        productVariant: true,
+      },
+    });
+
+    return {
+      message: "Product added to favorite successfully",
+      favorite: favorite,
+    };
   }
 
   remove(id: number) {
