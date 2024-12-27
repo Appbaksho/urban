@@ -24,7 +24,7 @@ const UserEdit = (props:DialogProps) => {
             </Avatar>
             <Button size="sm" variant="outline" className='mt-2'>Change Image</Button>
            </div>
-           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
+           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3 [&>div>label]:hidden">
                 <div>
                 <Label className="font-medium">Name</Label>
                 <Input type="text" placeholder="Muztahid Rahman"/>

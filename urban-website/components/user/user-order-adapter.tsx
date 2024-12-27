@@ -1,11 +1,13 @@
 import React from 'react'
 import { TableCell, TableRow } from '../ui/table'
 import { Badge } from '../ui/badge'
+import { Copy } from 'lucide-react'
+import { Button } from '../ui/button'
 
 const UserOrderAdapter = () => {
   return (
     <TableRow className='py-3'>
-              <TableCell>#c8s8d8</TableCell>
+              <TableCell>#c8s8d8 <Button className='text-xs' variant="outline" size="sm"><Copy size={15} className='mr-1'/> Copy</Button> </TableCell>
               <TableCell>
                 <div className="flex items-center gap-2">
                     <img src="https://via.placeholder.com/150" alt="product" className="w-12 h-12 rounded-md"/>
@@ -15,11 +17,12 @@ const UserOrderAdapter = () => {
                   </div>
                 </div>
               </TableCell>
-              <TableCell>Cash On Delivery</TableCell>
-              <TableCell>
+              <TableCell className='hidden md:flex items-center h-full'>
+                <p>Cash On Delivery</p></TableCell>
+              <TableCell className='text-right md:text-left'>
                 <Badge className='italic font-normal bg-gray-200' variant="outline">Received</Badge>
               </TableCell>
-              <TableCell className="text-right">20.00$</TableCell>
+              <TableCell className="text-right hidden md:block">2000 BDT</TableCell>
     </TableRow>
   )
 }

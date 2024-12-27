@@ -68,7 +68,7 @@ const Navbar = () => {
               </ScrollArea>
               <div className="flex items-center justify-between px-5 py-3 border-t">
                 <SheetDescription className='font-semibold'>Total</SheetDescription>
-                <SheetDescription className='font-semibold'>$190</SheetDescription>
+                <SheetDescription className='font-semibold'>1900 BDT</SheetDescription>
               </div>
               <SheetFooter className='flex items-center justify-between gap-1'>
                 <Link href="/checkout" className={buttonVariants({class:'flex-1'})}>Checkout</Link>

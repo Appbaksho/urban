@@ -11,9 +11,9 @@ const UserOrders = () => {
             <TableRow className='rounded-xl'>
               <TableHead className="w-[100px] rounded-lt-md">#ID</TableHead>
               <TableHead>Product</TableHead>
-              <TableHead>Method</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead className="text-right">Amount</TableHead>
+              <TableHead className='md:block hidden'>Method</TableHead>
+              <TableHead className='text-right md:text-left'>Status</TableHead>
+              <TableHead className="text-right hidden md:block">Amount</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>

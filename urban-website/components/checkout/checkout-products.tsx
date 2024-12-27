@@ -20,7 +20,7 @@ const CheckoutProducts = () => {
                       <p className='text-xs'>Quantity: 1</p>
                     </div>
                   </div>
-                  <p className='font-semibold'>$100</p>
+                  <p className='font-semibold'>1900 BDT</p>
                 </div>
               ))
             }

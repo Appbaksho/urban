@@ -10,7 +10,7 @@ const CartProduct = () => {
         <div>
             <p className="font-semibold text-primary">Random Product</p>
             <p className="text-gray-500 text-xs">Variant</p>
-            <p className="text-sm font-semibold mt-2 text-primary">$190</p>
+            <p className="text-sm font-semibold mt-2 text-primary">1900 BDT</p>
         </div>
         <div className='flex justify-end'>
             <Button size="icon" className='h-[20px] w-[20px] bg-red-200 hover:bg-red-200/70 text-red-500'>
