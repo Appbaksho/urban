@@ -1,11 +1,15 @@
-import React from 'react'
+import React, { Dispatch, SetStateAction } from 'react'
 import { Card, CardDescription, CardHeader, CardTitle } from '../ui/card'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { Button } from '../ui/button'
 import { Edit2 } from 'lucide-react'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table'
 
-const UserProfile = () => {
+interface UserProfileProps {
+ setEditOpen  : Dispatch<SetStateAction<boolean>>
+}
+
+const UserProfile = (props:UserProfileProps) => {
   return (
     <div>
         <Card>
@@ -15,7 +19,7 @@ const UserProfile = () => {
               <AvatarFallback>M</AvatarFallback>
             </Avatar>
             <div>
-            <CardTitle className='text-2xl'>Muztahid Rahman <Button size="icon" variant="outline"><Edit2 size={15}/></Button> </CardTitle>
+            <CardTitle className='text-2xl'>Muztahid Rahman <Button size="icon" onClick={()=> props.setEditOpen(p=>!p)} variant="outline"><Edit2 size={15}/></Button> </CardTitle>
             <CardDescription>random@gmail.com</CardDescription>
             </div>
           </CardHeader>
