@@ -77,6 +77,21 @@ export class ProductService {
     };
   }
 
+  //remove from favorite
+  async removeFromFavorite(productVariantId: string, customerId: string) {
+    const favorite = await this.databaseService.favorite.deleteMany({
+      where: {
+        productVariantId: productVariantId,
+        customerId: customerId,
+      },
+    });
+
+    return {
+      message: 'Product removed from favorite successfully',
+      favorite: favorite,
+    };
+  }
+
   remove(id: number) {
     return `This action removes a #${id} product`;
   }

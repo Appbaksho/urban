@@ -44,6 +44,16 @@ export class ProductController {
     return this.productService.addToFavorite(productVariantId, customerId);
   }
 
+  // remove from favorite
+  @Delete('remove-from-favorite/:productVariantId')
+  async removeFromFavorite(
+    @Param('productVariantId') productVariantId: string,
+    @Req() req: Request,
+  ) {
+    const customerId = await this.firebaseService.getCustomerIdFromToken(req);
+    return this.productService.removeFromFavorite(productVariantId, customerId);
+  }
+
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.productService.remove(+id);
