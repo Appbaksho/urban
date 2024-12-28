@@ -3,6 +3,7 @@ import { TableCell, TableRow } from '../ui/table'
 import { Badge } from '../ui/badge'
 import { Copy } from 'lucide-react'
 import { Button } from '../ui/button'
+import Link from 'next/link'
 
 const UserOrderAdapter = () => {
   return (
@@ -12,7 +13,7 @@ const UserOrderAdapter = () => {
                 <div className="flex items-center gap-2">
                     <img src="https://via.placeholder.com/150" alt="product" className="w-12 h-12 rounded-md"/>
                   <div>
-                    <div className='font-medium'>Product Name</div>
+                    <Link href="/user/orders/random" className='font-medium underline'>Product Name</Link>
                     <div className="text-xs text-gray-400">Product Description</div>
                   </div>
                 </div>
