@@ -1,18 +1,15 @@
-import { Gender } from "@prisma/client";
-
-export class CreateProductVariantDto {
-  additionalName: string;
-  size: string;
-  color: string;
-  gender?: Gender; // Assuming Gender is an enum, you might want to import and use it here
+export class Size {
+  name: string;
   stock: number;
-  imageUrl: string[];
-  price: number;
 }
 
 export class CreateProductDto {
   name: string;
   description: string;
-  categoryId: string;
-  variants: CreateProductVariantDto[];
+  categoryId?: string;
+  imageUrl: string[];
+  sizes: Size[];
+  details: string[];
+  sizeDescription: string[];
+  price: number;
 }

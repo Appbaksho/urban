@@ -26,11 +26,11 @@ model Customer {
 model Favorite {
   id             String           @id @default(cuid()) @map("_id")
   customerId       String
-  productVariantId String
+  productId String
   customer         Customer       @relation(fields: [customerId], references: [firebaseId])
-  productVariant   ProductVariant @relation(fields: [productVariantId], references: [id])
+  product   Product @relation(fields: [productId], references: [id])
 
-  @@unique([customerId, productVariantId])
+  @@unique([customerId, productId])
 }
 
 model Cart {
@@ -43,7 +43,7 @@ model Cart {
 
 model OrderItem {
   id             String               @id @default(cuid()) @map("_id")
-  productVariantId      String
+  sizeId         String
   quantity       Int
   cartId         String
 
@@ -53,7 +53,7 @@ model OrderItem {
   orderStatus    OrderStatus          @default(PENDING)
 
   transaction    TransactionHistory[]
-  productVariant        ProductVariant              @relation(fields: [productVariantId], references: [id])
+  size            Size                   @relation(fields: [sizeId], references: [id])
   cart           Cart                 @relation(fields: [cartId], references: [id])
 }
 
@@ -97,32 +97,37 @@ model Product {
   name        String
   description String
   categoryId String?
+  imageUrl   String[]
+  sizes      Size[] 
+  details    String[]
+  sizeDescription String[]
+
+  price       Float
+  discountPrice Float?
+
 
   //automated
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   continued   Boolean  @default(true)
 
-  variants   ProductVariant[]
   Category   Category?           @relation(fields: [categoryId], references: [id])
   discounts  DiscountOnProduct[]
+  Favorite Favorite[]
+  
 }
 
-model ProductVariant {
-  id             String  @id @default(cuid()) @map("_id")
-  additionalName String
-  size           String
-  color          String
-  imageUrl       String[]
-  gender         Gender?
-  stock          Int
-  price          Float
-  productId      String
-  product        Product @relation(fields: [productId], references: [id])
+model Size {
+  id          String   @id @default(cuid()) @map("_id")
+  name        String
+  stock       Int
+  productId   String
 
-  Favorite Favorite[]
+  product    Product @relation(fields: [productId], references: [id])
   OrderItem  OrderItem[]
 }
+
+
 
 model Category {
   id               String     @id @default(cuid()) @map("_id")
@@ -130,8 +135,6 @@ model Category {
   description      String
   imageUrl         String
   parentCategoryId String?
-  genderSpecific   Boolean   @default(false)
-  gender           Gender?  
   parentCategory   Category?  @relation("CategoryHierarchy", fields: [parentCategoryId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   childCategories  Category[] @relation("CategoryHierarchy")
   products         Product[]

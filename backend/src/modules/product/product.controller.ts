@@ -35,23 +35,23 @@ export class ProductController {
     return this.productService.findOne(id);
   }
 
-  @Put('add-to-favorite/:productVariantId')
+  @Put('add-to-favorite/:productId')
   async addToFavorite(
-    @Param('productVariantId') productVariantId: string,
+    @Param('productId') productId: string,
     @Req() req: Request,
   ) {
     const customerId = await this.firebaseService.getCustomerIdFromToken(req);
-    return this.productService.addToFavorite(productVariantId, customerId);
+    return this.productService.addToFavorite(productId, customerId);
   }
 
   // remove from favorite
-  @Delete('remove-from-favorite/:productVariantId')
+  @Delete('remove-from-favorite/:productId')
   async removeFromFavorite(
-    @Param('productVariantId') productVariantId: string,
+    @Param('productId') productId: string,
     @Req() req: Request,
   ) {
     const customerId = await this.firebaseService.getCustomerIdFromToken(req);
-    return this.productService.removeFromFavorite(productVariantId, customerId);
+    return this.productService.removeFromFavorite(productId, customerId);
   }
 
   @Delete(':id')

@@ -3,7 +3,8 @@ import { IsEnum } from 'class-validator';
 
 export class CreateCartDto {}
 export class AddToCartDto {
-  productVariantId: string;
+  productId: string;
+  sizeId: string;
   quantity: number;
 }
 

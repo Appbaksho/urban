@@ -12,36 +12,31 @@ export class ProductService {
         name: createProductDto.name,
         description: createProductDto.description,
         categoryId: createProductDto.categoryId,
+        imageUrl: createProductDto.imageUrl,
+        sizes: {
+          create: createProductDto.sizes.map((size) => ({
+            name: size.name,
+            stock: size.stock,
+          })),
+        },
+        details: createProductDto.details,
+        sizeDescription: createProductDto.sizeDescription,
+        price: createProductDto.price,
       },
     });
 
-    createProductDto.variants.forEach(async (variant) => {
-      await this.databaseService.productVariant.create({
-        data: {
-          additionalName: variant.additionalName,
-          size: variant.size,
-          color: variant.color,
-          stock: variant.stock,
-          imageUrl: variant.imageUrl,
-          price: variant.price,
-          gender: variant.gender,
-          productId: product.id,
-        },
-      });
-    });
-
-    const productWithVariants = await this.databaseService.product.findUnique({
+    const productWithSizes = await this.databaseService.product.findUnique({
       where: {
         id: product.id,
       },
       include: {
-        variants: true,
+        sizes: true,
       },
     });
 
     return {
       message: 'Product created successfully',
-      product: productWithVariants,
+      product: productWithSizes,
     };
   }
 
@@ -55,19 +50,23 @@ export class ProductService {
         id: id,
       },
       include: {
-        variants: true,
+        sizes: true,
       },
     });
   }
 
-  async addToFavorite(productVariantId: string, customerId: string) {
+  async addToFavorite(productId: string, customerId: string) {
     const favorite = await this.databaseService.favorite.create({
       data: {
-        productVariantId: productVariantId,
+        productId: productId,
         customerId: customerId,
       },
       include: {
-        productVariant: true,
+        product: {
+          include: {
+            sizes: true,
+          },
+        },
       },
     });
 
@@ -78,10 +77,10 @@ export class ProductService {
   }
 
   //remove from favorite
-  async removeFromFavorite(productVariantId: string, customerId: string) {
+  async removeFromFavorite(productId: string, customerId: string) {
     const favorite = await this.databaseService.favorite.deleteMany({
       where: {
-        productVariantId: productVariantId,
+        productId: productId,
         customerId: customerId,
       },
     });

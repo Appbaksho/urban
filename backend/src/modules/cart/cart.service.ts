@@ -15,27 +15,9 @@ export class CartService {
       include: {
         items: {
           include: {
-            productVariant: {
+            size: {
               include: {
-                product: {
-                  include: {
-                    discounts: {
-                      select: {
-                        discount: {
-                          select: {
-                            percentage: true,
-                          },
-                        },
-                      },
-                      orderBy: {
-                        discount: {
-                          createdAt: 'desc',
-                        },
-                      },
-                      take: 1,
-                    },
-                  },
-                },
+                product: true,
               },
             },
           },
@@ -54,27 +36,9 @@ export class CartService {
       include: {
         items: {
           include: {
-            productVariant: {
+            size: {
               include: {
-                product: {
-                  include: {
-                    discounts: {
-                      select: {
-                        discount: {
-                          select: {
-                            percentage: true,
-                          },
-                        },
-                      },
-                      orderBy: {
-                        discount: {
-                          createdAt: 'desc',
-                        },
-                      },
-                      take: 1,
-                    },
-                  },
-                },
+                product: true,
               },
             },
           },
@@ -91,8 +55,8 @@ export class CartService {
     const cart = await this.createIfNotFound(customerId);
     const cartItem = await this.databaseService.orderItem.create({
       data: {
-        productVariantId: addToCartDto.productVariantId,
         cartId: cart.id,
+        sizeId: addToCartDto.sizeId,
         quantity: addToCartDto.quantity,
       },
     });
@@ -119,18 +83,13 @@ export class CartService {
   async checkout(customerId: string, checkoutDto: any) {
     const cart = await this.createIfNotFound(customerId);
     cart.items.map(async (item) => {
-      const discountPercentage =
-        item.productVariant.product.discounts.length > 0
-          ? item.productVariant.product.discounts[0].discount.percentage
-          : 0;
-
       await this.databaseService.transactionHistory.create({
         data: {
           orderItemId: item.id,
           paymentMethod: checkoutDto.paymentMethod,
           amount:
-            item.quantity * item.productVariant.price -
-            item.productVariant.price * discountPercentage,
+            item.quantity *
+            (item.size.product.discountPrice || item.size.product.price),
         },
       });
       await this.databaseService.orderItem.update({
