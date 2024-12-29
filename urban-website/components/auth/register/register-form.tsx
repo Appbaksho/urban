@@ -3,17 +3,80 @@ import { Card} from '@/components/ui/card'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { MapPin, User } from 'lucide-react'
-import React, { useState } from 'react'
+import { Loader2, MapPin, User } from 'lucide-react'
+import React, { useEffect, useState } from 'react'
 import {useForm} from 'react-hook-form'
 import { registerSchema, RegistrationSchemaType } from './validator/register.validator'
 import {zodResolver} from '@hookform/resolvers/zod'
 import { Button } from '@/components/ui/button'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { auth } from '@/firebase/firebase'
+import { useToast } from '@/hooks/use-toast'
+import { useCreateUserMutation } from '@/api/auth/auth.api'
+import { useRouter } from 'next/navigation'
 const RegisterForm = () => {
     const [showPass, setshowPass] = useState<boolean>(false)
-    const {register,formState:{errors}} = useForm<RegistrationSchemaType>({
+    const {register,formState:{errors},handleSubmit} = useForm<RegistrationSchemaType>({
         resolver: zodResolver(registerSchema)
     })
+    const router = useRouter()
+    const [createUser,{isLoading,isError,isSuccess}] = useCreateUserMutation()
+    const {toast} = useToast()
+    const onSubmit = (data: RegistrationSchemaType) => {
+        createUserWithEmailAndPassword(auth, data.email, data.password).then(async (userCredential) => {
+            createUser({
+                contactNumbers: [data.phoneNumber],
+                name: `${data.firstName} ${data.lastName}`,
+                shippingAddress: data.billingAddress,
+                city: data.city,
+                zipCode: data.zip
+            }).then((res) => {
+                console.log(res)
+                toast({
+                    title: "Success",
+                    description: "User Created Successfully",
+                })
+                router.push('/user')
+            }).catch((error) => {
+                console.log(error)
+                toast({
+                    title: "Error",
+                    description: "Failed to create user",
+                    variant:"destructive"
+                })
+                router.push('/user')
+            })
+            
+        }).catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorCode, errorMessage)
+            toast({
+                title: "Error",
+                description: errorMessage,
+                variant:"destructive"
+            })
+        });
+    }
+
+    useEffect(() => {
+      if(isSuccess){
+        toast({
+            title: "Success",
+            description: "User Created Successfully",
+        })
+        router.push('/user')
+      }
+        if(isError){
+            toast({
+                title: "Error",
+                description: "Failed to create user",
+                variant:"destructive"
+            })
+        }
+    }, [])
+    
+
   return (
     <Card className='w-full px-4 p-5 md:p-10 mt-3 flex flex-col gap-3'>
         <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
@@ -95,7 +158,7 @@ const RegisterForm = () => {
             </div>
         </div>
         <div className="flex items-center justify-end mt-3">
-            <Button type='submit'>Create</Button>
+            <Button onClick={handleSubmit(onSubmit)} disabled={isLoading} type='submit'>{isLoading&&<Loader2 className='animate-spin mr-2' size={15}/>} Create</Button>
         </div>
         </Card>
    
