@@ -23,7 +23,7 @@ export class CustomerController {
     return this.customerService.findAll();
   }
 
-  @Get(':firebaseId')
+  @Get(':id')
   async findOne(@Param('id') id: string) {
     return this.customerService.findOne(id);
   }

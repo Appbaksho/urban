@@ -4,12 +4,12 @@ import {
     fetchBaseQuery
   } from "@reduxjs/toolkit/query/react";
   import { env } from "@/config/app.config";
+import { auth } from "@/firebase/firebase";
   
   const baseQuery = fetchBaseQuery({
     baseUrl: env.apiUrl,
-    credentials: "include",
-    prepareHeaders: (headers, { getState }: any) => {
-      const accessToken = window.localStorage.getItem("jwt");
+    prepareHeaders: async (headers, { getState }: any) => {
+      const accessToken = await auth.currentUser?.getIdToken();
       if (accessToken) {
         headers.set("Authorization", `Bearer ${accessToken}`);
       }

@@ -1,3 +1,4 @@
+"use client"
 import { AppSidebar } from '@/components/app-sidebar'
 import Footer from '@/components/common/footer'
 import Navbar from '@/components/common/navbar'
@@ -5,12 +6,25 @@ import { Breadcrumb, BreadcrumbList } from '@/components/ui/breadcrumb'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
+import { auth } from '@/firebase/firebase'
+import { onAuthStateChanged } from 'firebase/auth'
+import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const router = useRouter()
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (!user){
+        router.push('/auth/login')
+      }
+    })
+  }, [])
+  
   return (
         <main>
             <Navbar/>

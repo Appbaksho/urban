@@ -1,3 +1,4 @@
+
 import { Heart, Menu, SearchIcon, ShoppingBag, User } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -60,6 +61,7 @@ interface BaseNavbarProps {
     setOpen:React.Dispatch<React.SetStateAction<boolean>>
     sheet:boolean
     setSheet:React.Dispatch<React.SetStateAction<boolean>>
+    isLoggedIn:boolean
 }
 
 const BaseNavbar = (props:BaseNavbarProps) => {
@@ -171,9 +173,11 @@ const BaseNavbar = (props:BaseNavbarProps) => {
                     {/* <Link href="/wishlist" className="rounded-full p-1.5 hover:bg-gray-200">
                         <Heart size={20} strokeWidth={1}/>
                     </Link> */}
-                    <Link href="/user" className="rounded-full p-1.5 hover:bg-gray-200">
+                    {props.isLoggedIn?<Link href="/user" className="rounded-full p-1.5 hover:bg-gray-200">
                         <User size={20} strokeWidth={1}/>
-                    </Link>
+                    </Link>:<Link href="/auth/login" className="rounded-full p-1.5 hover:bg-gray-200">
+                        <User size={20} strokeWidth={1}/>
+                    </Link>}
                     <button onClick={()=>props.setSheet(true)} className="rounded-full p-1.5 hover:bg-gray-200">
                         <ShoppingBag size={20} strokeWidth={1}/>
                     </button>

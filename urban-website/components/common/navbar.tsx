@@ -11,14 +11,24 @@ import CartProduct from '../cart/cart-product'
 import { Input } from '../ui/input'
 import { Search } from 'lucide-react'
 import Link from 'next/link'
+import { onAuthStateChanged } from 'firebase/auth'
+import { auth } from '@/firebase/firebase'
 
 const Navbar = () => {
     const [bottomvisible, setbottomvisible] = useState<boolean>(false)
     const [searchOpen, setsearchOpen] = useState<boolean>(false)
     // const [searchQuery, setsearchQuery] = useState<string>('')
     const [cartOpen, setcartOpen] = useState<boolean>(false) 
+    const [loggedIn, setloggedIn] = useState<boolean>(false)
     
     useEffect(() => {
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          setloggedIn(true)
+        } else {
+          setloggedIn(false)
+        }
+        })
         const handleScroll = () => {
             const currentScrollValue = window.scrollY;
             if (currentScrollValue > 200) {
@@ -33,11 +43,11 @@ const Navbar = () => {
     
   return (
     <React.Fragment>
-        <NavbarTop/>
-        <BaseNavbar sheet={cartOpen} setSheet={setcartOpen} open={searchOpen} setOpen={setsearchOpen}/>
+        <NavbarTop isLoggedIn={loggedIn}/>
+        <BaseNavbar isLoggedIn={loggedIn} sheet={cartOpen} setSheet={setcartOpen} open={searchOpen} setOpen={setsearchOpen}/>
         <TopAnnounce/>
         <div className={`transition-all ease-in-out duration-200 fixed w-full left-0 right-0 ${bottomvisible?"opacity-100 top-0":"-top-[200px] opacity-0"}  z-50`}>
-            <BaseNavbar sheet={cartOpen} setSheet={setcartOpen} open={searchOpen} setOpen={setsearchOpen}/>
+            <BaseNavbar sheet={cartOpen} isLoggedIn={loggedIn} setSheet={setcartOpen} open={searchOpen} setOpen={setsearchOpen}/>
         </div>
         <Dialog open={searchOpen} onOpenChange={e=> setsearchOpen(e)}>
           <DialogContent>
