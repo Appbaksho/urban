@@ -1,4 +1,8 @@
+import { IsOptional } from 'class-validator';
+
 export class Size {
+  @IsOptional()
+  id: string;
   name: string;
   stock: number;
 }

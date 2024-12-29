@@ -44,6 +44,49 @@ export class ProductService {
     return `This action returns all product`;
   }
 
+  async update(productId: string, updateProductDto: CreateProductDto) {
+    // update sizes
+    const sizes = await updateProductDto.sizes.map((size) => ({
+      where: {
+        id: size.id,
+      },
+      update: {
+        stock: size.stock,
+      },
+      create: {
+        name: size.name,
+        stock: size.stock,
+      },
+    }));
+
+    // update product
+    const product = await this.databaseService.product.update({
+      where: {
+        id: productId,
+      },
+      data: {
+        name: updateProductDto.name,
+        description: updateProductDto.description,
+        categoryId: updateProductDto.categoryId,
+        imageUrl: updateProductDto.imageUrl,
+        sizes: {
+          upsert: sizes,
+        },
+        details: updateProductDto.details,
+        sizeDescription: updateProductDto.sizeDescription,
+        price: updateProductDto.price,
+      },
+      include: {
+        sizes: true,
+      },
+    });
+
+    return {
+      message: 'Product updated successfully',
+      product: product,
+    };
+  }
+
   async findOne(id: string) {
     return this.databaseService.product.findUnique({
       where: {
