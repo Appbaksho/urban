@@ -36,6 +36,28 @@ export class ProductController {
     return this.productService.findOne(id);
   }
 
+  @Get('find-product')
+  async findProduct(@Req() req: Request) {
+    const {
+      name,
+      categoryId,
+      price,
+      limit,
+      offset,
+      categoryNameContains,
+      size,
+    } = req.query;
+    return this.productService.findProduct(
+      name as string,
+      categoryId as string,
+      price ? parseFloat(price as string) : undefined,
+      limit ? parseInt(limit as string, 10) : undefined,
+      offset ? parseInt(offset as string, 10) : undefined,
+      categoryNameContains as string,
+      size as string,
+    );
+  }
+
   @Put(':id')
   async update(
     @Param('id') id: string,

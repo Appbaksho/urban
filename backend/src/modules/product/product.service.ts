@@ -41,8 +41,65 @@ export class ProductService {
     };
   }
 
-  findAll() {
-    return `This action returns all product`;
+  async findAll() {
+    return await this.databaseService.product.findMany({
+      include: {
+        sizes: true,
+      },
+    });
+  }
+
+  async findProduct(
+    name: string,
+    categoryId: string,
+    price: number,
+    limit: number,
+    offset: number,
+    categoryNameContains: string,
+    size: string,
+  ) {
+    const query: any = {};
+
+    if (name) {
+      query.name = {
+        contains: name,
+      };
+    }
+
+    if (categoryId) {
+      query.categoryId = categoryId;
+    }
+
+    if (price) {
+      query.price = price;
+    }
+
+    if (categoryNameContains) {
+      query.category = {
+        name: {
+          contains: categoryNameContains,
+        },
+      };
+    }
+
+    if (size) {
+      query.sizes = {
+        some: {
+          name: size,
+        },
+      };
+    }
+
+    const products = await this.databaseService.product.findMany({
+      where: query,
+      include: {
+        sizes: true,
+      },
+      take: limit,
+      skip: offset,
+    });
+
+    return products;
   }
 
   async update(productId: string, updateProductDto: UpdateProductDto) {
