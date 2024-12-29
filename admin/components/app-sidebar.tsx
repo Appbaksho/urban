@@ -25,72 +25,36 @@ import {
 const data = {
   navMain: [
     {
-      title: "Getting Started",
+      title: "Products",
       url: "#",
       items: [
         {
-          title: "Installation",
-          url: "#",
+          title: "All Products",
+          url: "/dashboard/products",
         },
         {
-          title: "Project Structure",
-          url: "#",
+          title: "Add Products",
+          url: "/dashboard/products/add",
         },
       ],
     },
     {
-      title: "Building Your Application",
+      title: "Orders",
       url: "#",
       items: [
         {
-          title: "Routing",
-          url: "#",
+          title: "All Orders",
+          url: "/dashboard/orders",
         },
         {
-          title: "Data Fetching",
-          url: "#",
+          title: "Pending Orders",
+          url: "/dashboard/orders/pending",
           isActive: true,
         },
         {
-          title: "Rendering",
-          url: "#",
-        },
-        {
-          title: "Caching",
-          url: "#",
-        },
-        {
-          title: "Styling",
-          url: "#",
-        },
-        {
-          title: "Optimizing",
-          url: "#",
-        },
-        {
-          title: "Configuring",
-          url: "#",
-        },
-        {
-          title: "Testing",
-          url: "#",
-        },
-        {
-          title: "Authentication",
-          url: "#",
-        },
-        {
-          title: "Deploying",
-          url: "#",
-        },
-        {
-          title: "Upgrading",
-          url: "#",
-        },
-        {
-          title: "Examples",
-          url: "#",
-        },
+          title: "Previous Orders",
+          url: "/dashboard/orders/previous",
+        }
       ],
     },
     {
