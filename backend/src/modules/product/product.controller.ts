@@ -12,6 +12,7 @@ import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { Request } from 'express';
 import { FirebaseService } from '../firebase/firebase.service';
+import { UpdateProductDto } from './dto/update-product.dto';
 
 @Controller('product')
 export class ProductController {
@@ -33,6 +34,14 @@ export class ProductController {
   @Get(':id')
   async findOne(@Param('id') id: string) {
     return this.productService.findOne(id);
+  }
+
+  @Put(':id')
+  async update(
+    @Param('id') id: string,
+    @Body() updateProductDto: UpdateProductDto,
+  ) {
+    return this.productService.update(id, updateProductDto);
   }
 
   @Put('add-to-favorite/:productId')

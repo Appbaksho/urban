@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { DatabaseService } from '../database/database.service';
+import { UpdateProductDto } from './dto/update-product.dto';
 
 @Injectable()
 export class ProductService {
@@ -44,20 +45,38 @@ export class ProductService {
     return `This action returns all product`;
   }
 
-  async update(productId: string, updateProductDto: CreateProductDto) {
+  async update(productId: string, updateProductDto: UpdateProductDto) {
     // update sizes
-    const sizes = await updateProductDto.sizes.map((size) => ({
+    let sizes;
+    if (updateProductDto.sizes.length > 0) {
+      sizes = await updateProductDto.sizes.map((size) => ({
+        where: {
+          id: size.id,
+        },
+        update: {
+          stock: size.stock,
+        },
+        create: {
+          name: size.name,
+          stock: size.stock,
+        },
+      }));
+    } else {
+      sizes = await this.databaseService.size.findMany({
+        where: {
+          productId: productId,
+        },
+      });
+    }
+
+    const previosuProduct = await this.databaseService.product.findUnique({
       where: {
-        id: size.id,
+        id: productId,
       },
-      update: {
-        stock: size.stock,
+      include: {
+        sizes: true,
       },
-      create: {
-        name: size.name,
-        stock: size.stock,
-      },
-    }));
+    });
 
     // update product
     const product = await this.databaseService.product.update({
@@ -65,16 +84,18 @@ export class ProductService {
         id: productId,
       },
       data: {
-        name: updateProductDto.name,
-        description: updateProductDto.description,
-        categoryId: updateProductDto.categoryId,
-        imageUrl: updateProductDto.imageUrl,
+        name: updateProductDto.name || previosuProduct.name,
+        description:
+          updateProductDto.description || previosuProduct.description,
+        categoryId: updateProductDto.categoryId || previosuProduct.categoryId,
+        imageUrl: updateProductDto.imageUrl || previosuProduct.imageUrl,
         sizes: {
           upsert: sizes,
         },
-        details: updateProductDto.details,
-        sizeDescription: updateProductDto.sizeDescription,
-        price: updateProductDto.price,
+        details: updateProductDto.details || previosuProduct.details,
+        sizeDescription:
+          updateProductDto.sizeDescription || previosuProduct.sizeDescription,
+        price: updateProductDto.price || previosuProduct.price,
       },
       include: {
         sizes: true,
