@@ -4,8 +4,10 @@ import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { Button } from '../ui/button'
 import { Edit2 } from 'lucide-react'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table'
+import { UserPayload } from '@/api/auth/auth.model'
+import { auth } from '@/firebase/firebase'
 
-interface UserProfileProps {
+interface UserProfileProps extends UserPayload {
  setEditOpen  : Dispatch<SetStateAction<boolean>>
 }
 
@@ -15,12 +17,12 @@ const UserProfile = (props:UserProfileProps) => {
         <Card>
           <CardHeader className='flex items-center flex-row gap-3'>
             <Avatar className='h-[80px] w-[80px]'>
-              <AvatarImage src="https://github.com/muztahiddurjoy.png" />
-              <AvatarFallback>M</AvatarFallback>
+              <AvatarImage src={props.photoUrl} />
+              <AvatarFallback>{String(props.name).substring(0,1).toUpperCase()}</AvatarFallback>
             </Avatar>
             <div>
-            <CardTitle className='text-2xl'>Muztahid Rahman <Button size="icon" onClick={()=> props.setEditOpen(p=>!p)} variant="outline"><Edit2 size={15}/></Button> </CardTitle>
-            <CardDescription>random@gmail.com</CardDescription>
+            <CardTitle className='text-2xl'>{props.name} <Button size="icon" onClick={()=> props.setEditOpen(p=>!p)} variant="outline"><Edit2 size={15}/></Button> </CardTitle>
+            <CardDescription>{auth.currentUser?.email}</CardDescription>
             </div>
           </CardHeader>
         </Card>
@@ -29,29 +31,29 @@ const UserProfile = (props:UserProfileProps) => {
           <TableBody className='text-sm [&>tr]:py-3'>
             <TableRow>
               <TableCell className="font-medium">Name</TableCell>
-              <TableCell className="text-right">Muztahid Rahman</TableCell>
+              <TableCell className="text-right">{props.name}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell className="font-medium">Email</TableCell>
-              <TableCell className="text-right">muztahiddurjoy99@gmail.com</TableCell>
+              <TableCell className="text-right">{auth.currentUser?.email}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell className="font-medium">Phone</TableCell>
-              <TableCell className="text-right">01521712242</TableCell>
+              {props.contactNumbers&&<TableCell className="text-right">{String(props.contactNumbers[0])}</TableCell>}
             </TableRow>
             <TableRow>
               <TableCell className="font-medium">Shipping Address</TableCell>
               <TableCell className="text-right">
-                Random Addresss
+                {props.shippingAddress}
               </TableCell>
             </TableRow>
             <TableRow>
               <TableCell className="font-medium">City</TableCell>
-              <TableCell className="text-right">Dhaka</TableCell>
+              <TableCell className="text-right">{props.city}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell className="font-medium">Zip</TableCell>
-              <TableCell className="text-right">1216</TableCell>
+              <TableCell className="text-right">{props.zipCode}</TableCell>
             </TableRow>
           </TableBody>
         </Table>
