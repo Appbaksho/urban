@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { DatabaseService } from '../database/database.service';
 import { UpdateProductDto } from './dto/update-product.dto';
+import fetch from 'node-fetch';
 
 @Injectable()
 export class ProductService {
@@ -209,6 +210,35 @@ export class ProductService {
     return {
       message: 'Product removed from favorite successfully',
       favorite: favorite,
+    };
+  }
+
+  async uploadImage(file: Express.Multer.File) {
+    //check if file is an image
+    if (!file.mimetype.startsWith('image')) {
+      throw new BadRequestException('File is not an image');
+    }
+    // Upload image to imgbb
+    const formData = new FormData();
+    formData.append('image', file.buffer.toString('base64'));
+
+    const response = await fetch(
+      `https://api.imgbb.com/1/upload?&key=${process.env.IMGBB_API_KEY}`,
+      {
+        method: 'POST',
+        body: formData,
+      },
+    );
+
+    const result = await response.json();
+
+    if (!result.success) {
+      throw new BadRequestException('Image upload failed');
+    }
+
+    return {
+      message: 'Image uploaded successfully',
+      imageUrl: result.data.url,
     };
   }
 

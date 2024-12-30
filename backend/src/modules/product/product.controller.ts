@@ -7,12 +7,15 @@ import {
   Delete,
   Put,
   Req,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { Request } from 'express';
 import { FirebaseService } from '../firebase/firebase.service';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('product')
 export class ProductController {
@@ -73,6 +76,12 @@ export class ProductController {
   ) {
     const customerId = await this.firebaseService.getCustomerIdFromToken(req);
     return this.productService.addToFavorite(productId, customerId);
+  }
+
+  @Post('/upload-image')
+  @UseInterceptors(FileInterceptor('image'))
+  async uploadImage(@UploadedFile() file: Express.Multer.File) {
+    return await this.productService.uploadImage(file);
   }
 
   // remove from favorite
