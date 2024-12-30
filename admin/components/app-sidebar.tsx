@@ -25,6 +25,16 @@ import {
 const data = {
   navMain: [
     {
+      title: "Stat",
+      url: "#",
+      items: [
+        {
+          title: "Monthly Stat",
+          url: "/dashboard/stat/monthly",
+        }
+      ],
+    },
+    {
       title: "Products",
       url: "#",
       items: [
@@ -34,6 +44,14 @@ const data = {
         },
         {
           title: "Add Products",
+          url: "/dashboard/products/add",
+        },
+        {
+          title: "All Categories",
+          url: "/dashboard/products/add",
+        },
+        {
+          title: "Add Categories",
           url: "/dashboard/products/add",
         },
       ],
@@ -55,74 +73,14 @@ const data = {
           title: "Previous Orders",
           url: "/dashboard/orders/previous",
         }
+        ,
+        {
+          title: "All Users",
+          url: "/dashboard/orders/users",
+        }
       ],
-    },
-    {
-      title: "API Reference",
-      url: "#",
-      items: [
-        {
-          title: "Components",
-          url: "#",
-        },
-        {
-          title: "File Conventions",
-          url: "#",
-        },
-        {
-          title: "Functions",
-          url: "#",
-        },
-        {
-          title: "next.config.js Options",
-          url: "#",
-        },
-        {
-          title: "CLI",
-          url: "#",
-        },
-        {
-          title: "Edge Runtime",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Architecture",
-      url: "#",
-      items: [
-        {
-          title: "Accessibility",
-          url: "#",
-        },
-        {
-          title: "Fast Refresh",
-          url: "#",
-        },
-        {
-          title: "Next.js Compiler",
-          url: "#",
-        },
-        {
-          title: "Supported Browsers",
-          url: "#",
-        },
-        {
-          title: "Turbopack",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Community",
-      url: "#",
-      items: [
-        {
-          title: "Contribution Guide",
-          url: "#",
-        },
-      ],
-    },
+    }
+    
   ],
 }
 
