@@ -48,11 +48,11 @@ const data = {
         },
         {
           title: "All Categories",
-          url: "/dashboard/products/add",
+          url: "/dashboard/products/categories",
         },
         {
           title: "Add Categories",
-          url: "/dashboard/products/add",
+          url: "/dashboard/products/categories/add",
         },
       ],
     },
