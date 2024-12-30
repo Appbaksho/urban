@@ -6,6 +6,9 @@ export const categoryApi = api.injectEndpoints({
         getCategories: build.query<Category[],void>({
         query: () => "/category",
         }),
+        getSingleCategory: build.query<Category,string>({
+            query: (id:string) => `/category/${id}`,
+        }),
         createCategory: build.mutation<Category,CreateCategory>({
         query: (data: CreateCategory) => ({
             url: "/category",
@@ -17,4 +20,4 @@ export const categoryApi = api.injectEndpoints({
     overrideExisting: true,
 })
 
-export const { useGetCategoriesQuery, useCreateCategoryMutation } = categoryApi;
+export const { useGetCategoriesQuery, useCreateCategoryMutation,useGetSingleCategoryQuery } = categoryApi;
