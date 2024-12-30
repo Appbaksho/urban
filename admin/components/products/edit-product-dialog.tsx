@@ -42,7 +42,7 @@ const EditProductDialog = (props:EditProductDialogProps) => {
     const [sizes, setsizes] = useState<Size[]>(props.product.sizes)
     const [name, setname] = useState<string>(props.product.name)
     const [description, setdescription] = useState<string>(props.product.description)
-    
+    const [imagesFiles, setimagesFiles] = useState<File[]>([])
     useEffect(() => {
       if(isError){
             console.log(error)
@@ -60,14 +60,27 @@ const EditProductDialog = (props:EditProductDialogProps) => {
                     <Label>Images</Label>
                    <div className="grid grid-cols-1 md:grid-cols-3 mt-2 gap-1">
                      {images.map((image,i)=>(
-                        <Card key={i} className='relative'>
+                        <Card key={i} className='relative h-[120px]'>
                           <CardContent>
-                             <img src={image} className="w-full h-full object-cover absolute top-0 left-0 bottom-0 right-0 rounded-md"/>
+                             <img src={image} className="w-full h-[120px] object-cover absolute top-0 left-0 bottom-0 right-0 rounded-md"/>
                           </CardContent>
-                          <CardDescription className='flex justify-end absolute top-0 right-0 p-2'>
+                          <CardDescription className='flex justify-end absolute top-0 right-0 p-1'>
                             <Button size="sm" variant="destructive" onClick={()=>{
                                 const newImages = images.filter((_,index)=>index!==i)
                                 setimages(newImages)
+                            }}><Trash2 size={13}/></Button>
+                          </CardDescription>
+                        </Card>
+                     ))}
+                     {imagesFiles.map((image,i)=>(
+                        <Card key={i} className='relative h-[120px]'>
+                          <CardContent>
+                             <img src={URL.createObjectURL(image)} className="w-full h-[120px] object-cover absolute top-0 left-0 bottom-0 right-0 rounded-md"/>
+                          </CardContent>
+                          <CardDescription className='flex justify-end absolute top-0 right-0 p-1'>
+                            <Button size="sm" variant="destructive" onClick={()=>{
+                                const newImages = imagesFiles.filter((_,index)=>index!==i)
+                                setimagesFiles(p=>[...newImages])
                             }}><Trash2 size={13}/></Button>
                           </CardDescription>
                         </Card>
@@ -76,7 +89,11 @@ const EditProductDialog = (props:EditProductDialogProps) => {
                      <CardHeader>
                        <CardTitle>Add Image</CardTitle>
                        <CardDescription>
-                        <Button size="sm">Add</Button>
+                        <Input type="file" multiple onChange={(e)=>{
+                            if(!e.target.files) return
+                            const files = Array.from(e.target.files)
+                            setimagesFiles(p=>[...p,...files])
+                        }} placeholder='Files'/>
                        </CardDescription>
                      </CardHeader>
                    </Card>
@@ -107,7 +124,23 @@ const EditProductDialog = (props:EditProductDialogProps) => {
                     </Select>
                 </div>
                 <div>
-                    <Label>Images</Label>
+                    <Label>Details</Label>
+                    <Input value={details.join(',')} onChange={(e)=>setdetails(e.target.value.split(','))} />
+                </div>
+                <div>
+                    <Label>Size Description</Label>
+                    <Input value={sizeDescription.join(',')} onChange={(e)=>setsizeDescription(e.target.value.split(','))} />
+                </div>
+                <div>
+                    <Label>Price</Label>
+                    <Input type="number" value={price} onChange={(e)=>setprice(Number(e.target.value))} />
+                </div>
+                <div>
+                    <Label>Discount Price</Label>
+                    <Input type="number" value={String(discountPrice)} onChange={(e)=>setdiscountPrice(e.target.value)} />
+                </div>
+                <div className='flex items-center justify-end gap-2'>
+                    <Button>Update</Button>
                 </div>
             </div>
           </DialogDescription>
