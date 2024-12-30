@@ -25,8 +25,8 @@ export class CustomerService {
     };
   }
 
-  findAll() {
-    return `This action returns all customer`;
+  async findAll() {
+    return await this.databaseService.customer.findMany();
   }
 
   async findOne(id: string) {
