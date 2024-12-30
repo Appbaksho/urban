@@ -1,8 +1,11 @@
+import AllCategoryTable from '@/components/category/all-category-table'
 import React from 'react'
 
 const CategoriesPage = () => {
   return (
-    <div>CategoriesPage</div>
+    <div className='p-3 md:p-5'>
+        <AllCategoryTable/>
+    </div>
   )
 }
 
