@@ -134,9 +134,8 @@ model Category {
   name             String
   description      String
   imageUrl         String
-  parentCategoryId String?
-  parentCategory   Category?  @relation("CategoryHierarchy", fields: [parentCategoryId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  childCategories  Category[] @relation("CategoryHierarchy")
+  parentCategoryId String
+
   products         Product[]
 }
 

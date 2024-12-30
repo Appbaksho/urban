@@ -81,6 +81,7 @@ export class ProductController {
   @Post('/upload-image')
   @UseInterceptors(FileInterceptor('image'))
   async uploadImage(@UploadedFile() file: Express.Multer.File) {
+    console.log(file);
     return await this.productService.uploadImage(file);
   }
 

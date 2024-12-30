@@ -23,22 +23,8 @@ export class CategoryService {
   }
 
   async findAll() {
-    const categories = await this.databaseService.category.findMany({
-      include: {
-        childCategories: true,
-      },
-    });
-
-    const buildCategoryTree = (categories, parentId = null) => {
-      return categories
-        .filter((category) => category.parentCategoryId === parentId)
-        .map((category) => ({
-          ...category,
-          children: buildCategoryTree(categories, category.id),
-        }));
-    };
-
-    return buildCategoryTree(categories);
+    const categories = await this.databaseService.category.findMany({});
+    return categories;
   }
 
   findOne(id: number) {

@@ -2,7 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { DatabaseService } from '../database/database.service';
 import { UpdateProductDto } from './dto/update-product.dto';
-import fetch from 'node-fetch';
+import axios from 'axios';
 
 @Injectable()
 export class ProductService {
@@ -221,19 +221,23 @@ export class ProductService {
     // Upload image to imgbb
     const formData = new FormData();
     formData.append('image', file.buffer.toString('base64'));
+    console.log(formData);
 
-    const response = await fetch(
-      `https://api.imgbb.com/1/upload?&key=${process.env.IMGBB_API_KEY}`,
+    const response = await axios.post(
+      `https://api.imgbb.com/1/upload?key=${process.env.IMGBB_API_KEY}`,
+      formData,
       {
-        method: 'POST',
-        body: formData,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
       },
     );
 
-    const result = await response.json();
+    const result = response.data;
+    console.log(result);
 
     if (!result.success) {
-      throw new BadRequestException('Image upload failed');
+      throw new BadRequestException(result);
     }
 
     return {
