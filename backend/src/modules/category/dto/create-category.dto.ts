@@ -3,5 +3,4 @@ export class CreateCategoryDto {
   description: string;
   imageUrl: string;
   parentCategoryId?: string;
-  gender?: string;
 }
