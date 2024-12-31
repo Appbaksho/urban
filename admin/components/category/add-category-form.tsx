@@ -11,14 +11,17 @@ import { useToast } from '@/hooks/use-toast'
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from '../ui/breadcrumb'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import { storage } from '@/firebase/firebase'
+import { useUploadImageMutation } from '../products/api/products.api'
 
 const AddCategoryForm = () => {
     const {data,isError,isLoading,error} = useGetCategoriesQuery()
     const [createCategory,{isLoading:createLoading,isError:isCreateError,isSuccess:createSuccess,data:createData,error:createError}] = useCreateCategoryMutation()
+    const [uploadImage,{data:imageData,isError:isImageError,isSuccess:imageSuccess}] = useUploadImageMutation()
     const [name, setname] = useState<string>('')
     const [desc, setdesc] = useState<string>('')
     const [image, setimage] = useState<File|null>(null)
     const [parentCategoryId, setparentCategoryId] = useState<string>('')
+    const [loading , setloading ] = useState(false)
 
     const {toast} = useToast()
 
@@ -57,6 +60,7 @@ const AddCategoryForm = () => {
     
 
     const sendToDB = async () => {
+      setloading(true)
         if (!name || !desc || !image) {
             toast({
                 title: 'Error',
@@ -64,25 +68,39 @@ const AddCategoryForm = () => {
                 variant: 'destructive',
                 duration: 5000
             })
+            setloading(false)
             return
         }
 
         try {
-            const storageRef = ref(storage, `categories/${image.name}`);
-            const snapshot = await uploadBytes(storageRef, image);
-            const imageUrl = await getDownloadURL(snapshot.ref);
+          
+            const imageForm = new FormData()
+            imageForm.append('image',image)
 
+            uploadImage(imageForm).then(async res=>{
             await createCategory({
                 name,
                 description: desc,
-                imageUrl,
+                imageUrl: String(res.data?.imageUrl),
                 parentCategoryId
             }).unwrap()
+            setloading(false)
             setname('')
             setdesc('')
             setimage(null)
             setparentCategoryId('')
+          }).catch(err=>{
+            console.error('Error uploading image:', err)
+            setloading(false)
+            toast({
+                title: 'Error',
+                description: "Failed to upload image",
+                variant: 'destructive',
+                duration: 5000
+            })
+          })
         } catch (error) {
+            setloading(false)
             console.error('Error creating category:', error)
             toast({
                 title: 'Error',
@@ -157,7 +175,7 @@ const AddCategoryForm = () => {
         </div>
       </CardContent>
       <CardFooter className='flex justify-end items-center'>
-        <Button onClick={sendToDB} disabled={isLoading||createLoading}>{createLoading&&<Loader2 size={15} className='animate-spin'/>}Create</Button>
+        <Button onClick={sendToDB} disabled={isLoading||createLoading||loading}>{loading&&<Loader2 size={15} className='animate-spin'/>}Create</Button>
       </CardFooter>
     </Card>
   )
