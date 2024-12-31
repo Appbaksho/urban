@@ -1,14 +1,15 @@
 "use client"
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../ui/table'
 import ProductTableAdapter from './product-table-adapter'
 import { useGetProductsQuery } from './api/products.api'
 import { useToast } from '@/hooks/use-toast'
 import { Skeleton } from '../ui/skeleton'
 
-const ProductTable = () => {
+const ProductTable = ({query}:{query:string}) => {
   const {data,isLoading,isSuccess,isError,error} = useGetProductsQuery()
   const {toast} = useToast()
+  
 
   useEffect(() => {
     if(isError){
@@ -41,7 +42,7 @@ const ProductTable = () => {
           <TableCell colSpan={6}>
             <Skeleton className='w-full h-[50px]' key={i}/>
           </TableCell>
-        </TableRow>):data?.map(product => (
+        </TableRow>):data?.filter(v=>v.name.toLowerCase().trim().includes(query.toLowerCase().trim())).map(product => (
           <ProductTableAdapter key={product.id} {...product}/>
         ))}
       </TableBody>
