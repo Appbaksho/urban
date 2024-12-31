@@ -5,9 +5,12 @@ import 'swiper/css'
 import { Button } from '../ui/button';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import ProductCard from './product-card';
+import { useGetProductsQuery } from '@/api/products/products.api';
 
 const NewInThisWeek = () => {
+  const {data,isLoading,isSuccess,isError,error} = useGetProductsQuery()
     const swiper = React.useRef<SwiperRef>(null)
+
   return (
     <div className='py-10'>
         <div className="flex items-center justify-between px-5 md:px-10">
@@ -41,8 +44,12 @@ const NewInThisWeek = () => {
         },
       }}
     >
-        {Array(10).fill("_").map((v,i)=>{
-            return <SwiperSlide key={i}><ProductCard/></SwiperSlide>
+        {data?.filter((v)=>{
+            return new Date(String(v.createdAt)).getTime() > new Date().getTime() - 7 * 24 * 60 * 60 * 1000
+        }).sort((a,b)=>{
+            return new Date(String(b.createdAt)).getTime() - new Date(String(a.createdAt)).getTime()
+        }).map((v,i)=>{
+            return <SwiperSlide key={i}><ProductCard {...v}/></SwiperSlide>
         })}
       
     </Swiper>

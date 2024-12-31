@@ -60,7 +60,6 @@ export class ProductService {
     size: string,
   ) {
     const query: any = {};
-
     if (name) {
       query.name = {
         contains: name,

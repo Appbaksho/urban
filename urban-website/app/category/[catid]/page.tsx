@@ -1,4 +1,5 @@
 "use client"
+import { useGetSingleCategoryQuery } from '@/api/category/category.api'
 import CategoryBanner from '@/components/category/banner'
 import CategoryContainer from '@/components/category/category-container'
 import Footer from '@/components/common/footer'
@@ -8,11 +9,12 @@ import React from 'react'
 
 const CategoryPage = () => {
   const params = useParams()
+  const {data:category,isLoading,isError,error} = useGetSingleCategoryQuery(String(params.catid))
 
   return (
     <>
     <Navbar/>
-    <CategoryBanner name={String(String(params.catid).substring(0,1).toUpperCase()+String(params.catid).substring(1)).replace('-',' ')} src='/products/hoodie-3.png'/>
+    <CategoryBanner name={String(category?.name)} src={String(category?.imageUrl)}/>
     <CategoryContainer/>
     <Footer/>
     </>

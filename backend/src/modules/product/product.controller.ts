@@ -34,11 +34,6 @@ export class ProductController {
     return this.productService.findAll();
   }
 
-  @Get(':id')
-  async findOne(@Param('id') id: string) {
-    return this.productService.findOne(id);
-  }
-
   @Get('find-product')
   async findProduct(@Req() req: Request) {
     const {
@@ -60,6 +55,13 @@ export class ProductController {
       size as string,
     );
   }
+
+  @Get(':id')
+  async findOne(@Param('id') id: string) {
+    return this.productService.findOne(id);
+  }
+
+
 
   @Put(':id')
   async update(
