@@ -1,5 +1,5 @@
 import { api } from "@/api";
-import { Product, ProductPayload } from "./products.model";
+import { ImageResponse, Product, ProductPayload } from "./products.model";
 
 export const productsApi = api.injectEndpoints({
     endpoints: (build) => ({
@@ -11,6 +11,13 @@ export const productsApi = api.injectEndpoints({
             url: "product",
             method: "POST",
             body: product,
+        }),
+        }),
+        uploadImage: build.mutation<ImageResponse, FormData>({
+        query: (image:FormData) => ({
+            url: "product/upload-image",
+            method: "POST",
+            body: image,
         }),
         }),
         updateProduct: build.mutation<Product, Product>({
@@ -29,4 +36,4 @@ export const productsApi = api.injectEndpoints({
     }),
     overrideExisting: false,
     });
-export const { useGetProductsQuery, useAddProductMutation, useUpdateProductMutation, useDeleteProductMutation } = productsApi;
+export const { useGetProductsQuery, useAddProductMutation, useUpdateProductMutation, useDeleteProductMutation,useUploadImageMutation } = productsApi;

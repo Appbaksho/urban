@@ -8,10 +8,15 @@ export interface Product {
   sizeDescription: string[]
   price: number
   discountPrice: any
-  createdAt: string
-  updatedAt: string
-  continued: boolean
+  createdAt?: string
+  updatedAt?: string
+  continued?: boolean
   sizes: Size[]
+}
+
+export interface ImageResponse{
+        message: string
+        imageUrl: string      
 }
 
 export interface Size {

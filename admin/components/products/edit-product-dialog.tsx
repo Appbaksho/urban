@@ -8,7 +8,9 @@ import { Input } from '../ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card'
 import { Button } from '../ui/button'
-import { Trash2 } from 'lucide-react'
+import { Loader2, Trash2 } from 'lucide-react'
+import { useUpdateProductMutation, useUploadImageMutation } from './api/products.api'
+import { useToast } from '@/hooks/use-toast'
 
 interface EditProductDialogProps {
   open: boolean
@@ -17,22 +19,12 @@ interface EditProductDialogProps {
 }
 
 
-//   name: string
-//   description: string
-//   categoryId: string
-//   imageUrl: string[]
-//   details: string[]
-//   sizeDescription: string[]
-//   price: number
-//   discountPrice: any
-//   createdAt: string
-//   updatedAt: string
-//   continued: boolean
-//   sizes: Size[]
-
-
 const EditProductDialog = (props:EditProductDialogProps) => {
     const {data:categories,isError,error} = useGetCategoriesQuery()
+    const [uploadImage,{data,isError:isImageUploadError,error:imageUploadError,isSuccess}] = useUploadImageMutation()
+    const [updateProductMutation,{data:proUpdateData, isSuccess:isSuccessUpdate, isError:isErrorUpdate, error:proUpdateError,isLoading}] = useUpdateProductMutation()
+
+    
     const [images, setimages] = useState<string[]>(props.product.imageUrl)
     const [selectedCategory, setselectedCategory] = useState<string>(props.product.categoryId)
     const [details, setdetails] = useState<string[]>(props.product.details)
@@ -43,12 +35,91 @@ const EditProductDialog = (props:EditProductDialogProps) => {
     const [name, setname] = useState<string>(props.product.name)
     const [description, setdescription] = useState<string>(props.product.description)
     const [imagesFiles, setimagesFiles] = useState<File[]>([])
+    const [uploadStatus, setuploadStatus] = useState('Update')
+    const {toast} = useToast()
     useEffect(() => {
       if(isError){
             console.log(error)
         }
     }, [isError,error])
+
+    useEffect(() => {
+      if(isImageUploadError){
+            console.log(imageUploadError)
+        }
+    }, [isImageUploadError,imageUploadError])
     
+    useEffect(() => {
+       
+      if(isSuccess){
+        if(data){
+        console.log(data)
+        }
+      }
+    }, [isSuccess,data])
+
+    useEffect(() => {
+      if(isSuccessUpdate){
+        toast({
+            title: 'Success',
+            description: 'Product Updated',
+        })
+        if(proUpdateData){
+          console.log(proUpdateData)
+        }
+      }
+    }, [isSuccessUpdate,proUpdateData])
+
+    useEffect(() => {
+        if(isErrorUpdate){
+            toast({
+                title: 'Error',
+                description: 'Cannot update product',
+                variant: 'destructive'
+            })
+            console.log(proUpdateError)
+        }
+        }
+    , [isErrorUpdate,proUpdateError])
+
+    const updateProduct = ()=>{
+        setuploadStatus('Uploading Image') 
+        
+        imagesFiles.forEach(async file=>  {
+            const imageForm = new FormData()
+            imageForm.append('image',file)
+            uploadImage(imageForm).then(res=>{
+                if(res.data){
+                    setimages(p=>[...p,res.data.imageUrl])
+                }
+            })
+        })
+        setimagesFiles([])
+        setuploadStatus('Updating')
+
+        updateProductMutation({
+            id:props.product.id,
+            categoryId:selectedCategory,
+            description,
+            details,
+            discountPrice,
+            imageUrl:images,
+            name,
+            price,
+            sizes,
+            sizeDescription,
+        }).then(res=>{
+            if(res.data){
+                console.log(res.data)
+                setuploadStatus('Update')
+            }
+        }).catch(err=>{
+            console.log(err)
+            setuploadStatus('Update')
+        })
+
+    }
+
   return (
     <Dialog open={props.open} onOpenChange={props.onOpenChange}>
       <DialogContent>
@@ -140,7 +211,7 @@ const EditProductDialog = (props:EditProductDialogProps) => {
                     <Input type="number" value={String(discountPrice)} onChange={(e)=>setdiscountPrice(e.target.value)} />
                 </div>
                 <div className='flex items-center justify-end gap-2'>
-                    <Button>Update</Button>
+                    <Button onClick={updateProduct} disabled={uploadStatus!="Update"}>{isLoading&&<Loader2 className='animate-spin mr-1' size={15}/>}{uploadStatus}</Button>
                 </div>
             </div>
           </DialogDescription>
