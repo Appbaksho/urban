@@ -15,8 +15,16 @@ import { useParams } from 'next/navigation';
 import React from 'react';
 import ProductImageSlider from '@/components/product-page/image-slider';
 import ProductDescriptionSingle from '@/components/product-page/product-description';
+import { useGetSingleProductQuery } from '@/api/products/products.api';
+import { useGetSingleCategoryQuery } from '@/api/category/category.api';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const ProductPage = () => {
+    const params =  useParams()
+    const {data,isLoading,isSuccess,isError,error} = useGetSingleProductQuery(String(params.productId))
+    const {data:category,isLoading:categoryLoading,isSuccess:categorySuccess,isError:categoryError} = useGetSingleCategoryQuery(String(data?.categoryId))
+
+
     return (
     <>
         <Navbar/>
@@ -28,18 +36,24 @@ const ProductPage = () => {
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
-                <BreadcrumbLink href="/components">Categories</BreadcrumbLink>
+                <BreadcrumbLink href="#">Categories</BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
+                {category?.parentCategoryId&&<>
                 <BreadcrumbItem>
-                <BreadcrumbPage>Panjabis</BreadcrumbPage>
+                <BreadcrumbLink href={`/category/${category.parentCategoryId}`}>Parent</BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                </>}
+                <BreadcrumbItem>
+                <BreadcrumbLink href={`/category/${data?.categoryId}`}>{category?.name}</BreadcrumbLink>
                 </BreadcrumbItem>
             </BreadcrumbList>
             </Breadcrumb>
 
         <div className='grid grid-cols-1 md:grid-cols-2 mt-10 gap-10'>
-            <ProductImageSlider/>
-            <ProductDescriptionSingle/>
+            {data?<ProductImageSlider images={data?.imageUrl}/>:<Skeleton className='w-full h-[300px] rounded-md'/>}
+            {data?<ProductDescriptionSingle {...data}/>:<Skeleton className='w-full h-[300px]'/>}
         </div>
         </div>
         <Footer/>

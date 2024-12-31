@@ -17,9 +17,11 @@ const ProductCard = (props:Product) => {
         </div>
         <div className='px-2'>
         <Link href={`/product/${props.id}`} className="font-semibold">{props.name}</Link>
+        <p className="text-xs mt-1">Available Sizes</p>
         <div className="flex items-center gap-1 mt-2 [&>div]:text-xs">
-        <Badge variant="outline" className='text-[10px]'>Men</Badge>
-        <Badge variant="outline">Women</Badge>
+          {props.sizes.map((v)=>{
+            return <Badge variant="outline" key={v.id}>{v.name}</Badge>
+          })}
         </div>
 
         <p className="font-bold text-right pr-3 mt-3 mb-3">{props.price} BDT</p>
