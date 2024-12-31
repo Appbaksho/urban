@@ -6,7 +6,7 @@ export const productsApi = api.injectEndpoints({
         getProducts: build.query<Product[], void>({
         query: () => "product",
         }),
-        addProduct: build.mutation<Product, ProductPayload>({
+        addProduct: build.mutation<Product, Product>({
         query: (product) => ({
             url: "product",
             method: "POST",
