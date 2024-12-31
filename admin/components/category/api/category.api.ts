@@ -16,8 +16,15 @@ export const categoryApi = api.injectEndpoints({
             body: data,
         }),
         }),
+        updateCategory: build.mutation<Category,Category>({
+        query: (data: Category) => ({
+            url: `/category/${data.id}`,
+            method: "PUT",
+            body: data,
+        }),
+        }),
     }),
     overrideExisting: true,
 })
 
-export const { useGetCategoriesQuery, useCreateCategoryMutation,useGetSingleCategoryQuery } = categoryApi;
+export const { useGetCategoriesQuery, useCreateCategoryMutation,useGetSingleCategoryQuery,useUpdateCategoryMutation } = categoryApi;

@@ -35,8 +35,18 @@ export class CategoryService {
     });
   }
 
-  update(id: number, updateCategoryDto: UpdateCategoryDto) {
-    return `This action updates a #${id} category`;
+  async update(id: string, updateCategoryDto: UpdateCategoryDto) {
+    return await this.databaseService.category.update({
+      where: {
+        id: id,
+      },
+      data: {
+        name: updateCategoryDto.name,
+        description: updateCategoryDto.description,
+        imageUrl: updateCategoryDto.imageUrl,
+        parentCategoryId: updateCategoryDto.parentCategoryId,
+      },
+    });
   }
 
   remove(id: number) {

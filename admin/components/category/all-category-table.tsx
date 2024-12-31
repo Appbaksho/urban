@@ -17,7 +17,7 @@ import { Skeleton } from '../ui/skeleton'
   
 const AllCategoryTable = () => {
     const {toast} = useToast()
-    const {data,isLoading,isSuccess,isError,error} = useGetCategoriesQuery()
+    const {data,isLoading,isSuccess,isError,error,refetch} = useGetCategoriesQuery()
 
     useEffect(() => {
         if(isError){
@@ -52,7 +52,7 @@ const AllCategoryTable = () => {
                     <Skeleton className='w-full h-[50px]'/>
                 </TableCell>
             </TableRow>)
-            :data?.map((category)=><CategoryAdapter key={category.id} {...category}/>)}
+            :data?.map((category)=><CategoryAdapter refetch={refetch} key={category.id} {...category}/>)}
           </TableBody>
         </Table>
     </div>

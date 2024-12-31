@@ -13,5 +13,6 @@ export interface Category {
     parentCategoryId?: string;
     children?: Category[];
     childrenCategories?: Category[];
+    refetch?: () => void;
 }
   
