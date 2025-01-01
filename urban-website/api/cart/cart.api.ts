@@ -28,6 +28,15 @@ const cartApi = api.injectEndpoints({
                 body: payload,
             }),
         }),
+        checkoutProduct: build.mutation<any, string>({
+            query: (token:string) => ({
+                url: "/cart/checkout",
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }),
+        }),
         removeFromCart: build.mutation<void, string>({
             query: (orderItemId:string) => ({
                 url: `/cart/${orderItemId}`,
@@ -38,4 +47,4 @@ const cartApi = api.injectEndpoints({
     overrideExisting: false,
     });
 
-export const { useLazyGetCartQuery, useAddToCartMutation,useAddManyToCartMutation,useRemoveFromCartMutation } = cartApi;
+export const { useLazyGetCartQuery, useAddToCartMutation,useAddManyToCartMutation,useRemoveFromCartMutation,useCheckoutProductMutation } = cartApi;

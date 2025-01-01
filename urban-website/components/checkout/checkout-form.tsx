@@ -13,7 +13,7 @@ interface CheckoutFormProps {
 }
 
 const CheckoutForm = (props:CheckoutFormProps) => {
-    const [retyped, setretyped] = useState<string>('')
+    
     const [showPass, setshowPass] = useState<boolean>(false)
   return (
    <Card className='mt-3'>
@@ -34,12 +34,12 @@ const CheckoutForm = (props:CheckoutFormProps) => {
             <Input type={showPass?"text":"password"} name="pass" value={props.data.password}
             onChange={e=> props.changeData(p=>({...p,password:e.target.value}))}
              id="pass" placeholder="password"/>
-{props.data.password!=retyped&&<p className='text-xs text-red-500'>Password are not same</p>}
+{props.data.password!=props.data.confirmPassword&&<p className='text-xs text-red-500'>Password are not same</p>}
         </div>
         <div>
             <Label htmlFor="repass" className='font-semibold text-black'>Retype Password</Label>
-            <Input type={showPass?"text":"password"} name="repass" value={retyped}
-            onChange={e=> setretyped(e.target.value)}
+            <Input type={showPass?"text":"password"} name="repass" value={props.data.confirmPassword}
+            onChange={e=> props.changeData(p=>({...p,confirmPassword:e.target.value}))}
              id="repass" placeholder="retype password"/>
              <div className="flex items-center gap-1 mt-1">
                 <Checkbox id='showpass' name='showpass' checked={showPass} onCheckedChange={()=>setshowPass(p=>!p)}/>
