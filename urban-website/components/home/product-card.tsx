@@ -19,7 +19,7 @@ const ProductCard = (props:Product) => {
         <Link href={`/product/${props.id}`} className="font-semibold">{props.name}</Link>
         <p className="text-xs mt-1">Available Sizes</p>
         <div className="flex items-center gap-1 mt-2 [&>div]:text-xs">
-          {props.sizes.map((v)=>{
+          {props.sizes.filter(v=>v.stock>0).map((v)=>{
             return <Badge variant="outline" key={v.id}>{v.name}</Badge>
           })}
         </div>
