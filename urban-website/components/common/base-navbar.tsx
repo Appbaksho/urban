@@ -1,4 +1,4 @@
-
+"use client"
 import { Heart, Menu, SearchIcon, ShoppingBag, User } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -22,9 +22,11 @@ import {
     SheetTrigger,
   } from "@/components/ui/sheet"
   
-import React from 'react'
+import React, { useEffect } from 'react'
 import { cn } from '@/lib/utils'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../ui/accordion'
+import {  useLazyGetCartQuery } from '@/api/cart/cart.api'
+import { auth } from '@/firebase/firebase'
 
 const components: { title: string; href: string; description: string }[] = [
     {
@@ -65,6 +67,29 @@ interface BaseNavbarProps {
 }
 
 const BaseNavbar = (props:BaseNavbarProps) => {
+  const [getCart,{data:cart,isLoading:cartLoading,isSuccess:isCartSuccess,isError:isCartError,error:cartError}] = useLazyGetCartQuery()
+
+  useEffect(() => {
+    if(isCartError){
+      console.log(cartError)
+    }
+    if(isCartSuccess){
+      console.log(cart)
+    }
+  }, [isCartError,isCartSuccess])
+
+  useEffect(() => {
+    if(props.isLoggedIn){
+      auth.currentUser?.getIdToken().then((token)=>{
+        getCart(token)
+      }).catch((e)=>{
+        console.log(e)
+      })
+    }
+  }, [props.isLoggedIn])
+  
+
+
   return (
     <div className='w-full bg-white px-5 md:px-20 py-3 flex justify-between items-center'>
       <Link href='/'>

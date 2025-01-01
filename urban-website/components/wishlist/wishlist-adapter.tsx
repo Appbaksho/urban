@@ -44,7 +44,7 @@ const WishlistAdapter = (props:Product) => {
             <Trash2 size={17} className='text-red-500'/>
           </Button>
         </div>
-        <Link href="/product/random" className="pt-5 mt-5 font-semibold">{props.name}</Link>
+        <Link href={`/product/${props.id}`} className="pt-5 mt-5 font-semibold">{props.name}</Link>
         <p className="text-xs mt-1">Available Sizes</p>
         <div className="flex items-center gap-1 mt-2">
           {props.sizes.filter(v=>v.stock>0).map((v)=>{

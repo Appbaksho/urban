@@ -14,7 +14,7 @@ import { UpdateCartItemDto } from './dto/update-cart.dto';
 import { AccessTokenGuard } from 'src/middlewares/access-token.guard';
 import { Request } from 'express';
 import { FirebaseService } from '../firebase/firebase.service';
-import { AddToCartDto } from './dto/create-cart.dto';
+import { AddToCartDto, CreateCartDto } from './dto/create-cart.dto';
 
 @Controller('cart')
 export class CartController {
@@ -31,6 +31,14 @@ export class CartController {
     return this.cartService.createIfNotFound(customerId);
   }
 
+  @Post()
+  @UseGuards(AccessTokenGuard)
+  async createMany(@Req() request: Request,@Body() createCartDto: CreateCartDto) {
+    const customerId =
+      await this.firebaseService.getCustomerIdFromToken(request);
+    return this.cartService.createIfNotFound(customerId);
+  }
+  
   @Get()
   @UseGuards(AccessTokenGuard)
   async findOne(@Param('id') id: string, @Req() request: Request) {
@@ -60,6 +68,13 @@ export class CartController {
     const customerId =
       await this.firebaseService.getCustomerIdFromToken(request);
     return this.cartService.addToCart(customerId, addToCartDto);
+  }
+  @Post('add-to-cart/batch')
+  @UseGuards(AccessTokenGuard)
+  async addToCartMany(@Body() addToCartDto: AddToCartDto[], @Req() request: Request) {
+    const customerId =
+      await this.firebaseService.getCustomerIdFromToken(request);
+    return this.cartService.addToCartMany(customerId, addToCartDto);
   }
 
   @Delete(':orderItemId')

@@ -8,45 +8,44 @@ import { AddToCartDto } from './dto/create-cart.dto';
 export class CartService {
   constructor(private readonly databaseService: DatabaseService) {}
   async createIfNotFound(customerId: string) {
-    const cart = await this.databaseService.cart.findUnique({
-      where: {
-        customerId: customerId,
-      },
-      include: {
-        items: {
-          include: {
-            size: {
-              include: {
-                product: true,
+    try {
+      const cart = await this.databaseService.cart.findUnique({
+        where: { customerId },
+        include: {
+          items: {
+            include: {
+              size: {
+                include: { product: true },
               },
             },
           },
         },
-      },
-    });
-
-    if (cart) {
-      return cart;
+      });
+  
+      if (cart) {
+        return cart;
+      }
+  
+      return await this.databaseService.cart.create({
+        data: { customerId },
+        include: {
+          items: {
+            include: {
+              size: {
+                include: { product: true },
+              },
+            },
+          },
+        },
+      });
+    } catch (error) {
+      console.error('Error in createIfNotFound:', error);
+      throw new Error('Failed to retrieve or create cart.');
     }
-
-    return this.databaseService.cart.create({
-      data: {
-        customerId: customerId,
-      },
-      include: {
-        items: {
-          include: {
-            size: {
-              include: {
-                product: true,
-              },
-            },
-          },
-        },
-      },
-    });
   }
+  
 
+  
   findAll() {
     return `This action returns all cart`;
   }
@@ -59,6 +58,25 @@ export class CartService {
         sizeId: addToCartDto.sizeId,
         quantity: addToCartDto.quantity,
       },
+    });
+
+    return {
+      message: 'Product added to cart',
+      orderItem: cartItem,
+    };
+  }
+
+  async addToCartMany(customerId: string, addToCartDto: AddToCartDto[]) {
+    const cart = await this.createIfNotFound(customerId);
+    const processed = addToCartDto.map((item) => {
+      return {
+        cartId: cart.id,
+        sizeId: item.sizeId,
+        quantity: item.quantity,
+      };
+    });
+    const cartItem = await this.databaseService.orderItem.createMany({
+      data: processed,
     });
 
     return {

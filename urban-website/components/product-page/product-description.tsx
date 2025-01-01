@@ -6,6 +6,7 @@ import { Button } from '../ui/button'
 import { Product, Size } from '@/api/products/products.model'
 import { useAddToWishlistMutation } from '@/api/products/products.api'
 import { useToast } from '@/hooks/use-toast'
+import { useAddToCartMutation } from '@/api/cart/cart.api'
 
 
 
@@ -14,6 +15,7 @@ const ProductDescriptionSingle = (props:Product) => {
     const [quantity, setquantity] = useState<number>(1)
     const [size, setsize] = useState<Size|null>(null)
     const [addToFavorite,{data,error,isLoading:addingWishlist,isError,isSuccess}] = useAddToWishlistMutation()
+    const [addToCart,{data:cartData,error:cartError,isLoading:addingCart,isError:cartIsError,isSuccess:cartIsSuccess}] = useAddToCartMutation()
 
     const {toast} = useToast()
     useEffect(() => {
@@ -32,6 +34,29 @@ const ProductDescriptionSingle = (props:Product) => {
             })
         }
     }, [isError,isSuccess])
+
+
+    useEffect(() => {
+        if(cartIsError){
+            toast({
+                title:'Error',
+                description:"Cannot add to cart",
+                variant:'destructive'
+            })
+            console.log(cartError)
+        }
+        if(cartIsSuccess){
+            toast({
+                title:'Added',
+                description:"Added to cart"
+            })
+        }
+    }, [cartIsError,cartIsSuccess])
+
+
+
+
+
 
     useEffect(() => {
       setquantity(1)
@@ -74,7 +99,21 @@ const ProductDescriptionSingle = (props:Product) => {
         </div>
         </div>
         <div className='mt-5 flex items-center gap-2'> 
-            <Button size="lg"><ShoppingBag size={16} className='mr-2'/> Add to Cart</Button>
+            <Button size="lg" disabled={addingCart} onClick={()=> {
+                if(size){
+            addToCart({
+                productId:String(props.id),
+                sizeId:String(size?.id),
+                quantity:quantity
+            })}
+            else{
+                toast({
+                    title:'Select a size',
+                    description:"Please select a size to add to cart",
+                    variant:'destructive'
+                })
+            }
+            }}>{addingCart?<Loader2 className='animate-spin mr-2' size={16}/>:<ShoppingBag size={16} className='mr-2'/>} Add to Cart</Button>
             <Button size="icon" onClick={()=> addToFavorite(String(props.id))} variant="outline" disabled={addingWishlist}>{addingWishlist?<Loader2 size={17} className='animate-spin'/>:<Heart size={17}/>}</Button>
         </div>
         <div className="mt-10">
