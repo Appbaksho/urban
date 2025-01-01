@@ -1,16 +1,22 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Card } from '../ui/card'
 import { Heart, Minus, Plus, ShoppingBag } from 'lucide-react'
 import { Button } from '../ui/button'
-import { Product } from '@/api/products/products.model'
+import { Product, Size } from '@/api/products/products.model'
 
 
 
 
 const ProductDescriptionSingle = (props:Product) => {
-    const [quantity, setquantity] = useState<number>(0)
-    const [size, setsize] = useState("")
+    const [quantity, setquantity] = useState<number>(1)
+    const [size, setsize] = useState<Size|null>(null)
+
+    useEffect(() => {
+      setquantity(1)
+    }, [size?.id])
+    
+
   return (
     <div className=''>
         <h1 className='text-3xl md:text-4xl font-extrabold'>{props.name}</h1>
@@ -20,8 +26,8 @@ const ProductDescriptionSingle = (props:Product) => {
                     <div className="grid grid-cols-4 md:grid-cols-8 gap-2 mt-2">
                         {
                             props.sizes.map((v,i)=>(
-                                <Card key={i} className={`p-2 font-regular transition-all ease-in-out duration-300 text-sm text-center rounded-md  ${size==v.id&&"font-extrabold border-primary/50 bg-primary/10"}`} onClick={
-                                    e=> setsize(v.id)
+                                <Card key={i} className={`p-2 ${v.stock==0&&"text-gray-500 bg-gray-100"} font-regular transition-all ease-in-out duration-300 text-sm text-center rounded-md  ${size?.id==v.id&&"font-extrabold border-primary/50 bg-primary/10"}`} onClick={
+                                    ()=> v.stock>0&&setsize(v)
                                 }>{v.name}</Card>
                             ))
                         }
@@ -33,7 +39,7 @@ const ProductDescriptionSingle = (props:Product) => {
         <div className="flex items-center justify-end">
         <Card className='mt-1 p-1 w-[100px] flex items-center justify-between'>
             
-            <Button size="sm" variant="secondary" onClick={e=> setquantity(quantity+1)}>
+            <Button size="sm" variant="secondary" onClick={e=> size&&quantity<size?.stock&&setquantity(quantity+1)}>   
                 <Plus size={13}/>
             </Button>
             <p className='text-sm'>
