@@ -1,9 +1,11 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import { Card } from '../ui/card'
-import { Heart, Minus, Plus, ShoppingBag } from 'lucide-react'
+import { Heart, Loader2, Minus, Plus, ShoppingBag } from 'lucide-react'
 import { Button } from '../ui/button'
 import { Product, Size } from '@/api/products/products.model'
+import { useAddToWishlistMutation } from '@/api/products/products.api'
+import { useToast } from '@/hooks/use-toast'
 
 
 
@@ -11,6 +13,25 @@ import { Product, Size } from '@/api/products/products.model'
 const ProductDescriptionSingle = (props:Product) => {
     const [quantity, setquantity] = useState<number>(1)
     const [size, setsize] = useState<Size|null>(null)
+    const [addToFavorite,{data,error,isLoading:addingWishlist,isError,isSuccess}] = useAddToWishlistMutation()
+
+    const {toast} = useToast()
+    useEffect(() => {
+        if(isError){
+            toast({
+                title:'Error',
+                description:"Cannot add to wishlist",
+                variant:'destructive'
+            })
+            console.log(error)
+        }
+        if(isSuccess){
+            toast({
+                title:'Added',
+                description:"Added to wishlist"
+            })
+        }
+    }, [isError,isSuccess])
 
     useEffect(() => {
       setquantity(1)
@@ -54,7 +75,7 @@ const ProductDescriptionSingle = (props:Product) => {
         </div>
         <div className='mt-5 flex items-center gap-2'> 
             <Button size="lg"><ShoppingBag size={16} className='mr-2'/> Add to Cart</Button>
-            <Button size="icon" variant="outline"><Heart size={17}/></Button>
+            <Button size="icon" onClick={()=> addToFavorite(String(props.id))} variant="outline" disabled={addingWishlist}>{addingWishlist?<Loader2 size={17} className='animate-spin'/>:<Heart size={17}/>}</Button>
         </div>
         <div className="mt-10">
             <p className='font-semibold'>Description</p>

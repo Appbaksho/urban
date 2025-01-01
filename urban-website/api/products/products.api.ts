@@ -1,6 +1,7 @@
 
+import { auth } from "@/firebase/firebase";
 import { api } from "../index.api";
-import { ImageResponse, Product, ProductPayload } from "./products.model";
+import { ImageResponse, Product, ProductPayload, Wishlist } from "./products.model";
 
 export const productsApi = api.injectEndpoints({
     endpoints: (build) => ({
@@ -10,7 +11,29 @@ export const productsApi = api.injectEndpoints({
         getSingleProduct: build.query<Product,string>({
             query: (id:string) => `/product/${id}`,
         }),
+        addToWishlist: build.mutation<Product, string>({
+            query: (id:string) => ({
+                url: `/product/add-to-favorite/${id}`,
+                method: "PUT",
+            }),
+        }),
+        getWishlist: build.query<Wishlist[], string>({
+            query: (token:string) => ({
+                url: "/product/get-favorite",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+            }),
+        }),
+        removeWishlist: build.mutation<Wishlist, string>({
+            query: (id:string) => ({
+                url: `product/remove-from-favorite/${id}`,
+                method: "DELETE",
+            }),
+        }),
+        
     }),
     overrideExisting: false,
     });
-export const { useGetProductsQuery,useGetSingleProductQuery} = productsApi;
+export const { useGetProductsQuery,useGetSingleProductQuery,useAddToWishlistMutation,useLazyGetWishlistQuery,useRemoveWishlistMutation} = productsApi;  

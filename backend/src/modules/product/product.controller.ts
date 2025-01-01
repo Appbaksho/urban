@@ -56,6 +56,14 @@ export class ProductController {
     );
   }
 
+  @Get('get-favorite')
+  async getFavorites(
+    @Req() req: Request,
+  ) {
+    const customerId = await this.firebaseService.getCustomerIdFromToken(req);
+    return this.productService.getFavorites(customerId);
+  }
+
   @Get(':id')
   async findOne(@Param('id') id: string) {
     return this.productService.findOne(id);

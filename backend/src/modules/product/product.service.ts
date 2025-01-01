@@ -197,6 +197,23 @@ export class ProductService {
     };
   }
 
+  async getFavorites(customerId: string) {
+    return this.databaseService.favorite.findMany({
+      where: {
+        customerId: customerId,
+      },
+      include: {
+        customer: false,
+        product: {
+          include: {
+            sizes: true,
+          },
+        },
+      }
+    });
+  }
+
+
   //remove from favorite
   async removeFromFavorite(productId: string, customerId: string) {
     const favorite = await this.databaseService.favorite.deleteMany({

@@ -12,6 +12,7 @@ export interface Product {
   updatedAt?: string
   continued?: boolean
   sizes: Size[]
+  refetch?: () => void
 }
 
 export interface ImageResponse{
@@ -37,4 +38,11 @@ export interface ProductPayload  {
         sizeDescription: string[];
         price: number;
       
+}
+
+export interface Wishlist {
+    id: string
+    customerId: string
+    productId: string
+    product: Product
 }
