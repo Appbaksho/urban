@@ -28,7 +28,7 @@ const CategoryBanner = (props:Category) => {
             </Breadcrumb>
           </div>
         
-            <Image src={props.src} height={400} width={300} alt={`${props.name} | Urban`} className='w-full h-[400px] object-cover'/>
+            <img src={props.src} height={400} width={300} alt={`${props.name} | Urban`} className='w-full h-[400px] object-cover'/>
             {/* <p className="pl-2 text-xl font-semibold mt-3">{props.name}</p> */}
         
         </div>

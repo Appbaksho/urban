@@ -28,7 +28,7 @@ const LoginForm = () => {
             description:'You have successfully logged in',
             className:"bg-green-500 text-white"
           })
-          router.push('/profile')
+          router.push('/user')
         }
         else{
           toast({
