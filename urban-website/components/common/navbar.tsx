@@ -13,6 +13,8 @@ import { Search } from 'lucide-react'
 import Link from 'next/link'
 import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from '@/firebase/firebase'
+import { useLazyGetCartQuery } from '@/api/cart/cart.api'
+import { Skeleton } from '../ui/skeleton'
 
 const Navbar = () => {
     const [bottomvisible, setbottomvisible] = useState<boolean>(false)
@@ -20,11 +22,35 @@ const Navbar = () => {
     // const [searchQuery, setsearchQuery] = useState<string>('')
     const [cartOpen, setcartOpen] = useState<boolean>(false) 
     const [loggedIn, setloggedIn] = useState<boolean>(false)
+    const [total, settotal] = useState<number>(0)
+
+    const [getCart,{data:cart,isLoading:cartLoading,isSuccess:isCartSuccess,isError:isCartError,error:cartError}] = useLazyGetCartQuery()
+
+  useEffect(() => {
+    if(isCartError){
+      console.log(cartError)
+    }
+    if(isCartSuccess){
+      console.log(cart)
+      settotal(cart?.items.reduce((acc,v)=>acc+v.size.product.price*v.quantity,0))
+    }
+  }, [isCartError,isCartSuccess])
+
+  const getAuthCart = ()=>{
+    auth.currentUser?.getIdToken().then((token)=>{
+      getCart(token)
+    }).catch((e)=>{
+      console.log(e)
+    })
+  }
+  
+  
     
     useEffect(() => {
       onAuthStateChanged(auth, (user) => {
         if (user) {
           setloggedIn(true)
+          getAuthCart()
         } else {
           setloggedIn(false)
         }
@@ -39,6 +65,13 @@ const Navbar = () => {
         }
     window.addEventListener('scroll', handleScroll);
     }, [])
+
+    useEffect(() => {
+      if(cartOpen){
+        getAuthCart()
+      }
+    }, [cartOpen])
+    
     
     
   return (
@@ -72,13 +105,15 @@ const Navbar = () => {
               <SheetDescription>
               </SheetDescription>
               <ScrollArea className='h-[70vh] pr-2'>
-                {Array(50).fill("_").map((v,i)=><SheetDescription key={i} className='border-b py-3'>
-                  <CartProduct/>
+                {cartLoading?Array(5).fill("_").map((_,i)=><SheetDescription key={i} className='border-b py-3'>
+                  <Skeleton className='h-[150px] w-full'/>
+                </SheetDescription>):cart?.items?.map((v)=><SheetDescription key={v.id} className='border-b py-3'>
+                  <CartProduct {...v}/>
                 </SheetDescription>)}
               </ScrollArea>
               <div className="flex items-center justify-between px-5 py-3 border-t">
                 <SheetDescription className='font-semibold'>Total</SheetDescription>
-                <SheetDescription className='font-semibold'>1900 BDT</SheetDescription>
+                <SheetDescription className='font-semibold'>{total} BDT</SheetDescription>
               </div>
               <SheetFooter className='flex items-center justify-between gap-1'>
                 <Link href="/checkout" className={buttonVariants({class:'flex-1'})}>Checkout</Link>

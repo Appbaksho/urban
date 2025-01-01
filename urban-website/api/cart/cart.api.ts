@@ -1,9 +1,9 @@
 import { api } from "../index.api";
-import { AddToCartPayload } from "./cart.model";
+import { AddToCartPayload, Cart } from "./cart.model";
 
 const cartApi = api.injectEndpoints({
     endpoints: (build) => ({
-        getCart: build.query<any, string>({
+        getCart: build.query<Cart, string>({
         query: (token:string) => {
             return {
                 url: "/cart",

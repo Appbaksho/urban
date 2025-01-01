@@ -67,26 +67,6 @@ interface BaseNavbarProps {
 }
 
 const BaseNavbar = (props:BaseNavbarProps) => {
-  const [getCart,{data:cart,isLoading:cartLoading,isSuccess:isCartSuccess,isError:isCartError,error:cartError}] = useLazyGetCartQuery()
-
-  useEffect(() => {
-    if(isCartError){
-      console.log(cartError)
-    }
-    if(isCartSuccess){
-      console.log(cart)
-    }
-  }, [isCartError,isCartSuccess])
-
-  useEffect(() => {
-    if(props.isLoggedIn){
-      auth.currentUser?.getIdToken().then((token)=>{
-        getCart(token)
-      }).catch((e)=>{
-        console.log(e)
-      })
-    }
-  }, [props.isLoggedIn])
   
 
 
