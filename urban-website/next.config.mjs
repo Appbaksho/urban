@@ -16,6 +16,13 @@ const nextConfig = {
             pathname: '/**',
             search: '',
           },
+          {
+            protocol: 'https',
+            hostname: 'indicollection.co.uk',
+            port: '',
+            pathname: '/**',
+            search: '',
+          }
         ],
     },
 };

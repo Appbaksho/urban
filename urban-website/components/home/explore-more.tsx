@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react';
 
 import 'swiper/css'
@@ -7,36 +7,24 @@ import  { Category } from './category-banner';
 import { Button } from '../ui/button';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import CategoryContainer from './category-container';
+import { useGetCategoriesQuery } from '@/api/category/category.api';
+import { useToast } from '@/hooks/use-toast';
+import { Skeleton } from '../ui/skeleton';
 
 const ExploreMore = () => {
     const swiper = React.useRef<SwiperRef>(null)
-    const sampleCategories:Category[] = [
-      {
-        src:'/products/kids.webp',
-        name:'Kids',
-        url:'/category/hoodie'
-      },
-      {
-        src:'/products/kids-1.jpg',
-        name:'Kids Jackets',
-        url:'/category/jackets'
-      },
-      {
-        src:'/products/hoodie-3.png',
-        name:'Cotton Hoodie',
-        url:'/category/joggers'
-      },
-      {
-        src:'/products/hoodie-4.jpg',
-        name:'Olive Hoodie',
-        url:'/category/sweatshirt'
-      },
-      {
-        src:'/products/hoodie-5.webp',
-        name:'Orange Hoodie',
-        url:'/category/sweatshirt'
+    const {data:category,isLoading,isError,error} = useGetCategoriesQuery()
+    const {toast} = useToast()
+    useEffect(() => {
+      if(isError){
+        toast({
+          title:'Error',
+          description:"Cannot get categories",
+          variant:'destructive'
+        })
+        console.log(error)
       }
-    ]
+    }, [isError])
   return (
     <div className='py-10'>
         <div className="flex items-center justify-between px-5 md:px-10">
@@ -68,11 +56,15 @@ const ExploreMore = () => {
         },
       }}
     >
-        {
-          sampleCategories.map((v,i)=>{
-            return <SwiperSlide key={i}><CategoryContainer {...v}/></SwiperSlide>
-        })
-        }
+        {isLoading?Array(10).fill("_").map((_,i)=><SwiperSlide key={i}>
+        <Skeleton className='h-[200px] w-full'/>
+      </SwiperSlide>):category?.map((v)=>{
+          return <SwiperSlide key={v.id}><CategoryContainer 
+          name={v.name}
+          src={v.imageUrl}
+          url={`/category/${v.id}`}/>
+          </SwiperSlide>
+      })}
       
     </Swiper>
     </div>
