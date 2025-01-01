@@ -10,12 +10,13 @@ const DeliveryDetails = () => {
     <Card>
       <CardContent className='pt-5'>
         <p className='text-xs font-semibold'>
-          Inside Dhaka : 50tk <br/>
-          All Over Bangladesh : 100tk
+          Inside Dhaka : 60tk <br/>
+          All Over Bangladesh : 120tk
         </p>
         <div className="flex items-center gap-1 mt-5">
-        <Checkbox id='cod' name='same-address'/>
-        <Label htmlFor="cod">Cash On Delivery</Label> 
+          <p className="italic text-sm">Currently Cash on delivery is available only</p>
+        {/* <Checkbox id='cod' name='same-address'/>
+        <Label htmlFor="cod">Cash On Delivery</Label>  */}
         </div>
       </CardContent>
     </Card>

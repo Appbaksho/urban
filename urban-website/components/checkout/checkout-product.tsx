@@ -1,6 +1,7 @@
 import React from 'react'
 
 const CheckoutProduct = () => {
+  
   return (
     <div className='flex items-center justify-between py-2'>
                   <div className='flex items-center space-x-2'>
