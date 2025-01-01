@@ -11,10 +11,13 @@ import CartProduct from '../cart/cart-product'
 import { Input } from '../ui/input'
 import { Search } from 'lucide-react'
 import Link from 'next/link'
-import { onAuthStateChanged } from 'firebase/auth'
+import { onAuthStateChanged, signOut } from 'firebase/auth'
 import { auth } from '@/firebase/firebase'
 import { useLazyGetCartQuery } from '@/api/cart/cart.api'
 import { Skeleton } from '../ui/skeleton'
+import CartProductOffline from '../cart/cart-product-offline'
+import { Product } from '@/api/products/products.model'
+import { AddToCartPayload, Item } from '@/api/cart/cart.model'
 
 const Navbar = () => {
     const [bottomvisible, setbottomvisible] = useState<boolean>(false)
@@ -22,16 +25,16 @@ const Navbar = () => {
     // const [searchQuery, setsearchQuery] = useState<string>('')
     const [cartOpen, setcartOpen] = useState<boolean>(false) 
     const [loggedIn, setloggedIn] = useState<boolean>(false)
+    const [offlineProducts, setofflineProducts] = useState<{price:number,quanity:number,id:string}[]>([])
+    const [offlineCartItems, setofflineCartItems] = useState<AddToCartPayload[]>([])
     const [total, settotal] = useState<number>(0)
 
     const [getCart,{data:cart,isLoading:cartLoading,isSuccess:isCartSuccess,isError:isCartError,error:cartError}] = useLazyGetCartQuery()
-
   useEffect(() => {
     if(isCartError){
       console.log(cartError)
     }
     if(isCartSuccess){
-      console.log(cart)
       settotal(cart?.items.reduce((acc,v)=>acc+v.size.product.price*v.quantity,0))
     }
   }, [isCartError,isCartSuccess])
@@ -64,13 +67,20 @@ const Navbar = () => {
             }
         }
     window.addEventListener('scroll', handleScroll);
+    
     }, [])
 
     useEffect(() => {
       if(cartOpen){
         getAuthCart()
+        setofflineCartItems(JSON.parse(localStorage.getItem('cart')||'[]'))
       }
     }, [cartOpen])
+
+    useEffect(() => {
+      settotal(offlineProducts.reduce((acc,v)=>acc+v.price*v.quanity,0))
+    }, [offlineProducts])
+    
     
     
     
@@ -105,18 +115,21 @@ const Navbar = () => {
               <SheetDescription>
               </SheetDescription>
               <ScrollArea className='h-[70vh] pr-2'>
-                {cartLoading?Array(5).fill("_").map((_,i)=><SheetDescription key={i} className='border-b py-3'>
+                {loggedIn?(cartLoading?Array(5).fill("_").map((_,i)=><SheetDescription key={i} className='border-b py-3'>
                   <Skeleton className='h-[150px] w-full'/>
                 </SheetDescription>):cart?.items?.map((v)=><SheetDescription key={v.id} className='border-b py-3'>
                   <CartProduct {...v}/>
-                </SheetDescription>)}
+                </SheetDescription>)):offlineCartItems.length>0?offlineCartItems.map((v:any,i:number)=><SheetDescription key={i} className='border-b py-3'>
+                  <CartProductOffline setCartItems={setofflineCartItems} setOfflineProducts={setofflineProducts} {...v}/>
+                </SheetDescription>):<SheetDescription className='border-b py-3'>No items in cart</SheetDescription>}
+
               </ScrollArea>
               <div className="flex items-center justify-between px-5 py-3 border-t">
                 <SheetDescription className='font-semibold'>Total</SheetDescription>
                 <SheetDescription className='font-semibold'>{total} BDT</SheetDescription>
               </div>
               <SheetFooter className='flex items-center justify-between gap-1'>
-                <Link href="/checkout" className={buttonVariants({class:'flex-1'})}>Checkout</Link>
+                <Link href="/checkout" className={buttonVariants({class:'flex-1 w-full'})}>Checkout</Link>
               </SheetFooter>
             </SheetHeader>
           </SheetContent>

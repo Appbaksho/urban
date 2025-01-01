@@ -7,6 +7,8 @@ import { Product, Size } from '@/api/products/products.model'
 import { useAddToWishlistMutation } from '@/api/products/products.api'
 import { useToast } from '@/hooks/use-toast'
 import { useAddToCartMutation } from '@/api/cart/cart.api'
+import { onAuthStateChanged } from 'firebase/auth'
+import { auth } from '@/firebase/firebase'
 
 
 
@@ -54,6 +56,79 @@ const ProductDescriptionSingle = (props:Product) => {
     }, [cartIsError,cartIsSuccess])
 
 
+    const addToCartFiltered = ()=>{
+        if(size){
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                addToCart({
+                    productId:String(props.id),
+                    sizeId:String(size?.id),
+                    quantity:quantity
+                })
+            }
+            else{
+                const previous = localStorage.getItem('cart')
+                if(previous){
+                    const prev = JSON.parse(previous)
+                    if(Array.isArray(prev)){
+                    if(prev.filter(v=> v.productId==String(props.id)).length>0){
+                        toast({
+                            title:'Already in cart',
+                            description:"This product is already in cart",
+                            variant:'destructive'
+                        })
+                    }
+                    else{
+                        localStorage.setItem('cart',JSON.stringify([...prev,{
+                            productId:String(props.id),
+                            sizeId:String(size?.id),
+                            quantity:quantity
+                        }]))
+                        toast({
+                            title:'Added',
+                            description:"Added to cart"
+                        })
+                    }
+                }
+                else{
+                    localStorage.setItem('cart',JSON.stringify([{
+                        productId:String(props.id),
+                        sizeId:String(size?.id),
+                        quantity:quantity
+                    }]))
+                    toast({
+                        title:'Added',
+                        description:"Added to cart"
+                    })
+                    
+                }
+                }
+                else{
+                    localStorage.setItem('cart',JSON.stringify([{
+                        productId:String(props.id),
+                        sizeId:String(size?.id),
+                        quantity:quantity
+                    }]))
+                    toast({
+                        title:'Added',
+                        description:"Added to cart"
+                    })
+                }
+
+                
+            }
+        })
+    }
+    else{
+        toast({
+            title:'Select Size',
+            description:"Please select a size to add to cart",
+            variant:'destructive'
+        })
+    }
+    }
+
+
 
 
 
@@ -99,21 +174,7 @@ const ProductDescriptionSingle = (props:Product) => {
         </div>
         </div>
         <div className='mt-5 flex items-center gap-2'> 
-            <Button size="lg" disabled={addingCart} onClick={()=> {
-                if(size){
-            addToCart({
-                productId:String(props.id),
-                sizeId:String(size?.id),
-                quantity:quantity
-            })}
-            else{
-                toast({
-                    title:'Select a size',
-                    description:"Please select a size to add to cart",
-                    variant:'destructive'
-                })
-            }
-            }}>{addingCart?<Loader2 className='animate-spin mr-2' size={16}/>:<ShoppingBag size={16} className='mr-2'/>} Add to Cart</Button>
+            <Button size="lg" disabled={addingCart} onClick={addToCartFiltered}>{addingCart?<Loader2 className='animate-spin mr-2' size={16}/>:<ShoppingBag size={16} className='mr-2'/>} Add to Cart</Button>
             <Button size="icon" onClick={()=> addToFavorite(String(props.id))} variant="outline" disabled={addingWishlist}>{addingWishlist?<Loader2 size={17} className='animate-spin'/>:<Heart size={17}/>}</Button>
         </div>
         <div className="mt-10">

@@ -21,11 +21,11 @@ export class CartService {
           },
         },
       });
-  
+
       if (cart) {
         return cart;
       }
-  
+
       return await this.databaseService.cart.create({
         data: { customerId },
         include: {
@@ -43,9 +43,7 @@ export class CartService {
       throw new Error('Failed to retrieve or create cart.');
     }
   }
-  
 
-  
   findAll() {
     return `This action returns all cart`;
   }

@@ -11,12 +11,13 @@ const CartProduct = (props:Item) => {
     <div className='flex gap-2 w-full justify-between'>
         <img width={100} height={100} src={props.size.product.imageUrl[0]} alt="Cart Item Image" className="object-cover h-[70px] w-[70px] rounded-md" />
         <div className='w-full flex flex-col items-start'>
-            <p className="font-semibold text-primary">{props.size.product.name}</p>
+            <p className="font-semibold text-left text-primary">{props.size.product.name}</p>
             <div className="flex items-center mt-1">
             <p className="text-xs mr-2">Size</p> <Badge variant="outline" className='text-xs'>{props.size.name}</Badge>
+            <p className="text-xs ml-2 text-right">Qty : {props.quantity}</p>
             </div>
             
-            <p className="text-sm font-semibold mt-2 text-primary">{props.size.product.price} BDT</p>
+            <p className="text-sm font-semibold mt-2 text-primary">{Number(props.size.product.price)*Number(props.quantity)} BDT</p>
         </div>
         <div className='flex justify-end'>
             <Button size="icon" className='h-[20px] w-[20px] bg-red-200 hover:bg-red-200/70 text-red-500'>

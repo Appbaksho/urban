@@ -1,5 +1,5 @@
-import { PartialType } from "@nestjs/mapped-types";
-import { DeliveryStatus, OrderStatus, PaymentStatus } from "@prisma/client";
+import { PartialType } from '@nestjs/mapped-types';
+import { DeliveryStatus, OrderStatus, PaymentStatus } from '@prisma/client';
 
 class UpdateCartDto {
   isCheckedOut: boolean;

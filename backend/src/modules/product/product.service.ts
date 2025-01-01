@@ -209,10 +209,9 @@ export class ProductService {
             sizes: true,
           },
         },
-      }
+      },
     });
   }
-
 
   //remove from favorite
   async removeFromFavorite(productId: string, customerId: string) {

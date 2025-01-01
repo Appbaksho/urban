@@ -33,12 +33,15 @@ export class CartController {
 
   @Post()
   @UseGuards(AccessTokenGuard)
-  async createMany(@Req() request: Request,@Body() createCartDto: CreateCartDto) {
+  async createMany(
+    @Req() request: Request,
+    @Body() createCartDto: CreateCartDto,
+  ) {
     const customerId =
       await this.firebaseService.getCustomerIdFromToken(request);
     return this.cartService.createIfNotFound(customerId);
   }
-  
+
   @Get()
   @UseGuards(AccessTokenGuard)
   async findOne(@Param('id') id: string, @Req() request: Request) {
@@ -71,7 +74,10 @@ export class CartController {
   }
   @Post('add-to-cart/batch')
   @UseGuards(AccessTokenGuard)
-  async addToCartMany(@Body() addToCartDto: AddToCartDto[], @Req() request: Request) {
+  async addToCartMany(
+    @Body() addToCartDto: AddToCartDto[],
+    @Req() request: Request,
+  ) {
     const customerId =
       await this.firebaseService.getCustomerIdFromToken(request);
     return this.cartService.addToCartMany(customerId, addToCartDto);

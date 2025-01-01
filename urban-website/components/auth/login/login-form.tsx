@@ -75,15 +75,12 @@ const LoginForm = () => {
           </div>
         </form>
         
-        <p className="text-center text-xs mt-5">Other Options</p>
-        <div className="flex justify-center mt-3">
-        <Button variant="outline" onClick={() => console.log('Login with Google')} className='text-xs text-gray-500 rounded-none'>
-          <GoogleIcon/>
-          <span className="pl-1">
-            Login with Google
-          </span>
-        </Button>
+        <div className="flex items-center gap-2 mt-5">
+          <div className="h-[1px] w-full bg-gray-200"></div>
+          <p className="text-xs">Or</p>
+          <div className="h-[1px] w-full bg-gray-200"></div>
         </div>
+        <Button className='mt-5 w-full' variant='outline' onClick={()=> router.push('/auth/register')}>Register</Button>  
       </CardContent>
     </Card>
   )
