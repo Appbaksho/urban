@@ -12,9 +12,10 @@ const SearchPage = () => {
     <Navbar/>
     <div className="px-3 md:px-10">
         <Suspense fallback={<p>Loading...</p>}>
-        <SearchResultBanner/>
+          <SearchResultBanner/>
+          <SearchResultProducts/>
         </Suspense>
-    <SearchResultProducts/>
+    
     </div>
     <Footer/>
     </>
