@@ -74,8 +74,17 @@ const Navbar = () => {
       if(cartOpen){
         getAuthCart()
         setofflineCartItems(JSON.parse(localStorage.getItem('cart')||'[]'))
+        
+        
       }
     }, [cartOpen])
+
+    useEffect(() => {
+      if(cart){
+        settotal(cart?.items.reduce((acc,v)=>acc+v.size.product.price*v.quantity,0))
+      }
+    }, [cart])
+    
 
     useEffect(() => {
       settotal(offlineProducts.reduce((acc,v)=>acc+v.price*v.quanity,0))
@@ -118,7 +127,7 @@ const Navbar = () => {
                 {loggedIn?(cartLoading?Array(5).fill("_").map((_,i)=><SheetDescription key={i} className='border-b py-3'>
                   <Skeleton className='h-[150px] w-full'/>
                 </SheetDescription>):cart?.items?.map((v)=><SheetDescription key={v.id} className='border-b py-3'>
-                  <CartProduct {...v}/>
+                  <CartProduct refetch={getAuthCart} {...v}/>
                 </SheetDescription>)):offlineCartItems.length>0?offlineCartItems.map((v:any,i:number)=><SheetDescription key={i} className='border-b py-3'>
                   <CartProductOffline setCartItems={setofflineCartItems} setOfflineProducts={setofflineProducts} {...v}/>
                 </SheetDescription>):<SheetDescription className='border-b py-3'>No items in cart</SheetDescription>}

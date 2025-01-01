@@ -17,6 +17,7 @@ export interface Cart {
     paymentStatus: string
     orderStatus: string
     size: Size
+    refetch?: () => void
   }
   
   export interface Size {
