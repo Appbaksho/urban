@@ -8,7 +8,7 @@ import Navbar from '@/components/common/navbar'
 import { Button } from '@/components/ui/button'
 import { auth } from '@/firebase/firebase'
 import { onAuthStateChanged } from 'firebase/auth'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 export interface ShippingFormData {
   name: string;       // Full name of the user
@@ -32,13 +32,23 @@ const CheckoutPage = () => {
     city: '',
     zip: ''
   })
+  const [isLoggedIn, setisLoggedIn] = useState(false)
+  useEffect(() => {
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      setisLoggedIn(true)
+    } else {
+      setisLoggedIn(false)
+    }
+  })
+  }, [])
   return (
     <>
     <Navbar/>
     <div className="grid grid-cols-1 md:grid-cols-2 gap-5 px-3 md:px-20 py-10">
         <div className="">
             <p className='font-bold text-xl'>Billing Details</p>
-            {auth.currentUser ? <AlreadyLoggedIn uid={auth.currentUser.uid}/> : <CheckoutForm changeData={setcheckoutFormData} data={checkoutFormData}/>}
+            {isLoggedIn ? <AlreadyLoggedIn uid={String(auth.currentUser?.uid)}/> : <CheckoutForm changeData={setcheckoutFormData} data={checkoutFormData}/>}
             
         </div>
         <div>
