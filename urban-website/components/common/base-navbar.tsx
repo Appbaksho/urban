@@ -170,9 +170,11 @@ const BaseNavbar = (props:BaseNavbarProps) => {
                 <input type="text" className='focus:outline-0 bg-transparent pr-2 placeholder:font-medium placeholder:text-sm w-[100px]' placeholder='Search' />
             </div>
             <div className="flex items-center gap-2">
-                    {/* <Link href="/wishlist" className="rounded-full p-1.5 hover:bg-gray-200">
+                    {props.isLoggedIn?<Link href="/wishlist" className="rounded-full p-1.5 hover:bg-gray-200">
                         <Heart size={20} strokeWidth={1}/>
-                    </Link> */}
+                    </Link>:<Link href="/login" className="rounded-full p-1.5 hover:bg-gray-200">
+                        <Heart size={20} strokeWidth={1}/>
+                    </Link>}
                     {props.isLoggedIn?<Link href="/user" className="rounded-full p-1.5 hover:bg-gray-200">
                         <User size={20} strokeWidth={1}/>
                     </Link>:<Link href="/auth/login" className="rounded-full p-1.5 hover:bg-gray-200">
