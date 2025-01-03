@@ -1,3 +1,4 @@
+import { UserPayload } from "../auth/auth.model"
 import { Product } from "../products/products.model"
 
 export interface Cart {
@@ -5,7 +6,13 @@ export interface Cart {
     customerId: string
     deliveryCharge: number
     items: Item[]
-  }
+}
+export interface OrderCart {
+    id: string
+    customer:UserPayload
+    deliveryCharge: number
+    items: Item[]
+}
   
   export interface Item {
     id: string
@@ -39,7 +46,7 @@ export interface Cart {
     deliveryStatus: string
     paymentStatus: string
     orderStatus: string
-    cart: Cart
+    cart: OrderCart
     size: Size
   }
   

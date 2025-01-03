@@ -36,10 +36,6 @@ const ProgressInfo = ({props}:ProgressInfoProps) => {
             </div>
             <p className="text-center text-sm">Delivered</p>
         </div>
-        
-        
-
-
       </CardContent>
     </Card>
   )

@@ -93,7 +93,18 @@ export class CartService {
       const cartItem = await this.databaseService.orderItem.findUnique({
         where: { id: orderItemId },
         include: {
-          cart:true,
+          cart:{
+            include:{
+              customer:true,
+              items:{
+                include:{
+                  size:{
+                    include:{product:true}
+                  }
+                }
+              }
+            }
+          },
           size: {
             include: { product: true},
           },

@@ -1,5 +1,6 @@
 "use client"
 import { useLazyGetSingleOrderQuery } from '@/api/cart/cart.api'
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb'
 import { Skeleton } from '@/components/ui/skeleton'
 import PricingInfo from '@/components/user/order/pricing-info'
 import ProductInfo from '@/components/user/order/product-info'
@@ -50,10 +51,23 @@ const SingleOrderPage = () => {
   
 
   return (
-    <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+    <div>
+      <Breadcrumb>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/user/orders">Orders</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage>Single Order</BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
+    <div className='grid grid-cols-1 md:grid-cols-2 gap-4 mt-5'>
       {orderLoading?<Skeleton className='w-full h-[300px]'/>:order&&<ProgressInfo props={order?.deliveryStatus}/>}
-      {orderLoading?<Skeleton className='w-full h-[300px]'/>:<ProductInfo/>}
-      {orderLoading?<Skeleton className='w-full h-[200px]'/>:<UserInfo/>}
+      {orderLoading?<Skeleton className='w-full h-[300px]'/>:order&&<ProductInfo items={order?.cart.items} deliveryCharge={order.cart.deliveryCharge}/>}
+      {orderLoading?<Skeleton className='w-full h-[200px]'/>:order&&<UserInfo {...order.cart.customer} />}
+    </div>
     </div>
   )
 }
