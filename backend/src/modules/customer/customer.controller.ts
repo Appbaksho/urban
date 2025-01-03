@@ -25,7 +25,7 @@ export class CustomerController {
 
   @Get(':id')
   async findOne(@Param('id') id: string) {
-    return this.customerService.findOne(id);
+    return await this.customerService.findOne(id);
   }
 
   // @Patch(':id')

@@ -30,9 +30,11 @@ export class CustomerService {
   }
 
   async findOne(id: string) {
-    return this.databaseService.customer.findUnique({
+    const result  = await this.databaseService.customer.findUnique({
       where: { firebaseId: id },
     });
+    console.log(result);
+    return result;
   }
 
   // update(id: number, updateCustomerDto: UpdateCustomerDto) {

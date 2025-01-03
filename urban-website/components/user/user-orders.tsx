@@ -1,8 +1,14 @@
 import React from 'react'
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../ui/table'
 import UserOrderAdapter from './user-order-adapter'
+import { Cart } from '@/api/cart/cart.model'
 
-const UserOrders = () => {
+
+interface UserOrdersProps {
+  carts:Cart[]
+}
+
+const UserOrders = (props:UserOrdersProps) => {
   return (
     <div>
         <Table>
@@ -18,8 +24,10 @@ const UserOrders = () => {
           </TableHeader>
           <TableBody>
             {
-                Array.from({length: 5}).map((_, i) => (
-                    <UserOrderAdapter key={i} />
+                props.carts.map((cart) => (
+                  cart.items.map((item) => (
+                    <UserOrderAdapter key={item.id} {...item} />
+                  ))
                 ))
             }
           </TableBody>

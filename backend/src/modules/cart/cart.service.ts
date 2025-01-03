@@ -66,6 +66,7 @@ export class CartService {
       });
 
       if (cart) {
+        console.log(cart);
         return cart;
       }
 

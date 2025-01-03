@@ -11,8 +11,10 @@ import { Button } from '@/components/ui/button'
 import { auth } from '@/firebase/firebase'
 import { useToast } from '@/hooks/use-toast'
 import { createUserWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth'
+import { Loader2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
+import { set } from 'zod'
 
 export interface ShippingFormData {
   name: string;       // Full name of the user
@@ -44,6 +46,7 @@ const CheckoutPage = () => {
   const [isLoggedIn, setisLoggedIn] = useState(false)
   const router = useRouter()
   const {toast} = useToast()
+  const [checkingOut, setcheckingOut] = useState<boolean>(false)
   useEffect(() => {
   onAuthStateChanged(auth, (user) => {
     if (user) {
@@ -57,12 +60,14 @@ const CheckoutPage = () => {
 
 
   useEffect(() => {
+    
     if(checkoutError){
       toast({
         title:'Error',
         description:'Cannot do checkout right now',
         variant:'destructive'
       })
+      setcheckingOut(false)
       console.log(checkoutError)
     }
     if(checkoutSuccess){
@@ -70,6 +75,7 @@ const CheckoutPage = () => {
         title:'Success',
         description:'Checkout successful'
       })
+      setcheckingOut(false)
       localStorage.clear()
       router.push('/user/orders')
     }
@@ -83,6 +89,7 @@ const CheckoutPage = () => {
         description:'Cannot do checkout right now',
         variant:'destructive'
       })
+      setcheckingOut(false)
       console.log(error)
     }
     if(isSuccess){
@@ -106,6 +113,7 @@ const CheckoutPage = () => {
         description:'Cannot create user',
         variant:'destructive'
       })
+      setcheckingOut(false)
       console.log(customerError)
     }
     if(customerSuccess){
@@ -116,6 +124,7 @@ const CheckoutPage = () => {
 
 
   const checkOutProducts = () => {
+    setcheckingOut(true)
     //form validation 
     if(!isLoggedIn){
       if(checkoutFormData.name===''){
@@ -124,6 +133,7 @@ const CheckoutPage = () => {
           description:'Name is required',
           variant:'destructive'
         })
+        setcheckingOut(false)
         return
       }
       else if(checkoutFormData.email===''){
@@ -132,6 +142,7 @@ const CheckoutPage = () => {
           description:'Email is required',
           variant:'destructive'
         })
+        setcheckingOut(false)
         return
       }
       else if(checkoutFormData.phone===''){
@@ -140,6 +151,7 @@ const CheckoutPage = () => {
           description:'Phone is required',
           variant:'destructive'
         })
+        setcheckingOut(false)
         return
       }
       else if(checkoutFormData.address===''){
@@ -148,6 +160,7 @@ const CheckoutPage = () => {
           description:'Address is required',
           variant:'destructive'
         })
+        setcheckingOut(false)
         return
       }
       else if(checkoutFormData.city===''){
@@ -156,6 +169,7 @@ const CheckoutPage = () => {
           description:'City is required',
           variant:'destructive'
         })
+        setcheckingOut(false)
         return
       }
       else if(checkoutFormData.zip===''){
@@ -164,6 +178,7 @@ const CheckoutPage = () => {
           description:'Zip is required',
           variant:'destructive'
         })
+        setcheckingOut(false)
         return
       }
       else if(checkoutFormData.password===''){
@@ -172,6 +187,7 @@ const CheckoutPage = () => {
           description:'Password is required',
           variant:'destructive'
         })
+        setcheckingOut(false)
         return
       }
       else if(checkoutFormData.password.length<6){
@@ -180,6 +196,7 @@ const CheckoutPage = () => {
           description:'Password must be atleast 6 characters',
           variant:'destructive'
         })
+        setcheckingOut(false)
         return
       }
       else if(!checkoutFormData.email.includes('@')){
@@ -188,6 +205,7 @@ const CheckoutPage = () => {
           description:'Invalid email',
           variant:'destructive'
         })
+        setcheckingOut(false)
         return
       }
       else if(checkoutFormData.phone.length<11){
@@ -196,6 +214,7 @@ const CheckoutPage = () => {
           description:'Invalid phone number',
           variant:'destructive'
         })
+        setcheckingOut(false)
         return
       }
       else if(checkoutFormData.zip.length<4){
@@ -204,6 +223,7 @@ const CheckoutPage = () => {
           description:'Invalid zip code',
           variant:'destructive'
         })
+        setcheckingOut(false)
         return
       }
       else if(checkoutFormData.city.length<3){
@@ -212,6 +232,7 @@ const CheckoutPage = () => {
           description:'Invalid city name',
           variant:'destructive'
         })
+        setcheckingOut(false)
         return
       }
       else if(checkoutFormData.address.length<10){
@@ -220,6 +241,7 @@ const CheckoutPage = () => {
           description:'Invalid address',
           variant:'destructive'
         })
+        setcheckingOut(false)
         return
       }
       else if(checkoutFormData.name.length<3){
@@ -228,6 +250,7 @@ const CheckoutPage = () => {
           description:'Invalid name',
           variant:'destructive'
         })
+        setcheckingOut(false)
         return
       }
       else if(checkoutFormData.password!==checkoutFormData.confirmPassword){
@@ -236,6 +259,7 @@ const CheckoutPage = () => {
           description:'Password do not match',
           variant:'destructive'
         })
+        setcheckingOut(false)
         return
       }
       else{
@@ -264,10 +288,19 @@ const CheckoutPage = () => {
             description:errorMessage,
             variant:'destructive'
           })
+          setcheckingOut(false)
         });
       }
     }
-  
+    else{
+      onAuthStateChanged(auth, (user) => {
+        user?.getIdToken().then((token)=>{
+          checkOutProductServer(token)
+        }).catch((e)=>{
+          console.log(e)
+        })
+      })
+    }
   }
 
   return (
@@ -283,7 +316,7 @@ const CheckoutPage = () => {
             <CheckoutProducts/>
             <DeliveryDetails/>
             <div className="flex justify-end mt-3">
-                <Button onClick={checkOutProducts}>Place Order</Button>
+                <Button disabled={checkingOut} onClick={checkOutProducts}>{checkingOut&&<Loader2 size={15} className='animate-spin'/>} Place Order</Button>
             </div>
         </div>
     </div>

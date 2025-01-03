@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Card, CardDescription, CardHeader, CardTitle } from '../ui/card'
-import { onAuthStateChanged } from 'firebase/auth'
+import { onAuthStateChanged, signOut } from 'firebase/auth'
 import { auth } from '@/firebase/firebase'
 import { useGetCustomerQuery, useLazyGetCustomerQuery } from '@/api/customer/customer.api'
 import { useToast } from '@/hooks/use-toast'
