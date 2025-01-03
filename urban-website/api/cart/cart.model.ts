@@ -30,7 +30,19 @@ export interface Cart {
   
   
   
-
+  export interface SingleOrder {
+    id: string
+    sizeId: string
+    quantity: number
+    cartId: string
+    isCheckedOut: boolean
+    deliveryStatus: string
+    paymentStatus: string
+    orderStatus: string
+    cart: Cart
+    size: Size
+  }
+  
 
 export interface AddToCartPayload {
     productId: string;

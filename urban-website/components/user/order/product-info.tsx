@@ -11,9 +11,9 @@ const ProductInfo = () => {
       </CardHeader>
       <CardContent>
         {
-            Array.from({length: 3}).map((_, i) => (
-                <CheckoutProduct key={i}/>
-            ))
+            // Array.from({length: 3}).map((_, i) => (
+            //     <CheckoutProduct key={i}/>
+            // ))
 
         }
       </CardContent>

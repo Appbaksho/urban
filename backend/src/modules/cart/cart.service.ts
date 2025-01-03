@@ -88,6 +88,29 @@ export class CartService {
     }
   }
 
+  async getOrderedSingleItem(orderItemId: string) {
+    try {
+      const cartItem = await this.databaseService.orderItem.findUnique({
+        where: { id: orderItemId },
+        include: {
+          cart:true,
+          size: {
+            include: { product: true},
+          },
+        },
+      });
+
+      if (cartItem) {
+        return cartItem;
+      }
+
+      throw new Error('Cart item not found');
+    } catch (error) {
+      console.error('Error in getOrderedSingleItem:', error);
+      throw new Error('Failed to retrieve cart item.');
+    }
+  }
+
   findAll() {
     return `This action returns all cart`;
   }

@@ -1,5 +1,6 @@
+import { UserOrders } from "@/components/user/user-orders";
 import { api } from "../index.api";
-import { AddToCartPayload, Cart } from "./cart.model";
+import { AddToCartPayload, Cart, SingleOrder } from "./cart.model";
 
 const cartApi = api.injectEndpoints({
     endpoints: (build) => ({
@@ -14,10 +15,21 @@ const cartApi = api.injectEndpoints({
             };
         },
         }),
-        getOrders: build.query<Cart[], string>({
+        getOrders: build.query<UserOrders, string>({
             query: (token:string) => {
                 return {
                     url: "/cart/checked-out",
+                    method: "GET",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                };
+            },
+        }),
+        getSingleOrder : build.query<SingleOrder, {token:string,id:string}>({
+            query: ({token,id}:{token:string,id:string}) => {
+                return {
+                    url: `/cart/checked-out/${id}`,
                     method: "GET",
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -58,4 +70,4 @@ const cartApi = api.injectEndpoints({
     overrideExisting: false,
     });
 
-export const { useLazyGetCartQuery, useAddToCartMutation,useAddManyToCartMutation,useRemoveFromCartMutation,useCheckoutProductMutation,useGetOrdersQuery,useLazyGetOrdersQuery } = cartApi;
+export const { useLazyGetCartQuery, useAddToCartMutation,useAddManyToCartMutation,useRemoveFromCartMutation,useCheckoutProductMutation,useGetOrdersQuery,useLazyGetOrdersQuery,useGetSingleOrderQuery,useLazyGetSingleOrderQuery} = cartApi;

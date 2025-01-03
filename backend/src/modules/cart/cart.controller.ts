@@ -55,7 +55,13 @@ export class CartController {
   async getCheckedOut(@Req() request: Request) {
     const customerId =
       await this.firebaseService.getCustomerIdFromToken(request);
-    return this.cartService.getCheckedOut(customerId);
+    return await this.cartService.getCheckedOut(customerId);
+  }
+
+  @Get('checked-out/:id')
+  @UseGuards(AccessTokenGuard)
+  async getCheckedOutById(@Param('id') id: string) {
+    return await this.cartService.getOrderedSingleItem(id);
   }
 
   @Put(':orderItemId')

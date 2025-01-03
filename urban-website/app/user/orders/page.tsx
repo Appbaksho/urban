@@ -43,7 +43,7 @@ const OrdersPage = () => {
 
   return (
     <div>
-        {/* {ordersLoading?<Skeleton className='w-full h-[300px]'/>:orders&&<UserOrders carts={orders}/>} */}
+        {ordersLoading?<Skeleton className='w-full h-[300px]'/>:orders&&<UserOrders {...orders}/>}
     </div>
   )
 }
