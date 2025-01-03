@@ -16,12 +16,14 @@ const UserPage = () => {
         getCustomer(user.uid)
       } 
     })
-  }, [])
+  }, [edit])
+
+  
   
   return (
     <div>
       {data?<UserProfile {...data} setEditOpen={setedit}/>:<Skeleton className='w-full h-[300px]'/>}
-      <UserEdit open={edit} onToggle={setedit}/>
+      {data&&<UserEdit user={data} open={edit} onToggle={setedit}/>}
     </div>
   )
 }

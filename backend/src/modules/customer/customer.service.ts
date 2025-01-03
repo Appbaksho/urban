@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 // import { UpdateCustomerDto } from './dto/update-customer.dto';
 import { DatabaseService } from '../database/database.service';
+import { UpdateCustomerDto } from './dto/update-customer.dto';
 
 @Injectable()
 export class CustomerService {
@@ -37,9 +38,18 @@ export class CustomerService {
     return result;
   }
 
-  // update(id: number, updateCustomerDto: UpdateCustomerDto) {
-  //   return `This action updates a #${id} customer`;
-  // }
+  async update(id: string, updateCustomerDto: UpdateCustomerDto) {
+    return await this.databaseService.customer.update({
+      where: { firebaseId: id },
+      data: {
+        city: updateCustomerDto.city,
+        contactNumbers: updateCustomerDto.contactNumbers,
+        name: updateCustomerDto.name,
+        photoUrl: updateCustomerDto.photoUrl,
+        shippingAddress: updateCustomerDto.shippingAddress,
+      },
+    });
+  }
 
   // remove(id: number) {
   //   return `This action removes a #${id} customer`;

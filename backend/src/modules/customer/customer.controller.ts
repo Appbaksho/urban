@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Body, Param, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, UseGuards, Put } from '@nestjs/common';
 import { CustomerService } from './customer.service';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { AccessTokenGuard } from 'src/middlewares/access-token.guard';
 import { User } from 'src/decorators/user.decorator';
+import { UpdateCustomerDto } from './dto/update-customer.dto';
 
 @Controller('customer')
 export class CustomerController {
@@ -28,13 +29,13 @@ export class CustomerController {
     return await this.customerService.findOne(id);
   }
 
-  // @Patch(':id')
-  // update(
-  //   @Param('id') id: string,
-  //   @Body() updateCustomerDto: UpdateCustomerDto,
-  // ) {
-  //   return this.customerService.update(+id, updateCustomerDto);
-  // }
+  @Put(':id')
+  update(
+    @Param('id') id: string,
+    @Body() updateCustomerDto: UpdateCustomerDto,
+  ) {
+    return this.customerService.update(id, updateCustomerDto);
+  }
 
   // @Delete(':id')
   // remove(@Param('id') id: string) {

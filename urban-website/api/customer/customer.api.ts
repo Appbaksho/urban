@@ -6,8 +6,15 @@ export const customerApi = api.injectEndpoints({
         getCustomer: build.query<UserPayload, string>({
             query: (id: string) => `/customer/${id}`,
         }),
+        updateUser: build.mutation<UserPayload, { id: string; data: UserPayload }>({
+            query: ({ id, data }) => ({
+                url: `/customer/${id}`,
+                method: "PUT",
+                body: data,
+            }),
+        }),
     }),
     overrideExisting: false,
 });
 
-export const { useGetCustomerQuery,useLazyGetCustomerQuery } = customerApi;
+export const { useGetCustomerQuery,useLazyGetCustomerQuery,useUpdateUserMutation } = customerApi;
