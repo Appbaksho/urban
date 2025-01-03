@@ -14,6 +14,17 @@ const cartApi = api.injectEndpoints({
             };
         },
         }),
+        getOrders: build.query<Cart[], string>({
+            query: (token:string) => {
+                return {
+                    url: "/cart/checked-out",
+                    method: "GET",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                };
+            },
+        }),
         addToCart: build.mutation<void, AddToCartPayload>({
         query: (payload:AddToCartPayload) => ({
             url: "/cart/add-to-cart",
@@ -47,4 +58,4 @@ const cartApi = api.injectEndpoints({
     overrideExisting: false,
     });
 
-export const { useLazyGetCartQuery, useAddToCartMutation,useAddManyToCartMutation,useRemoveFromCartMutation,useCheckoutProductMutation } = cartApi;
+export const { useLazyGetCartQuery, useAddToCartMutation,useAddManyToCartMutation,useRemoveFromCartMutation,useCheckoutProductMutation,useGetOrdersQuery,useLazyGetOrdersQuery } = cartApi;

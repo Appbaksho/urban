@@ -13,6 +13,49 @@ export class CartService {
         where: { customerId },
         include: {
           items: {
+            where:{
+              isCheckedOut:false
+            },
+            include: {
+              size: {
+                include: { product: true },
+              },
+            },
+          },
+        },
+      });
+
+      if (cart) {
+        return cart;
+      }
+
+      return await this.databaseService.cart.create({
+        data: { customerId },
+        include: {
+          items: {
+            include: {
+              size: {
+                include: { product: true },
+              },
+            },
+          },
+        },
+      });
+    } catch (error) {
+      console.error('Error in createIfNotFound:', error);
+      throw new Error('Failed to retrieve or create cart.');
+    }
+  }
+
+  async getCheckedOut(customerId: string) {
+    try {
+      const cart = await this.databaseService.cart.findUnique({
+        where: { customerId },
+        include: {
+          items: {
+            where:{
+              isCheckedOut:true
+            },
             include: {
               size: {
                 include: { product: true },
