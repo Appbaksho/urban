@@ -42,7 +42,7 @@ const ProductTable = ({query}:{query:string}) => {
           <TableCell colSpan={6}>
             <Skeleton className='w-full h-[50px]' key={i}/>
           </TableCell>
-        </TableRow>):data?.filter(v=>v.name.toLowerCase().trim().includes(query.toLowerCase().trim())).map(product => (
+        </TableRow>):data?.filter(v=>v.name.toLowerCase().trim().includes(query.toLowerCase().trim())).sort((a,b)=>new Date(b.createdAt).getTime()-new Date(a.createdAt).getTime()).map(product => (
           <ProductTableAdapter key={product.id} {...product}/>
         ))}
       </TableBody>

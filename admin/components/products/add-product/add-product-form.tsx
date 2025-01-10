@@ -197,7 +197,7 @@ const AddProductForm = () => {
                     <br/>
                     <ul className='mt-3'>
                         {sizes.map(size=>(
-                            <li key={size.id} className="flex items-center gap-2">
+                            <li key={size.id} className="flex items-center gap-2 my-2">
                                 <span>{size.name}</span>
                                 <span>{size.stock}</span>
                                 <div>
@@ -210,7 +210,7 @@ const AddProductForm = () => {
                         ))}
                     </ul>
                     <br/>
-                    <Dialog>
+                    <Dialog open={sizediaOpen} onOpenChange={setsizediaOpen}>
                       <DialogTrigger className={buttonVariants({variant:'default',className:'mt-3'})}>Add Size</DialogTrigger>
                       <DialogContent>
                         <DialogHeader>
@@ -228,9 +228,7 @@ const AddProductForm = () => {
                                 <br/>
                                 <Button onClick={
                                     ()=>{
-                                        const newSizes = sizes
-                                        newSizes.push({name:sizeName,stock:Number(stock),id:String(Math.random()),productId:''})
-                                        setsizes(newSizes)
+                                        setsizes(p=>[...p,{name:sizeName,stock:Number(stock),id:String(Math.random())}])
                                         setsizediaOpen(false)
                                     }
                                 } 
