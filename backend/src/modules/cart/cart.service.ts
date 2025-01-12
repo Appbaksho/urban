@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { UpdateCartItemDto } from './dto/update-cart.dto';
 import { DatabaseService } from '../database/database.service';
-import { OrderStatus, PaymentStatus } from '@prisma/client';
+import { DeliveryStatus, OrderStatus, PaymentStatus } from '@prisma/client';
 import { AddToCartDto } from './dto/create-cart.dto';
 
 @Injectable()
@@ -13,8 +13,8 @@ export class CartService {
         where: { customerId },
         include: {
           items: {
-            where:{
-              isCheckedOut:false
+            where: {
+              isCheckedOut: false,
             },
             include: {
               size: {
@@ -53,8 +53,8 @@ export class CartService {
         where: { customerId },
         include: {
           items: {
-            where:{
-              isCheckedOut:true
+            where: {
+              isCheckedOut: true,
             },
             include: {
               size: {
@@ -93,20 +93,20 @@ export class CartService {
       const cartItem = await this.databaseService.orderItem.findUnique({
         where: { id: orderItemId },
         include: {
-          cart:{
-            include:{
-              customer:true,
-              items:{
-                include:{
-                  size:{
-                    include:{product:true}
-                  }
-                }
-              }
-            }
+          cart: {
+            include: {
+              customer: true,
+              items: {
+                include: {
+                  size: {
+                    include: { product: true },
+                  },
+                },
+              },
+            },
           },
           size: {
-            include: { product: true},
+            include: { product: true },
           },
         },
       });
@@ -192,8 +192,9 @@ export class CartService {
         },
         data: {
           isCheckedOut: true,
-          paymentStatus: PaymentStatus.PAID,
+          paymentStatus: PaymentStatus.PENDING,
           orderStatus: OrderStatus.CHECKED_OUT,
+          deliveryStatus: DeliveryStatus.PENDING,
         },
       });
     });
