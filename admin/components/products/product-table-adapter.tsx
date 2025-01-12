@@ -19,7 +19,7 @@ const ProductTableAdapter = (props:Product) => {
             <img src={props.imageUrl[0]} className='h-[50px] w-[100px] object-cover rounded-md'/>
           </TableCell>
           <TableCell>
-            <p className="font-medium">{props.name}</p>
+            <p className="font-bold">{props.name}</p>
             <p className="text-xs">{String(props.description).substring(0,20)}...</p>
           </TableCell>
           <TableCell>{props.price} BDT</TableCell>
