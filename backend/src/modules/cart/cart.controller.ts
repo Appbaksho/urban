@@ -50,6 +50,10 @@ export class CartController {
     return this.cartService.createIfNotFound(customerId);
   }
 
+  @Get('checked-out-all')
+  async getCheckedOutAll() {
+    return await this.cartService.getCheckedOutAll();
+  }
   @Get('checked-out')
   @UseGuards(AccessTokenGuard)
   async getCheckedOut(@Req() request: Request) {
@@ -57,6 +61,8 @@ export class CartController {
       await this.firebaseService.getCustomerIdFromToken(request);
     return await this.cartService.getCheckedOut(customerId);
   }
+
+
 
   @Get('checked-out/:id')
   @UseGuards(AccessTokenGuard)
