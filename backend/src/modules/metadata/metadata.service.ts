@@ -18,6 +18,14 @@ export class MetadataService {
   }
 
   async update(id: number, updateMetadatumDto: UpdateMetadatumDto) {
-    return `This action updates a #${id} metadatum`;
+    const metadata = await this.databaseService.metadata.findFirst({});
+    return this.databaseService.metadata.update({
+      where: {
+        id: metadata.id,
+      },
+      data: {
+        ...updateMetadatumDto,
+      },
+    });
   }
 }
