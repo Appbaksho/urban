@@ -77,6 +77,7 @@ const EditProductDialog = (props:EditProductDialogProps) => {
                 description: 'Cannot update product',
                 variant: 'destructive'
             })
+            setuploadStatus('Update')
             console.log(proUpdateError)
         }
         }

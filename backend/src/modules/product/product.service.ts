@@ -154,6 +154,7 @@ export class ProductService {
         sizeDescription:
           updateProductDto.sizeDescription || previosuProduct.sizeDescription,
         price: updateProductDto.price || previosuProduct.price,
+        discountPrice: Number(updateProductDto.discountPrice) || previosuProduct.discountPrice,
       },
       include: {
         sizes: true,
