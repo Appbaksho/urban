@@ -46,6 +46,7 @@ export class ProductService {
     return await this.databaseService.product.findMany({
       include: {
         sizes: true,
+        Category: true,
       },
     });
   }
@@ -172,6 +173,7 @@ export class ProductService {
       },
       include: {
         sizes: true,
+        Category: true,
       },
     });
   }

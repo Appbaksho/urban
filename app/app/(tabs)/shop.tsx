@@ -3,7 +3,6 @@ import {ScrollView, View } from 'react-native';
 import { Text } from 'react-native-paper';
 import { getAuth, onAuthStateChanged } from '@react-native-firebase/auth';
 import useLogout from '@/hooks/useLogout';
-import { useTestAuthMutation } from '@/modules/notification/api/notification.api';
 import { useNavigation } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import TopBar from '@/components/drawer/top-bar';
@@ -20,7 +19,6 @@ const ShopLayout = () => {
       const navigation = useNavigation();
       const logout = useLogout();
       const auth = getAuth();
-      const [testAuth, { data, error }] = useTestAuthMutation();
     
       useLayoutEffect(() => {
         navigation.setOptions({
@@ -39,10 +37,6 @@ const ShopLayout = () => {
     
         return () => unsubscribe();
       }, [auth]);
-    
-      useEffect(() => {
-        console.log(data, error);
-      }, [data, error]);
     
         useEffect(() => {
             console.log('selectedChip: ', selectedChip);

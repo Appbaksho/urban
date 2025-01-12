@@ -49,6 +49,23 @@ export class CategoryService {
     });
   }
 
+  async createParentCategory(createCategoryDto: CreateCategoryDto) {
+    const metadata = await this.databaseService.metadata.findFirst({});
+    const category = await this.databaseService.parentCategory.create({
+      data: {
+        name: createCategoryDto.name,
+        description: createCategoryDto.description,
+        imageUrl: createCategoryDto.imageUrl,
+        metadataId: metadata.id,
+      },
+    });
+
+    return {
+      message: 'Parent category created successfully',
+      category,
+    };
+  }
+
   remove(id: number) {
     return `This action removes a #${id} category`;
   }

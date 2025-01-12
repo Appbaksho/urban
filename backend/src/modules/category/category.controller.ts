@@ -3,7 +3,6 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
   Put,
@@ -19,6 +18,11 @@ export class CategoryController {
   @Post()
   async create(@Body() createCategoryDto: CreateCategoryDto) {
     return this.categoryService.create(createCategoryDto);
+  }
+
+  @Post('parent')
+  async createParentCategory(@Body() createCategoryDto: CreateCategoryDto) {
+    return this.categoryService.createParentCategory(createCategoryDto);
   }
 
   @Get()

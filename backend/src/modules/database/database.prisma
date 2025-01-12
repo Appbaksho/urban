@@ -7,6 +7,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Metadata {
+  id        String   @id @default(cuid()) @map("_id")
+  
+  //config
+  deliveryCharge Float
+  parentCategory ParentCategory[]
+  bannerUrl     String
+  title         String
+  description   String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model Customer {
   firebaseId       String                       @id @map("_id")
   name             String
@@ -127,7 +141,16 @@ model Size {
   OrderItem  OrderItem[]
 }
 
+model ParentCategory {
+  name        String   @id @default(cuid()) @map("_id")
+  description String
+  imageUrl    String
 
+  metadataId  String
+  metadata    Metadata @relation(fields: [metadataId], references: [id])
+
+  categories  Category[]
+}
 
 model Category {
   id               String     @id @default(cuid()) @map("_id")
@@ -136,6 +159,7 @@ model Category {
   imageUrl         String
   parentCategoryId String
 
+  parentCategory ParentCategory @relation(fields: [parentCategoryId], references: [name])
   products         Product[]
 }
 

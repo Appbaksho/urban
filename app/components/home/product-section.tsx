@@ -1,5 +1,6 @@
 import { theme } from "@/theme/theme"
 import { router } from "expo-router"
+import React from "react"
 import { useEffect, useState } from "react"
 import { ScrollView, View, Image } from "react-native"
 import { Text } from "react-native-paper"

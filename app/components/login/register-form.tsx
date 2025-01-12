@@ -37,7 +37,7 @@ const RegisterForm = (props: RegisterFormProps) => {
         const credentials = { email, password };
         console.log(credentials);
         await createUserWithEmailAndPassword(auth, email, password);
-        router.push('/(tabs)');
+        router.push('/create-profile');
       } catch (err) {
         // @ts-ignore
         setErrorMessage(err.message);
