@@ -33,13 +33,14 @@ const ProductTable = ({query}:{query:string}) => {
           <TableHead>Name</TableHead>
           <TableHead>Price</TableHead>
           <TableHead>Discount Price</TableHead>
+          <TableHead>Stock</TableHead>
           <TableHead>Created At</TableHead>
           <TableHead className='text-right'>Actions</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {isLoading?Array(10).fill("_").map((_,i)=><TableRow>
-          <TableCell colSpan={6}>
+          <TableCell colSpan={7}>
             <Skeleton className='w-full h-[50px]' key={i}/>
           </TableCell>
         </TableRow>):data?.filter(v=>v.name.toLowerCase().trim().includes(query.toLowerCase().trim())).sort((a,b)=>new Date(b.createdAt).getTime()-new Date(a.createdAt).getTime()).map(product => (
