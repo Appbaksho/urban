@@ -24,7 +24,9 @@ const ProductCard = (props:Product) => {
           })}
         </div>
 
-        <p className="font-bold text-right pr-3 mt-3 mb-3">{props.price} BDT</p>
+        
+        <p className="font-bold text-right pr-3 mt-3">{props.discountPrice?props.discountPrice:props.price} BDT</p>
+        {props.discountPrice&&<p className='line-through pr-3 text-right mb-3 text-xs font-medium text-gray-600'>{props.price} BDT</p>} 
         </div>
     </Card>
   )

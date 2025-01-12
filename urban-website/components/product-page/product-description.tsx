@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import { Card } from '../ui/card'
-import { Heart, Loader2, Minus, Plus, ShoppingBag } from 'lucide-react'
+import { BadgePercent, Heart, Loader2, Minus, Plus, ShoppingBag } from 'lucide-react'
 import { Button } from '../ui/button'
 import { Product, Size } from '@/api/products/products.model'
 import { useAddToWishlistMutation } from '@/api/products/products.api'
@@ -141,6 +141,12 @@ const ProductDescriptionSingle = (props:Product) => {
   return (
     <div className=''>
         <h1 className='text-3xl md:text-4xl font-extrabold'>{props.name}</h1>
+        <div className="mt-10 mb-5">
+            <p className='text-sm text-gray-600'>Price</p>
+
+            <p className='font-bold text-2xl flex items-center gap-2'> {props.discountPrice?props.discountPrice:props.price} BDT{props.discountPrice&&<BadgePercent className='fill-primary' color='#fff'/>}</p>
+            {props.discountPrice&&<p className='font-medium text-lg line-through text-gray-600'> {props.discountPrice?props.discountPrice:props.price} BDT</p>}
+        </div>
         <div className="grid  grid-cols-1 md:grid-cols-5">
             <div className='md:col-span-4'>
                 <p className='mt-5 text-sm'>Available Sizes</p>
