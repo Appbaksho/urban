@@ -26,6 +26,7 @@ const ProductLayout = () => {
     const [activeSlide, setActiveSlide] = useState(0);
     const [sizeId, setSizeId] = useState('');
     const [menuVisible, setMenuVisible] = useState(false);
+    const [selectedSizeId, setSelectedSizeId] = useState<string | null>(null);
     const { data: product, isLoading } = useGetSingleProductQuery(productId);
     const { data: products, isLoading: isProductsLoading } = useGetProductsQuery();
     const openMenu = () => setMenuVisible(true);
@@ -77,33 +78,6 @@ const ProductLayout = () => {
                 </View>
                 <View className="ml-4 flex-1 mt-[30]">
                     <View>
-                        {/* <ScrollView horizontal showsHorizontalScrollIndicator={false} className="flex-row mt-1 w-full h-[33vw]">
-                        {product.c.map((color: string,index:number) => (
-                            <TouchableOpacity
-                                onPress={() => {
-                                    setActiveVariant(index);
-                                }}
-                            >
-                                <View
-                                    style={{
-                                        marginLeft: index === 0 ? 0 : 10,
-                                        borderColor: theme.colors.primary,
-                                        borderWidth: activeVariant === index ? 1 : 0,
-                                        borderRadius: 5,
-                                        padding: activeVariant === index ? 2 : 0, // Add padding to create a gap between border and image
-                                    }}
-                                >
-                                    <Image
-                                        style={{
-                                            borderRadius: 5,
-                                        }}
-                                        className="h-[30vw] w-[30vw]"
-                                        source={{ uri: product.images[0] }}
-                                    />
-                                </View>
-                            </TouchableOpacity>
-                        ))}
-                    </ScrollView>  */}
 
                         <Text variant={'titleMedium'} className="mt-4" style={{ color: theme.colors.primary }}>{product?.name}</Text>
                         <Text variant={'labelMedium'} className="mt-1">{product.Category?.name}</Text>
@@ -120,9 +94,6 @@ const ProductLayout = () => {
                         <Text className="mt-8" variant="bodySmall">
                             {product.description}
                         </Text>
-                        {/* <Text className="mt-4" variant="labelSmall">
-                        Shown: {product?.color[activeVariant]}
-                    </Text> */}
 
                         <TouchableOpacity className="mt-2">
                             <Text variant="labelSmall" style={{ textDecorationLine: 'underline' }}>
@@ -131,37 +102,31 @@ const ProductLayout = () => {
                         </TouchableOpacity>
 
                         <View className="mt-8 mr-4 flex-col">
-                            
+
                             <View className="mt-4">
-                                <ButtonWide text={"Select Size"} variant="secondary" />
-                                <Picker
-                                    selectedValue={sizeId}
-                                    onValueChange={(itemValue) => setSizeId(itemValue)}
-                                    style={{ height: 50, width: '100%' }}
-                                >
+                                {/* <ButtonWide text={"Select Size"} variant="secondary" />*/}
+                                <Text className="text-base font-semibold">Select Size</Text>
+                                <View className="flex-row flex-wrap mt-2">
                                     {product.sizes.map((size) => (
-                                        <Picker.Item key={size.id} label={size.name} value={size.id} />
+                                        <TouchableOpacity
+                                            key={size.id}
+                                            onPress={() => setSelectedSizeId(size.id)}
+                                            className={`border border-black rounded-md p-2 m-1 w-12 h-12 items-center justify-center ${selectedSizeId === size.id ? 'bg-black' : 'bg-white'
+                                                }`}
+                                        >
+                                            <Text className={`${selectedSizeId === size.id ? 'text-white' : 'text-black'}`}>
+                                                {size.name}
+                                            </Text>
+                                        </TouchableOpacity>
                                     ))}
-                                </Picker>
+                                </View>
                             </View>
-                            <View className="h-4" />
+                            <View className="h-8" />
                             <ButtonWide text={"Add to Bag"} />
                             <View className="h-4" />
                             <ButtonWide text={"Favourite"} variant="secondary" />
                         </View>
                         <View className="mt-8 h-[1] mr-4 bg-gray-200" />
-                        {/* <TouchableOpacity className="mt-4 p-4 flex-row ">
-                        <Text variant="labelMedium">Reviews {'(112)'}</Text>
-                        <View className="flex-1"/>
-                        <View className="flex-row mr-2">
-                            <Star color={theme.colors.primary} size={16}/>
-                            <Star color={theme.colors.primary} size={16}/>
-                            <Star color={theme.colors.primary} size={16}/>
-                            <Star color={theme.colors.primary} size={16}/>
-                            <Star color={theme.colors.primary} size={16}/>
-                        </View>
-                        <ChevronDown color={theme.colors.primary} size={16}/>
-                    </TouchableOpacity> */}
                         <View className="mt-4 h-[1] mr-4 bg-gray-200" />
                         <TouchableOpacity className="mt-4 p-4 flex-row items-center">
                             <View className="flex-1" />

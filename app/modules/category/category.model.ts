@@ -15,4 +15,23 @@ export interface Category {
     childrenCategories?: Category[];
     refetch?: () => void;
 }
+
+export interface ParentCategory {
+    name: string;
+    description: string;
+    imageUrl: string;
+    metadataId: string;
+    categories: Category[];
+}
+
+export interface Metadata {
+    id: string;
+    deliveryCharge: number;
+    bannerUrl: string;
+    title: string;
+    description: string;
+    createdAt: string;
+    updatedAt: string;
+    parentCategory: ParentCategory[];
+}
   

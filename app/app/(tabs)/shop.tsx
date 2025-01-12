@@ -11,12 +11,15 @@ import ProductSectionHorizontal from '@/components/home/product-section';
 import { theme } from '@/theme/theme';
 import ProductSectionHolder from '@/components/home/product-section-holder';
 import ProductGrid from '@/components/home/product-grid';
+import { useGetMetadataQuery } from '@/modules/category/category.api';
+import CategorySectionHorizontal from '@/components/home/category-card-horizontal';
 
 
 const ShopLayout = () => {
       const [user, setUser] = useState<any>();
       const [selectedChip, setSelectedChip] = useState<string>('Men');
       const navigation = useNavigation();
+      const {data: metadata} =  useGetMetadataQuery();
       const logout = useLogout();
       const auth = getAuth();
     
@@ -58,9 +61,13 @@ const ShopLayout = () => {
         </View>
         <View className={'w-[100vw] bg-gray-300'} style={{height:1}}/>
         <ScrollView showsVerticalScrollIndicator={false} className={'flex-1 w-full'}>
-            <ProductSectionHorizontal title={'Shop by category'} isCategoryList={true} preview={true}/>
-            <ProductSectionHolder />
-            <ProductGrid  title={'Upcoming'} />
+            <CategorySectionHorizontal title={'Shop by category'} parentCategoryId={selectedChip}/>
+            <ProductSectionHolder image={
+              metadata&&metadata.parentCategory.filter(parentCategory => parentCategory.name === selectedChip).length>0?
+              metadata.parentCategory.filter(parentCategory => parentCategory.name === selectedChip)[0].imageUrl:
+              "https://i.ebayimg.com/images/g/pQUAAOSwV~VgwtUA/s-l1200.jpg"
+            } />
+            <ProductGrid  title={'Winter Collection'} />
             <ProductGrid  title={'New Arrivals'} />
             <View className={'w-full'} style={{height:30}}/>  
         </ScrollView>
