@@ -13,6 +13,7 @@ const ProductSectionHolder = (props:ProductSectionHolderProps) => {
     const [sections, setSections] = useState<any[]>([]);
     useEffect(() => {
         if(props.image){
+            console.log('props.image: ', props.image);
             setImage(props.image)
         }
         if(props.sections){
@@ -23,12 +24,17 @@ const ProductSectionHolder = (props:ProductSectionHolderProps) => {
                 'Best Sellers',
                 'Trending',
                 'Discounts',
-                'Anime marchs',
-                'Pookie bear'
+                'Offers',
+                'Winter Collection',
             ]
             setSections(sections)
         }
     }, []);
+
+    useEffect(() => {
+        console.log('props.image: ', props.image);
+        if(props.image)setImage(props.image)
+    }, [props.image]);
     return (
         <View>
             <ImageBackground className={'w-full h-fit mt-6'} source={{uri:image}}>
