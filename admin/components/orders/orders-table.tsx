@@ -2,9 +2,13 @@
 import React, { useState } from 'react'
 import { Input } from '../ui/input'
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../ui/table'
+import { useGetOrdersQuery } from './api/orders.model'
+import { Skeleton } from '../ui/skeleton'
+import OrdersAdapter from './orders-adapter'
 
 const OrdersTable = () => {
     const [query, setquery] = useState<string>('')
+    const {data:orders,isLoading,isError,error} = useGetOrdersQuery()
   return (
     <div className='p-5'>
         <div className="flex justify-end">
@@ -16,19 +20,27 @@ const OrdersTable = () => {
           <TableCaption>A list of your orders.</TableCaption>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[100px]">Invoice</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Method</TableHead>
+              <TableHead className="w-[100px]">ID</TableHead>
+              <TableHead>Product</TableHead>
+              <TableHead>Date</TableHead>
               <TableHead className="text-right">Amount</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            <TableRow>
-              <TableCell className="font-medium">INV001</TableCell>
-              <TableCell>Paid</TableCell>
-              <TableCell>Credit Card</TableCell>
-              <TableCell className="text-right">.00</TableCell>
-            </TableRow>
+            
+              {
+                isLoading?Array(10).fill("_").map((_,i)=><TableCell colSpan={4}>
+                  <Skeleton className='w-full h-[50px]' key={i}/>
+                </TableCell>):orders?.filter(v=>{
+                  if(query.trim()=='') return v
+                  if(v.id.toLowerCase().includes(query.toLowerCase())) return v
+                  
+                }).map(order => (
+                    order.items.map((item) => (
+                        <OrdersAdapter key={item.id} {...item}/>
+                    ))
+                ))
+              }
           </TableBody>
         </Table>
     </div>

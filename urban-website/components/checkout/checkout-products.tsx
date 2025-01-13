@@ -64,10 +64,10 @@ const CheckoutProducts = () => {
         <CardContent className='py-5'>
           <CardDescription className='text-xs'>Scroll Down if you cannot see all products</CardDescription>
           <ScrollArea className="h-[200px] w-full p-1">
-            {isOffline?offlineProducts.map((v)=>{
+            {isOffline?offlineProducts.map((v,i)=>{
               return <CheckoutProductOffline products={offlineProducts} settotal={settotal} quantity={Number(v.quantity)} id={v.productId} key={v.sizeId} />
             }):isLoading?Array(5).fill(0).map((v,i)=>{
-                return <Skeleton className="w-full h-[80px]"/>
+                return <Skeleton key={i} className="w-full h-[80px]"/>
               }):cart?.items.map((v)=>{
                 return <CheckoutProduct key={v.id} {...v}/>
               })

@@ -99,7 +99,7 @@ export class CartService {
             include: {
               size: {
                 include: { product: true },
-              },
+              }
             },
           },
         },

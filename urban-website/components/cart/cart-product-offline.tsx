@@ -56,7 +56,7 @@ isLoading && <Skeleton className='w-[full] h-[150px]'/>
         <div className='w-full flex flex-col items-start'>
             <p className="font-semibold text-left text-primary">{product?.name}</p>
             <div className="flex items-center mt-1">
-            <p className="text-xs mr-2">Size</p> {product?.sizes.filter(v=>v.id==props.sizeId).map(v=> <Badge variant="outline" className='text-xs'>{v.name}</Badge>)}
+            <p className="text-xs mr-2">Size</p> {product?.sizes.filter(v=>v.id==props.sizeId).map((v,i)=> <Badge key={i} variant="outline" className='text-xs'>{v.name}</Badge>)}
             <p className="text-xs ml-2 text-right">Qty : {props.quantity}</p>
             </div>
             
