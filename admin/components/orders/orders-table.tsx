@@ -22,7 +22,9 @@ const OrdersTable = () => {
             <TableRow>
               <TableHead className="w-[100px]">ID</TableHead>
               <TableHead>Product</TableHead>
-              <TableHead>Date</TableHead>
+              <TableHead>Orderd On</TableHead>
+              <TableHead>Delivery Status</TableHead>
+              <TableHead>Payment Method</TableHead>
               <TableHead className="text-right">Amount</TableHead>
             </TableRow>
           </TableHeader>

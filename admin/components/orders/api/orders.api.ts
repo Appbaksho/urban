@@ -15,6 +15,7 @@ export interface Item {
   paymentStatus: string
   orderStatus: string
   size: Size
+  createdAt: string
 }
 
 export interface Size {
