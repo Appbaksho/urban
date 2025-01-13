@@ -35,7 +35,9 @@ const OrdersTable = () => {
                   <Skeleton className='w-full h-[50px]' key={i}/>
                 </TableCell>):orders?.filter(v=>{
                   if(query.trim()=='') return v
-                  if(v.id.toLowerCase().includes(query.toLowerCase())) return v
+                  if(v.items.find(i=>i.id.includes(query.toLowerCase()))) return v
+                  if(v.items.find(i=>i.size.product.name.toLowerCase().includes(query.toLowerCase()))) return v
+                  if(v.items.find(i=>i.size.name.toLowerCase().includes(query.toLowerCase()))) return v
                   
                 }).map(order => (
                     order.items.map((item) => (
