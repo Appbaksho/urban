@@ -22,8 +22,8 @@ const UserPage = () => {
   
   return (
     <div>
-      {data?<UserProfile {...data} setEditOpen={setedit}/>:<Skeleton className='w-full h-[300px]'/>}
-      {data&&<UserEdit user={data} open={edit} onToggle={setedit}/>}
+      {/* {data?<UserProfile {...data} setEditOpen={setedit}/>:<Skeleton className='w-full h-[300px]'/>}
+      {data&&<UserEdit user={data} open={edit} onToggle={setedit}/>} */}
     </div>
   )
 }

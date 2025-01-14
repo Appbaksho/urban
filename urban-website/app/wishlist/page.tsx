@@ -7,7 +7,7 @@ const WishlistPage = () => {
   return (
     <>
     <Navbar/>
-    <WishlistContainer/>
+    {/* <WishlistContainer/> */}
     <Footer/>
     </>
   )
