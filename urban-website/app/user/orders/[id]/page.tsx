@@ -1,5 +1,5 @@
 "use client"
-import { useLazyGetSingleOrderQuery } from '@/api/cart/cart.api'
+import { useLazyGetSingleOrderQuery } from '@/components/api/cart/cart.api'
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb'
 import { Skeleton } from '@/components/ui/skeleton'
 import PricingInfo from '@/components/user/order/pricing-info'

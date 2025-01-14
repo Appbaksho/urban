@@ -1,6 +1,6 @@
 "use client"
-import { AddToCartPayload } from '@/api/cart/cart.model'
-import { useGetProductsQuery, useGetSingleProductQuery } from '@/api/products/products.api'
+import { AddToCartPayload } from '@/components/api/cart/cart.model'
+import { useGetProductsQuery, useGetSingleProductQuery } from '@/components/api/products/products.api'
 import React, { useEffect, useState } from 'react'
 import { Button, buttonVariants } from '../ui/button'
 import { X } from 'lucide-react'

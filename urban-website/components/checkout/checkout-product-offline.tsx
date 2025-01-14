@@ -1,6 +1,6 @@
 "use client"
-import { AddToCartPayload, Item } from '@/api/cart/cart.model'
-import { useGetSingleProductQuery } from '@/api/products/products.api'
+import { AddToCartPayload, Item } from '@/components/api/cart/cart.model'
+import { useGetSingleProductQuery } from '@/components/api/products/products.api'
 import { useToast } from '@/hooks/use-toast'
 import React, { useEffect } from 'react'
 

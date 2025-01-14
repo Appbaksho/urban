@@ -5,7 +5,7 @@ import 'swiper/css'
 import CategoryBanner, { Category } from './category-banner';
 import { Button } from '../ui/button';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { useGetCategoriesQuery } from '@/api/category/category.api';
+import { useGetCategoriesQuery } from '@/components/api/category/category.api';
 import { Skeleton } from '../ui/skeleton';
 import { useToast } from '@/hooks/use-toast';
 

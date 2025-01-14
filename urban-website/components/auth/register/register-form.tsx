@@ -12,7 +12,7 @@ import { Button } from '@/components/ui/button'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '@/firebase/firebase'
 import { useToast } from '@/hooks/use-toast'
-import { useCreateUserMutation } from '@/api/auth/auth.api'
+import { useCreateUserMutation } from '@/components/api/auth/auth.api'
 import { useRouter } from 'next/navigation'
 const RegisterForm = () => {
     const [showPass, setshowPass] = useState<boolean>(false)

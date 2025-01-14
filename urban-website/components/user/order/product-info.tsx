@@ -1,4 +1,4 @@
-import { Item } from '@/api/cart/cart.model'
+import { Item } from '@/components/api/cart/cart.model'
 import CheckoutProduct from '@/components/checkout/checkout-product'
 import CheckoutProducts from '@/components/checkout/checkout-products'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'

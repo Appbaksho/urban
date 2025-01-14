@@ -4,7 +4,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { Button } from '../ui/button'
 import { Edit2 } from 'lucide-react'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table'
-import { UserPayload } from '@/api/auth/auth.model'
+import { UserPayload } from '@/components/api/auth/auth.model'
 import { auth } from '@/firebase/firebase'
 
 interface UserProfileProps extends UserPayload {

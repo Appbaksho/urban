@@ -4,7 +4,7 @@ import { Badge } from '../ui/badge'
 import { Copy } from 'lucide-react'
 import { Button } from '../ui/button'
 import Link from 'next/link'
-import { Cart, Item } from '@/api/cart/cart.model'
+import { Cart, Item } from '@/components/api/cart/cart.model'
 
 const UserOrderAdapter = (props:Item) => {
 

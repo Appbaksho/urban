@@ -1,5 +1,5 @@
 "use client"
-import { useGetCustomerQuery, useLazyGetCustomerQuery } from '@/api/customer/customer.api'
+import { useGetCustomerQuery, useLazyGetCustomerQuery } from '@/components/api/customer/customer.api'
 import { Skeleton } from '@/components/ui/skeleton'
 import UserEdit from '@/components/user/user-edit'
 import UserProfile from '@/components/user/user-profile'

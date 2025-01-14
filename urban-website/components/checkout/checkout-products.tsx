@@ -2,13 +2,13 @@ import React, { use, useEffect, useState } from 'react'
 import { Card, CardContent, CardDescription, CardFooter } from '../ui/card'
 import { ScrollArea } from '../ui/scroll-area'
 import CheckoutProduct from './checkout-product'
-import { useLazyGetCartQuery } from '@/api/cart/cart.api'
+import { useLazyGetCartQuery } from '@/components/api/cart/cart.api'
 import { useToast } from '@/hooks/use-toast'
 import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from '@/firebase/firebase'
 import { Skeleton } from '../ui/skeleton'
 import CheckoutProductOffline from './checkout-product-offline'
-import { AddToCartPayload } from '@/api/cart/cart.model'
+import { AddToCartPayload } from '@/components/api/cart/cart.model'
 
 const CheckoutProducts = () => {
   const [getCart,{data:cart,isError,isSuccess,isLoading,error}] = useLazyGetCartQuery()

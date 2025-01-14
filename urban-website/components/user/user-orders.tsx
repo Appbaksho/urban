@@ -1,7 +1,7 @@
 import React from 'react'
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../ui/table'
 import UserOrderAdapter from './user-order-adapter'
-import { Cart, Item } from '@/api/cart/cart.model'
+import { Cart, Item } from '@/components/api/cart/cart.model'
 import { ScrollArea, ScrollBar } from '../ui/scroll-area'
 
 

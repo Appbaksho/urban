@@ -4,7 +4,7 @@ import { AspectRatio } from '../ui/aspect-ratio'
 import Link from 'next/link'
 import { Badge } from '../ui/badge'
 import { Card } from '../ui/card'
-import { Product } from '@/api/products/products.model'
+import { Product } from '@/components/api/products/products.model'
 import { Skeleton } from '../ui/skeleton'
 
 const ProductCard = (props:Product) => {

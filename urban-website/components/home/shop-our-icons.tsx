@@ -6,7 +6,7 @@ import  { Category } from './category-banner';
 import { Button } from '../ui/button';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import CategoryContainer from './category-container';
-import { useGetProductsQuery } from '@/api/products/products.api';
+import { useGetProductsQuery } from '@/components/api/products/products.api';
 import ProductCard from './product-card';
 import { Skeleton } from '../ui/skeleton';
 import { useToast } from '@/hooks/use-toast';

@@ -15,8 +15,8 @@ import { useParams } from 'next/navigation';
 import React from 'react';
 import ProductImageSlider from '@/components/product-page/image-slider';
 import ProductDescriptionSingle from '@/components/product-page/product-description';
-import { useGetSingleProductQuery } from '@/api/products/products.api';
-import { useGetSingleCategoryQuery } from '@/api/category/category.api';
+import { useGetSingleProductQuery } from '@/components/api/products/products.api';
+import { useGetSingleCategoryQuery } from '@/components/api/category/category.api';
 import { Skeleton } from '@/components/ui/skeleton';
 
 const ProductPage = () => {

@@ -1,6 +1,6 @@
 "use client"
-import { useCreateUserMutation } from '@/api/auth/auth.api'
-import { useAddManyToCartMutation, useCheckoutProductMutation } from '@/api/cart/cart.api'
+import { useCreateUserMutation } from '@/components/api/auth/auth.api'
+import { useAddManyToCartMutation, useCheckoutProductMutation } from '@/components/api/cart/cart.api'
 import AlreadyLoggedIn from '@/components/checkout/already-loggedin'
 import CheckoutForm from '@/components/checkout/checkout-form'
 import CheckoutProducts from '@/components/checkout/checkout-products'

@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect } from 'react'
 import ProductCard from '../home/product-card'
-import { useGetProductsQuery } from '@/api/products/products.api'
+import { useGetProductsQuery } from '@/components/api/products/products.api'
 import { useToast } from '@/hooks/use-toast'
 import { Skeleton } from '../ui/skeleton'
 
