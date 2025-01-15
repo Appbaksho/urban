@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
 import ProductCard from '../home/product-card'
-import { useGetProductsQuery } from '@/api/products/products.api'
+import { useGetProductsQuery } from '@/components/api/products/products.api'
 
 const AllProducts = () => {
   const {data,isLoading,isSuccess,isError,error} = useGetProductsQuery()  

@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import { Category } from './api/category.model'
 import { TableCell, TableRow } from '../ui/table'
-import { Edit2, Loader2, Table, Trash2 } from 'lucide-react'
+import { Edit2, Loader2, Table, Trash, Trash2 } from 'lucide-react'
 import { Button, buttonVariants } from '../ui/button'
 import { useGetCategoriesQuery, useGetSingleCategoryQuery, useUpdateCategoryMutation } from './api/category.api'
 import { useToast } from '@/hooks/use-toast'
@@ -193,10 +193,24 @@ const CategoryAdapter = (props:Category) => {
               </Dialog>
                     
                 
-                <Button size="icon" variant="destructive" disabled={loading}>
-                 
-                    <Trash2 size={15}/>
-                </Button>
+                <Dialog>
+                   <DialogTrigger className={buttonVariants({size:'icon',variant:'destructive'})}>
+                     <Trash2 size={15}/>
+                   </DialogTrigger>
+                   <DialogContent>
+                     <DialogHeader>
+                       <DialogTitle>Are you absolutely sure?</DialogTitle>
+                       <DialogDescription>
+                         Are you sure that you want to delete this category?
+                         <div className="flex justify-end mt-5 items-center">
+                          <Button variant="destructive" size="sm"><Trash2/>Delete</Button>
+                         </div>
+                       </DialogDescription>
+                     </DialogHeader>
+                   </DialogContent>
+                 </Dialog>
+                  
+                
               </TableCell>
             
     </TableRow>

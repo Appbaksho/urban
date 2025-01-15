@@ -1,4 +1,4 @@
-import { DeliveryStatus } from '@/api/cart/cart.model'
+import { DeliveryStatus } from '@/components/api/cart/cart.model'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Bike, Check, Hand, Package } from 'lucide-react'
 import React from 'react'

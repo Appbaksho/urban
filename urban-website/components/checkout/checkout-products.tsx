@@ -2,13 +2,13 @@ import React, { use, useEffect, useState } from 'react'
 import { Card, CardContent, CardDescription, CardFooter } from '../ui/card'
 import { ScrollArea } from '../ui/scroll-area'
 import CheckoutProduct from './checkout-product'
-import { useLazyGetCartQuery } from '@/api/cart/cart.api'
+import { useLazyGetCartQuery } from '@/components/api/cart/cart.api'
 import { useToast } from '@/hooks/use-toast'
 import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from '@/firebase/firebase'
 import { Skeleton } from '../ui/skeleton'
 import CheckoutProductOffline from './checkout-product-offline'
-import { AddToCartPayload } from '@/api/cart/cart.model'
+import { AddToCartPayload } from '@/components/api/cart/cart.model'
 
 const CheckoutProducts = () => {
   const [getCart,{data:cart,isError,isSuccess,isLoading,error}] = useLazyGetCartQuery()
@@ -64,10 +64,10 @@ const CheckoutProducts = () => {
         <CardContent className='py-5'>
           <CardDescription className='text-xs'>Scroll Down if you cannot see all products</CardDescription>
           <ScrollArea className="h-[200px] w-full p-1">
-            {isOffline?offlineProducts.map((v)=>{
+            {isOffline?offlineProducts.map((v,i)=>{
               return <CheckoutProductOffline products={offlineProducts} settotal={settotal} quantity={Number(v.quantity)} id={v.productId} key={v.sizeId} />
             }):isLoading?Array(5).fill(0).map((v,i)=>{
-                return <Skeleton className="w-full h-[80px]"/>
+                return <Skeleton key={i} className="w-full h-[80px]"/>
               }):cart?.items.map((v)=>{
                 return <CheckoutProduct key={v.id} {...v}/>
               })

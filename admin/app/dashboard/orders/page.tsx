@@ -1,8 +1,11 @@
+import OrdersTable from '@/components/orders/orders-table'
 import React from 'react'
 
 const OrderPage = () => {
   return (
-    <div>OrderPage</div>
+    <div>
+      <OrdersTable/>
+    </div>
   )
 }
 

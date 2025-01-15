@@ -88,6 +88,38 @@ export class CartService {
     }
   }
 
+  async getCheckedOutAll(){
+    try {
+      const cart = await this.databaseService.cart.findMany({
+        include: {
+          items: {
+            where: {
+              isCheckedOut: true,
+            },
+            include: {
+              size: {
+                include: { product: true },
+              }
+            },
+          },
+        },
+      });
+
+      if (cart) {
+        console.log(cart);
+        return cart;
+      }
+      return {
+        message: 'No checked out items',
+      }
+
+    
+    } catch (error) {
+      console.error('Error in createIfNotFound:', error);
+      throw new Error('Failed to retrieve or create cart.');
+    }
+  }
+
   async getOrderedSingleItem(orderItemId: string) {
     try {
       const cartItem = await this.databaseService.orderItem.findUnique({

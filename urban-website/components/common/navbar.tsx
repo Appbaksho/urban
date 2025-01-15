@@ -13,11 +13,11 @@ import { Search } from 'lucide-react'
 import Link from 'next/link'
 import { onAuthStateChanged, signOut } from 'firebase/auth'
 import { auth } from '@/firebase/firebase'
-import { useLazyGetCartQuery } from '@/api/cart/cart.api'
+import { useLazyGetCartQuery } from '@/components/api/cart/cart.api'
 import { Skeleton } from '../ui/skeleton'
 import CartProductOffline from '../cart/cart-product-offline'
-import { Product } from '@/api/products/products.model'
-import { AddToCartPayload, Item } from '@/api/cart/cart.model'
+import { Product } from '@/components/api/products/products.model'
+import { AddToCartPayload, Item } from '@/components/api/cart/cart.model'
 
 const Navbar = () => {
     const [bottomvisible, setbottomvisible] = useState<boolean>(false)

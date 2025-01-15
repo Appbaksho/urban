@@ -3,10 +3,10 @@ import React, { useEffect, useState } from 'react'
 import { Card } from '../ui/card'
 import { BadgePercent, Heart, Loader2, Minus, Plus, ShoppingBag } from 'lucide-react'
 import { Button } from '../ui/button'
-import { Product, Size } from '@/api/products/products.model'
-import { useAddToWishlistMutation } from '@/api/products/products.api'
+import { Product, Size } from '@/components/api/products/products.model'
+import { useAddToWishlistMutation } from '@/components/api/products/products.api'
 import { useToast } from '@/hooks/use-toast'
-import { useAddToCartMutation } from '@/api/cart/cart.api'
+import { useAddToCartMutation } from '@/components/api/cart/cart.api'
 import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from '@/firebase/firebase'
 
@@ -145,7 +145,7 @@ const ProductDescriptionSingle = (props:Product) => {
             <p className='text-sm text-gray-600'>Price</p>
 
             <p className='font-bold text-2xl flex items-center gap-2'> {props.discountPrice?props.discountPrice:props.price} BDT{props.discountPrice&&<BadgePercent className='fill-primary' color='#fff'/>}</p>
-            {props.discountPrice&&<p className='font-medium text-lg line-through text-gray-600'> {props.discountPrice?props.discountPrice:props.price} BDT</p>}
+            {props.discountPrice&&<p className='font-medium text-lg line-through text-gray-600'> {props.price} BDT</p>}
         </div>
         <div className="grid  grid-cols-1 md:grid-cols-5">
             <div className='md:col-span-4'>

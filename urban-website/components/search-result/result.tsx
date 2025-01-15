@@ -1,7 +1,7 @@
 import React from 'react'
 import ProductCard from '../home/product-card'
 import { useSearchParams } from 'next/navigation'
-import { useGetProductsQuery } from '@/api/products/products.api'
+import { useGetProductsQuery } from '@/components/api/products/products.api'
 import { useToast } from '@/hooks/use-toast'
 import { Skeleton } from '../ui/skeleton'
 

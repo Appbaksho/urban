@@ -1,5 +1,5 @@
 "use client"
-import { useLazyGetOrdersQuery } from '@/api/cart/cart.api'
+import { useLazyGetOrdersQuery } from '@/components/api/cart/cart.api'
 import { Skeleton } from '@/components/ui/skeleton'
 import UserOrders from '@/components/user/user-orders'
 import { auth } from '@/firebase/firebase'

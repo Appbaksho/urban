@@ -7,7 +7,7 @@ import  { Category } from './category-banner';
 import { Button } from '../ui/button';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import CategoryContainer from './category-container';
-import { useGetCategoriesQuery } from '@/api/category/category.api';
+import { useGetCategoriesQuery } from '@/components/api/category/category.api';
 import { useToast } from '@/hooks/use-toast';
 import { Skeleton } from '../ui/skeleton';
 

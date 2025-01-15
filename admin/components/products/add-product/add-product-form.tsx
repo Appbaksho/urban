@@ -13,6 +13,7 @@ import React, { useState } from 'react'
 import { useAddProductMutation, useUploadImageMutation } from '../api/products.api'
 import { Size } from '../api/products.model'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
+import DetailsAdapter from './details-adapter'
 // name: string
 //   description: string
 //   categoryId: string
@@ -158,7 +159,7 @@ const AddProductForm = () => {
                 </div>
                 <div className='md:col-span-2'>
                     <Label htmlFor="description">Description</Label>
-                    <Textarea id="description" className="Input" placeholder="Product Description" value={description} onChange={e=> setdescription(e.target.value)}/>
+                    <Textarea id="description" className="Input" placeholder="Product Description" value={description} onChange={e=> setdescription(e.target.value)} rows={10}/>
                 </div>
                 
                 <div>
@@ -182,12 +183,26 @@ const AddProductForm = () => {
                 </div>
                 <div>
                     <Label htmlFor="details">Details (Comma separated. eg: Wash carefully,Random Spec)</Label>
+                    <div>
+                    {
+                        details.map((detail,i)=>(
+                            <DetailsAdapter key={i} name={detail} setName={setdetails}/>
+                        ))
+                    }
+                    </div>
                     <Input type="text" id="details" className="Input" placeholder="Details"
                     value={details.join(',')} onChange={(e)=>setdetails(e.target.value.split(','))}
                      />
                 </div>
                 <div>
                     <Label htmlFor="sizeDescription">Size Description (Comma separated. eg: M: 20",S: 10")</Label>
+                    <div>
+                    {
+                        sizeDescription.map((size,i)=>(
+                            <DetailsAdapter key={i} name={size} setName={setsizeDescription}/>
+                        ))
+                    }
+                    </div>
                     <Input type="text" id="sizeDescription" className="Input" placeholder="Size Description" 
                     value={sizeDescription.join(',')} onChange={(e)=>setsizeDescription(e.target.value.split(','))}
                     />

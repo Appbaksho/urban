@@ -5,7 +5,7 @@ import 'swiper/css'
 import { Button } from '../ui/button';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import ProductCard from './product-card';
-import { useGetProductsQuery } from '@/api/products/products.api';
+import { useGetProductsQuery } from '@/components/api/products/products.api';
 
 const NewInThisWeek = () => {
   const {data,isLoading,isSuccess,isError,error} = useGetProductsQuery()

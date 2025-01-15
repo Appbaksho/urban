@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import WishlistAdapter from './wishlist-adapter'
 import { useToast } from '@/hooks/use-toast'
 import { Skeleton } from '../ui/skeleton'
-import { useLazyGetWishlistQuery } from '@/api/products/products.api'
+import { useLazyGetWishlistQuery } from '@/components/api/products/products.api'
 import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from '@/firebase/firebase'
 

@@ -6,9 +6,9 @@ import { Button } from '../ui/button'
 import { Heart, Loader2, Trash2 } from 'lucide-react'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '../ui/dialog'
 import Link from 'next/link'
-import { Product } from '@/api/products/products.model'
+import { Product } from '@/components/api/products/products.model'
 import { Badge } from '../ui/badge'
-import { useRemoveWishlistMutation } from '@/api/products/products.api'
+import { useRemoveWishlistMutation } from '@/components/api/products/products.api'
 import { useToast } from '@/hooks/use-toast'
 
 const WishlistAdapter = (props:Product) => {

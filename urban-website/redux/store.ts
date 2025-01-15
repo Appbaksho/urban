@@ -1,4 +1,4 @@
-import { api } from '@/api/index.api'
+import { api } from '@/components/api/index.api'
 import { configureStore } from '@reduxjs/toolkit'
 import { setupListeners } from '@reduxjs/toolkit/query'
 

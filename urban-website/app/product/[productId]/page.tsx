@@ -15,8 +15,8 @@ import { useParams } from 'next/navigation';
 import React from 'react';
 import ProductImageSlider from '@/components/product-page/image-slider';
 import ProductDescriptionSingle from '@/components/product-page/product-description';
-import { useGetSingleProductQuery } from '@/api/products/products.api';
-import { useGetSingleCategoryQuery } from '@/api/category/category.api';
+import { useGetSingleProductQuery } from '@/components/api/products/products.api';
+import { useGetSingleCategoryQuery } from '@/components/api/category/category.api';
 import { Skeleton } from '@/components/ui/skeleton';
 
 const ProductPage = () => {
@@ -28,7 +28,7 @@ const ProductPage = () => {
     return (
     <>
         <Navbar/>
-        <div className='px-5 md:px-10 lg:px-20'>
+        {/* <div className='px-5 md:px-10 lg:px-20'>
         <Breadcrumb>
             <BreadcrumbList>
                 <BreadcrumbItem>
@@ -55,7 +55,7 @@ const ProductPage = () => {
             {data?<ProductImageSlider images={data?.imageUrl}/>:<Skeleton className='w-full h-[300px] rounded-md'/>}
             {data?<ProductDescriptionSingle {...data}/>:<Skeleton className='w-full h-[300px]'/>}
         </div>
-        </div>
+        </div> */}
         <Footer/>
     </>
     );

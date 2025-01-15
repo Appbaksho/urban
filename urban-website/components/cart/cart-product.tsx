@@ -3,10 +3,9 @@ import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import { Button } from '../ui/button'
 import { Loader2, X } from 'lucide-react'
-import { Product } from '@/api/products/products.model'
-import { Item, Size } from '@/api/cart/cart.model'
+import { Item, Size } from '@/components/api/cart/cart.model'
 import { Badge } from '../ui/badge'
-import { useRemoveFromCartMutation } from '@/api/cart/cart.api'
+import { useRemoveFromCartMutation } from '@/components/api/cart/cart.api'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '../ui/dialog'
 
 const CartProduct = (props:Item) => {

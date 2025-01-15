@@ -25,7 +25,7 @@ import {
 import React, { useEffect } from 'react'
 import { cn } from '@/lib/utils'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../ui/accordion'
-import {  useLazyGetCartQuery } from '@/api/cart/cart.api'
+import {  useLazyGetCartQuery } from '@/components/api/cart/cart.api'
 import { auth } from '@/firebase/firebase'
 
 const components: { title: string; href: string; description: string }[] = [

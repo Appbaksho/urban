@@ -1,4 +1,4 @@
-import { Item } from '@/api/cart/cart.model'
+import { Item } from '@/components/api/cart/cart.model'
 import React from 'react'
 
 const CheckoutProduct = (props:Item) => {

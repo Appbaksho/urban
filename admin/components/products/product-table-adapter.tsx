@@ -19,11 +19,12 @@ const ProductTableAdapter = (props:Product) => {
             <img src={props.imageUrl[0]} className='h-[50px] w-[100px] object-cover rounded-md'/>
           </TableCell>
           <TableCell>
-            <p className="font-medium">{props.name}</p>
+            <p className="font-bold">{props.name}</p>
             <p className="text-xs">{String(props.description).substring(0,20)}...</p>
           </TableCell>
           <TableCell>{props.price} BDT</TableCell>
           <TableCell>{props.discountPrice?props.discountPrice+" BDT":'N/A'}</TableCell>
+          <TableCell>{props.sizes.map((v,i)=><p className='text-xs' key={i}>{v.name}:{v.stock}</p>)}</TableCell>
           <TableCell>{dayjs(props.createdAt).format("DD-MM-YY hh:mm A")}</TableCell>
           <TableCell className="flex items-center justify-end gap-2">
             <Button size="icon" variant="outline" onClick={()=>seteditOpen(true)}>

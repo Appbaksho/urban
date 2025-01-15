@@ -1,5 +1,5 @@
 "use client"
-import { useGetCustomerQuery, useLazyGetCustomerQuery } from '@/api/customer/customer.api'
+import { useGetCustomerQuery, useLazyGetCustomerQuery } from '@/components/api/customer/customer.api'
 import { Skeleton } from '@/components/ui/skeleton'
 import UserEdit from '@/components/user/user-edit'
 import UserProfile from '@/components/user/user-profile'
@@ -22,8 +22,8 @@ const UserPage = () => {
   
   return (
     <div>
-      {data?<UserProfile {...data} setEditOpen={setedit}/>:<Skeleton className='w-full h-[300px]'/>}
-      {data&&<UserEdit user={data} open={edit} onToggle={setedit}/>}
+      {/* {data?<UserProfile {...data} setEditOpen={setedit}/>:<Skeleton className='w-full h-[300px]'/>}
+      {data&&<UserEdit user={data} open={edit} onToggle={setedit}/>} */}
     </div>
   )
 }

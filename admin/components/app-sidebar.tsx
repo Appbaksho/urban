@@ -65,16 +65,6 @@ const data = {
           url: "/dashboard/orders",
         },
         {
-          title: "Pending Orders",
-          url: "/dashboard/orders/pending",
-          isActive: true,
-        },
-        {
-          title: "Previous Orders",
-          url: "/dashboard/orders/previous",
-        }
-        ,
-        {
           title: "All Users",
           url: "/dashboard/orders/users",
         }

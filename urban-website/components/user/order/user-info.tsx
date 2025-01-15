@@ -1,4 +1,4 @@
-import { UserPayload } from '@/api/auth/auth.model'
+import { UserPayload } from '@/components/api/auth/auth.model'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import React, { useEffect } from 'react'
 

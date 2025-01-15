@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import ReduxWrapper from "@/redux/redux-wrapper";
 import {Poppins} from 'next/font/google'
+import UnderConstructionPage from "@/components/under-construction/under-construction";
 // const geistSans = localFont({
 //   src: "./fonts/GeistVF.woff",
 //   variable: "--font-geist-sans",
@@ -34,7 +35,7 @@ export default function RootLayout({
         className={poppins.className}
       >
         <ReduxWrapper>
-          
+          <UnderConstructionPage/>
           {children}
           
         </ReduxWrapper>
