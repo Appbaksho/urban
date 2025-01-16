@@ -11,11 +11,11 @@ export default function Home() {
   return (
     <>
     <Navbar/>
-    {/* <HeroSection/>
+    <HeroSection/>
     <LatestAndGreatest/>
     <ShopOurIcons/> 
     <NewInThisWeek/>
-    <ExploreMore/> */}
+    <ExploreMore/>
     <Footer/>
     </>
   );

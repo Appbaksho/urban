@@ -9,7 +9,7 @@ const ProductsPage = () => {
     <Navbar/>
     <div className="py-10">
         <p className='text-2xl font-bold md:px-10 mb-5 px-4'>All Products</p>
-        {/* <AllProducts/> */}
+        <AllProducts/>
     </div>
     <Footer/>
     </>

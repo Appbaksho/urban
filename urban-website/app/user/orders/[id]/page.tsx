@@ -63,11 +63,11 @@ const SingleOrderPage = () => {
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-    {/* <div className='grid grid-cols-1 md:grid-cols-2 gap-4 mt-5'>
+    <div className='grid grid-cols-1 md:grid-cols-2 gap-4 mt-5'>
       {orderLoading?<Skeleton className='w-full h-[300px]'/>:order&&<ProgressInfo props={order?.deliveryStatus}/>}
       {orderLoading?<Skeleton className='w-full h-[300px]'/>:order&&<ProductInfo items={order?.cart.items} deliveryCharge={order.cart.deliveryCharge}/>}
       {orderLoading?<Skeleton className='w-full h-[200px]'/>:order&&<UserInfo {...order.cart.customer} />}
-    </div> */}
+    </div>
     </div>
   )
 }

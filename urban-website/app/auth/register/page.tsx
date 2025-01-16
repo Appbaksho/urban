@@ -7,7 +7,7 @@ const RegisterPage = () => {
   return (
     <div>
       <Navbar/>
-      {/* <RegisterContainer/> */}
+      <RegisterContainer/>
       <Footer/>
     </div>
   )

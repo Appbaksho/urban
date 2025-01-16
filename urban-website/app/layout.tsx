@@ -35,9 +35,8 @@ export default function RootLayout({
         className={poppins.className}
       >
         <ReduxWrapper>
-          <UnderConstructionPage/>
+          {/* <UnderConstructionPage/> */}
           {children}
-          
         </ReduxWrapper>
       </body>
     </html>

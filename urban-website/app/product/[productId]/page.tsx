@@ -28,7 +28,7 @@ const ProductPage = () => {
     return (
     <>
         <Navbar/>
-        {/* <div className='px-5 md:px-10 lg:px-20'>
+        <div className='px-5 md:px-10 lg:px-20'>
         <Breadcrumb>
             <BreadcrumbList>
                 <BreadcrumbItem>
@@ -55,7 +55,7 @@ const ProductPage = () => {
             {data?<ProductImageSlider images={data?.imageUrl}/>:<Skeleton className='w-full h-[300px] rounded-md'/>}
             {data?<ProductDescriptionSingle {...data}/>:<Skeleton className='w-full h-[300px]'/>}
         </div>
-        </div> */}
+        </div>
         <Footer/>
     </>
     );

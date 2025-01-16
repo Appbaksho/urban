@@ -313,11 +313,11 @@ const CheckoutPage = () => {
             
         </div>
         <div>
-            {/* <CheckoutProducts/>
+            <CheckoutProducts/>
             <DeliveryDetails/>
             <div className="flex justify-end mt-3">
                 <Button disabled={checkingOut} onClick={checkOutProducts}>{checkingOut&&<Loader2 size={15} className='animate-spin'/>} Place Order</Button>
-            </div> */}
+            </div>
         </div>
     </div>
     <Footer/>
