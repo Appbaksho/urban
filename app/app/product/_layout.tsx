@@ -2,13 +2,14 @@ import { ButtonWide } from "@/components/core/btn-wide";
 import TopBarV2 from "@/components/drawer/top-bar-v2";
 import ProductSectionHorizontal from "@/components/home/product-section";
 import ProductSectionHorizontalReal from "@/components/home/product-section-horizontal-real";
-import { useGetProductsQuery, useGetSingleProductQuery } from "@/modules/products/products.api";
+import { useAddToCartMutation } from "@/modules/cart/cart.api";
+import { useAddToWishlistMutation, useGetProductsQuery, useGetSingleProductQuery, useGetWishlistQuery} from "@/modules/products/products.api";
 import { theme } from "@/theme/theme";
 import { Picker } from '@react-native-picker/picker';
 import { useLocalSearchParams, useNavigation } from "expo-router";
 import { ChevronDown, Share2Icon, Star } from "lucide-react-native";
 import React, { Key, useEffect, useLayoutEffect, useState } from "react";
-import { Dimensions, ImageBackground, NativeScrollEvent, NativeSyntheticEvent, ScrollView, View, StyleSheet, Image } from "react-native";
+import { Dimensions, ImageBackground, NativeScrollEvent, NativeSyntheticEvent, ScrollView, View, StyleSheet, Image, ToastAndroid } from "react-native";
 import { TouchableOpacity } from "react-native";
 import { Text } from "react-native-paper";
 import { black } from "react-native-paper/lib/typescript/styles/themes/v2/colors";
@@ -28,13 +29,22 @@ const ProductLayout = () => {
     const [menuVisible, setMenuVisible] = useState(false);
     const [selectedSizeId, setSelectedSizeId] = useState<string | null>(null);
     const { data: product, isLoading } = useGetSingleProductQuery(productId);
+    const [addToBag, {data: bagData, isLoading: isBagLoading}] = useAddToCartMutation();
+    const [addToFavourite, {data: favouriteData, isLoading: isFavouriteLoading}] = useAddToWishlistMutation();
+    const {data: favourites, refetch: reFetchWishList } = useGetWishlistQuery();
     const { data: products, isLoading: isProductsLoading } = useGetProductsQuery();
     const openMenu = () => setMenuVisible(true);
     const closeMenu = () => setMenuVisible(false);
+    const [isFav, setIsFav] = useState(false);
 
     useEffect(() => {
         console.log('product: ', product);
-    }, [product])
+        console.log('favourites: ', favourites);
+        if (favourites) {
+            const isFavourite = favourites.find((fav) => fav.id === product?.id);
+            setIsFav(!!isFavourite);
+        }
+    }, [product, favourites]);
 
     const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
         const slideIndex = Math.round(event.nativeEvent.contentOffset.x / viewportWidth);
@@ -122,9 +132,36 @@ const ProductLayout = () => {
                                 </View>
                             </View>
                             <View className="h-8" />
-                            <ButtonWide text={"Add to Bag"} />
+                            <ButtonWide onPress={
+                                () => {
+                                    if (selectedSizeId && product && product.id) {
+                                    addToBag({
+                                        productId: product.id,
+                                        sizeId: selectedSizeId,
+                                        quantity: 1,
+                                    }).then((res) => {
+                                        console.log('res', res);
+                                        ToastAndroid.show('Added to bag', ToastAndroid.SHORT);
+                                    });
+                                }else {
+                                    ToastAndroid.show('Please select a size', ToastAndroid.SHORT);
+                                }
+                            }
+                            } loading={isBagLoading} text={"Add to Bag"} variant="primary" />
                             <View className="h-4" />
-                            <ButtonWide text={"Favourite"} variant="secondary" />
+                            <ButtonWide 
+                            onPress={
+                                () => {
+                                    if (product && product.id) {
+                                    addToFavourite(product.id).then((res) => {
+                                        console.log('res', res);
+                                        ToastAndroid.show('Added to favourites', ToastAndroid.SHORT);
+                                    });
+                                }else {
+                                    ToastAndroid.show('Please select a size', ToastAndroid.SHORT);
+                                }
+                            }
+                            } text={"Favourite"} variant="secondary" />
                         </View>
                         <View className="mt-8 h-[1] mr-4 bg-gray-200" />
                         <View className="mt-4 h-[1] mr-4 bg-gray-200" />

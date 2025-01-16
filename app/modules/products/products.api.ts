@@ -15,13 +15,9 @@ export const productsApi = api.injectEndpoints({
                 method: "PUT",
             }),
         }),
-        getWishlist: build.query<Wishlist[], string>({
-            query: (token:string) => ({
-                url: "/product/get-favorite",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`,
-                },
+        getWishlist: build.query<Wishlist[], void>({
+            query: () => ({
+                url: "/product/get-favorite"
             }),
         }),
         removeWishlist: build.mutation<Wishlist, string>({
@@ -34,4 +30,4 @@ export const productsApi = api.injectEndpoints({
     }),
     overrideExisting: false,
     });
-export const { useGetProductsQuery,useGetSingleProductQuery,useAddToWishlistMutation,useLazyGetWishlistQuery,useRemoveWishlistMutation} = productsApi;  
+export const { useGetProductsQuery,useGetSingleProductQuery,useAddToWishlistMutation,useGetWishlistQuery,useRemoveWishlistMutation} = productsApi;  
