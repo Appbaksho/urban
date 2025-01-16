@@ -3,14 +3,24 @@ import { AppSidebar } from '@/components/app-sidebar'
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb'
 import { Separator } from '@/components/ui/separator'
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
+import { auth } from '@/firebase/firebase'
 import { Item } from '@radix-ui/react-dropdown-menu'
-import { usePathname } from 'next/navigation'
+import { onAuthStateChanged } from 'firebase/auth'
+import { usePathname, useRouter } from 'next/navigation'
 import path from 'path'
-import React, { PropsWithChildren } from 'react'
+import React, { PropsWithChildren, useEffect } from 'react'
 
 const DashboardLayout = ({children}:PropsWithChildren) => {
     const pathname = usePathname()
-    console.log(pathname)
+
+    const navigate = useRouter()
+    useEffect(() => {
+        onAuthStateChanged(auth, (user) => {
+          if (!user) {
+            navigate.push('/login')
+          }
+        })
+      }, [])
   return (
     <SidebarProvider>
     <AppSidebar />
