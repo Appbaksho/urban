@@ -10,7 +10,7 @@ export default function Page() {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        navigate.push('/admin')
+        navigate.push('/dashboard')
       }
     })
   }, [])

@@ -15,6 +15,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { sendPasswordResetEmail, signInWithEmailAndPassword } from "firebase/auth"
 import { auth } from "@/firebase/firebase"
 import { toast } from "@/hooks/use-toast"
+import { useRouter } from "next/navigation"
 
 export function LoginForm({
   className,
@@ -24,7 +25,7 @@ export function LoginForm({
   const [email, setemail] = useState<string>('')
   const [pass, setpass] = useState<string>('')
   const [showPass, setshowPass] = useState<boolean>(false)
-
+  const router = useRouter()
   const sendForgetEmail = ()=>{
     // send email to reset password
     sendPasswordResetEmail(auth, forgotEmail).then(()=>{
@@ -44,11 +45,14 @@ export function LoginForm({
 
   const loginUser = ()=>{
     // login user
-    signInWithEmailAndPassword(auth, email, pass).then(()=>{
-      toast({
-        title: 'Success',
-        description: "Logged in successfully"
-      })
+    signInWithEmailAndPassword(auth, email, pass).then((user)=>{
+      if(user){
+        toast({
+          title: 'Success',
+          description: "Logged in successfully"
+        })
+        router.push('/dashboard')
+      }
     }).catch((e)=>{
       toast({
         title: 'Error',
@@ -68,7 +72,7 @@ export function LoginForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <form onSubmit={e=>e.preventDefault()}>
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
                 <Label htmlFor="email">Email</Label>
@@ -128,7 +132,7 @@ export function LoginForm({
                   </label>
                 </div>
               </div>
-              <Button type="submit" className="w-full">
+              <Button type="submit" className="w-full" onClick={loginUser}>
                 Login
               </Button>
             </div>
