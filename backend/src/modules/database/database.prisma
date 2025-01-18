@@ -68,8 +68,9 @@ model OrderItem {
   orderStatus    OrderStatus          @default(PENDING)
 
   transaction    TransactionHistory[]
-  size            Size                   @relation(fields: [sizeId], references: [id])
+  size           Size                   @relation(fields: [sizeId], references: [id])
   cart           Cart                 @relation(fields: [cartId], references: [id])
+  batchId        String?              @default("sheidhonerbatchid")
   createdAt  DateTime    @default(now())
 }
 
@@ -120,7 +121,6 @@ model Product {
 
   price       Float
   discountPrice Float?
-
 
   //automated
   createdAt   DateTime @default(now())

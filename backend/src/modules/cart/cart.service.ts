@@ -111,9 +111,7 @@ export class CartService {
       }
       return {
         message: 'No checked out items',
-      }
-
-    
+      };
     } catch (error) {
       console.error('Error in createIfNotFound:', error);
       throw new Error('Failed to retrieve or create cart.');
@@ -122,6 +120,9 @@ export class CartService {
 
   async getOrderedSingleItem(orderItemId: string) {
     try {
+      const cartItemPre = await this.databaseService.orderItem.findUnique({
+        where: { id: orderItemId },
+      });
       const cartItem = await this.databaseService.orderItem.findUnique({
         where: { id: orderItemId },
         include: {
@@ -133,6 +134,9 @@ export class CartService {
                   size: {
                     include: { product: true },
                   },
+                },
+                where: {
+                  batchId: cartItemPre.batchId,
                 },
               },
             },
@@ -160,11 +164,20 @@ export class CartService {
 
   async addToCart(customerId: string, addToCartDto: AddToCartDto) {
     const cart = await this.createIfNotFound(customerId);
+    let batchId = '';
+    if (cart.items.length > 0) {
+      batchId = cart.items[0].batchId;
+    } else {
+      batchId =
+        Math.random().toString(36).substring(2, 15) +
+        Math.random().toString(36).substring(2, 15);
+    }
     const cartItem = await this.databaseService.orderItem.create({
       data: {
         cartId: cart.id,
         sizeId: addToCartDto.sizeId,
         quantity: addToCartDto.quantity,
+        batchId: batchId,
       },
     });
 
@@ -176,11 +189,20 @@ export class CartService {
 
   async addToCartMany(customerId: string, addToCartDto: AddToCartDto[]) {
     const cart = await this.createIfNotFound(customerId);
+    let batchId = '';
+    if (cart.items.length > 0) {
+      batchId = cart.items[0].batchId;
+    } else {
+      batchId =
+        Math.random().toString(36).substring(2, 15) +
+        Math.random().toString(36).substring(2, 15);
+    }
     const processed = addToCartDto.map((item) => {
       return {
         cartId: cart.id,
         sizeId: item.sizeId,
         quantity: item.quantity,
+        batchId: batchId,
       };
     });
     const cartItem = await this.databaseService.orderItem.createMany({
@@ -246,5 +268,51 @@ export class CartService {
     return {
       message: 'Cart item removed',
     };
+  }
+
+  async batchUpdate(batchId: string, updateCartItemDto: UpdateCartItemDto) {
+    const updatedCartItem = this.databaseService.orderItem.updateMany({
+      where: {
+        batchId,
+      },
+      data: updateCartItemDto,
+    });
+    return {
+      message: 'Cart items updated',
+      orderItem: updatedCartItem,
+    };
+  }
+
+  async getBatchAll() {
+    try {
+      const orderItems = await this.databaseService.orderItem.findMany();
+      const batches = orderItems.reduce((acc, item) => {
+        if (!acc[item.batchId]) {
+          acc[item.batchId] = [];
+        }
+        acc[item.batchId].push(item);
+        return acc;
+      }, {});
+
+      return Object.values(batches);
+    } catch (error) {
+      console.error('Error in getBatchAll:', error);
+      throw new Error('Failed to retrieve batch items.');
+    }
+  }
+
+  async getBatch(batchId: string) {
+    try {
+      const orderItems = await this.databaseService.orderItem.findMany({
+        where: {
+          batchId,
+        },
+      });
+
+      return orderItems;
+    } catch (error) {
+      console.error('Error in getBatch:', error);
+      throw new Error('Failed to retrieve batch items.');
+    }
   }
 }

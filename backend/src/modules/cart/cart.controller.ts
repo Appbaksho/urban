@@ -62,8 +62,6 @@ export class CartController {
     return await this.cartService.getCheckedOut(customerId);
   }
 
-
-
   @Get('checked-out/:id')
   @UseGuards(AccessTokenGuard)
   async getCheckedOutById(@Param('id') id: string) {
@@ -76,6 +74,24 @@ export class CartController {
     @Body() updateCartDto: UpdateCartItemDto,
   ) {
     return this.cartService.update(orderItemId, updateCartDto);
+  }
+
+  @Put('batch-update/:batchId')
+  async batchUpdate(
+    @Param('batchId') batchId: string,
+    @Body() updateCartDto: UpdateCartItemDto,
+  ) {
+    return this.cartService.batchUpdate(batchId, updateCartDto);
+  }
+
+  @Get('batch/all/get')
+  async getBatchAll() {
+    return await this.cartService.getBatchAll();
+  }
+
+  @Get('batch/:batchId')
+  async getBatch(@Param('batchId') batchId: string) {
+    return await this.cartService.getBatch(batchId);
   }
 
   @Post('checkout')
