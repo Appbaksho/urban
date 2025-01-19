@@ -1,3 +1,4 @@
+"use client"
 import { useGetMetadataQuery } from '@/components/metadata/api/metadata.api'
 import BannerContainer from '@/components/metadata/banner-container'
 import DeliveryCharges from '@/components/metadata/delivery-charges'
