@@ -20,20 +20,11 @@ import {
   SidebarMenuSubItem,
   SidebarRail,
 } from "@/components/ui/sidebar"
+import Link from "next/link"
 
 // This is sample data.
 const data = {
   navMain: [
-    {
-      title: "Stat",
-      url: "#",
-      items: [
-        {
-          title: "Monthly Stat",
-          url: "/dashboard/stat/monthly",
-        }
-      ],
-    },
     {
       title: "Products",
       url: "#",
@@ -105,6 +96,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 className="group/collapsible"
               >
                 <SidebarMenuItem>
+                  <Link href="/dashboard/metadata" className="text-sm ml-2">Meta Data</Link>
+                </SidebarMenuItem>
+                <SidebarMenuItem>
                   <CollapsibleTrigger asChild>
                     <SidebarMenuButton>
                       {item.title}{" "}
@@ -119,7 +113,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                           <SidebarMenuSubItem key={item.title}>
                             <SidebarMenuSubButton
                               asChild
-                              isActive={item.isActive}
                             >
                               <a href={item.url}>{item.title}</a>
                             </SidebarMenuSubButton>
