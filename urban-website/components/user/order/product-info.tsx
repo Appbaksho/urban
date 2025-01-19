@@ -7,6 +7,7 @@ import React, { useEffect } from 'react'
 interface ProductInfoProps {
   items: Item[]
   deliveryCharge: number
+  batchId: string
 }
 
 const ProductInfo = (props:ProductInfoProps) => {
@@ -16,7 +17,7 @@ const ProductInfo = (props:ProductInfoProps) => {
         <CardTitle>Ordered Items</CardTitle>
       </CardHeader>
       <CardContent>
-       {props.items.map(item => (
+       {props.items.filter((v)=>v.batchId==props.batchId).map(item => (
             <CheckoutProduct key={item.id} {...item}/>
           ))}
       </CardContent>
@@ -27,7 +28,7 @@ const ProductInfo = (props:ProductInfoProps) => {
         </div>
         <div className='bg-primary rounded-b-md py-2 px-5 flex items-center justify-between w-full'>
           <p className="text-sm text-white font-semibold">Total</p>
-          <p className="text-sm text-right text-white font-semibold">{Number(props.items.reduce((acc, item) => acc + item.size.product.price * item.quantity, 0)+Number(props.deliveryCharge)).toFixed(2)} BDT</p>
+          <p className="text-sm text-right text-white font-semibold">{Number(props.items.filter((v)=> v.batchId==props.batchId).reduce((acc, item) => acc + item.size.product.price * item.quantity, 0)+Number(props.deliveryCharge)).toFixed(2)} BDT</p>
         </div>
       </CardFooter>
     </Card>
