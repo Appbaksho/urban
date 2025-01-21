@@ -17,6 +17,7 @@ export interface OrderCart {
   export interface Item {
     id: string
     sizeId: string
+    batchId	:string
     quantity: number
     cartId: string
     isCheckedOut: boolean
@@ -42,6 +43,7 @@ export interface OrderCart {
     sizeId: string
     quantity: number
     cartId: string
+    batchId	:string
     isCheckedOut: boolean
     deliveryStatus: string
     paymentStatus: string
