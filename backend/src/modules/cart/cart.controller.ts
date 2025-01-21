@@ -123,4 +123,9 @@ export class CartController {
   async remove(@Param('orderItemId') orderItemId: string) {
     return this.cartService.remove(orderItemId);
   }
+
+  @Get('fix/order-detail')
+  async fixOrderDetail() {
+    return this.cartService.fixOrderDetail();
+  }
 }

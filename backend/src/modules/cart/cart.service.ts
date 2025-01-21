@@ -17,6 +17,7 @@ export class CartService {
               isCheckedOut: false,
             },
             include: {
+              orderDetail: true,
               size: {
                 include: { product: true },
               },
@@ -34,6 +35,7 @@ export class CartService {
         include: {
           items: {
             include: {
+              orderDetail: true,
               size: {
                 include: { product: true },
               },
@@ -57,6 +59,7 @@ export class CartService {
               isCheckedOut: true,
             },
             include: {
+              orderDetail: true,
               size: {
                 include: { product: true },
               },
@@ -75,6 +78,7 @@ export class CartService {
         include: {
           items: {
             include: {
+              orderDetail: true,
               size: {
                 include: { product: true },
               },
@@ -88,7 +92,7 @@ export class CartService {
     }
   }
 
-  async getCheckedOutAll(){
+  async getCheckedOutAll() {
     try {
       const cart = await this.databaseService.cart.findMany({
         include: {
@@ -97,9 +101,10 @@ export class CartService {
               isCheckedOut: true,
             },
             include: {
+              orderDetail: true,
               size: {
                 include: { product: true },
-              }
+              },
             },
           },
         },
@@ -131,6 +136,7 @@ export class CartService {
               customer: true,
               items: {
                 include: {
+                  orderDetail: true,
                   size: {
                     include: { product: true },
                   },
@@ -172,12 +178,33 @@ export class CartService {
         Math.random().toString(36).substring(2, 15) +
         Math.random().toString(36).substring(2, 15);
     }
+
     const cartItem = await this.databaseService.orderItem.create({
       data: {
         cartId: cart.id,
         sizeId: addToCartDto.sizeId,
         quantity: addToCartDto.quantity,
         batchId: batchId,
+      },
+    });
+
+    const size = await this.databaseService.size.findUnique({
+      where: {
+        id: addToCartDto.sizeId,
+      },
+      include: {
+        product: true,
+      },
+    });
+
+    await this.databaseService.orderDetail.create({
+      data: {
+        orderItemId: cartItem.id,
+        size: size.name,
+        quantity: addToCartDto.quantity,
+        price: size.product.discountPrice || size.product.price,
+        productName: size.product.name,
+        imageUrl: size.product.imageUrl[0],
       },
     });
 
@@ -207,6 +234,38 @@ export class CartService {
     });
     const cartItem = await this.databaseService.orderItem.createMany({
       data: processed,
+    });
+
+    const cartItems = await this.databaseService.orderItem.findMany({
+      where: {
+        batchId,
+      },
+      include: {
+        size: {
+          include: { product: true },
+        },
+      },
+    });
+
+    cartItems.map(async (item) => {
+      const size = await this.databaseService.size.findUnique({
+        where: {
+          id: item.sizeId,
+        },
+        include: {
+          product: true,
+        },
+      });
+      await this.databaseService.orderDetail.create({
+        data: {
+          orderItemId: item.id,
+          size: size.name,
+          quantity: item.quantity,
+          price: size.product.discountPrice || size.product.price,
+          productName: size.product.name,
+          imageUrl: size.product.imageUrl[0],
+        },
+      });
     });
 
     return {
@@ -271,7 +330,7 @@ export class CartService {
   }
 
   async batchUpdate(batchId: string, updateCartItemDto: UpdateCartItemDto) {
-    const updatedCartItem = this.databaseService.orderItem.updateMany({
+    const updatedCartItem = await this.databaseService.orderItem.updateMany({
       where: {
         batchId,
       },
@@ -285,7 +344,11 @@ export class CartService {
 
   async getBatchAll() {
     try {
-      const orderItems = await this.databaseService.orderItem.findMany();
+      const orderItems = await this.databaseService.orderItem.findMany({
+        include: {
+          orderDetail: true,
+        },
+      });
       const batches = orderItems.reduce((acc, item) => {
         if (!acc[item.batchId]) {
           acc[item.batchId] = [];
@@ -307,6 +370,9 @@ export class CartService {
         where: {
           batchId,
         },
+        include: {
+          orderDetail: true,
+        },
       });
 
       return orderItems;
@@ -314,5 +380,14 @@ export class CartService {
       console.error('Error in getBatch:', error);
       throw new Error('Failed to retrieve batch items.');
     }
+  }
+
+  async fixOrderDetail() {
+    //get all order details
+    await this.databaseService.transactionHistory.deleteMany({});
+    await this.databaseService.orderItem.deleteMany({});
+    return {
+      message: 'Order items deleted',
+    };
   }
 }

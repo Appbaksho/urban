@@ -72,6 +72,20 @@ model OrderItem {
   cart           Cart                 @relation(fields: [cartId], references: [id])
   batchId        String?              @default("sheidhonerbatchid")
   createdAt  DateTime    @default(now())
+
+  orderDetail    OrderDetail?
+}
+
+model OrderDetail {
+  id            String    @id @default(cuid()) @map("_id")
+  quantity      Int
+  size          String
+  price         Float
+  productName   String
+  imageUrl      String
+
+  orderItem     OrderItem @relation(fields: [orderItemId], references: [id])
+  orderItemId   String @unique
 }
 
 model TransactionHistory {
