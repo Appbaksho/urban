@@ -1,42 +1,20 @@
-export interface Order {
-  id: string
-  customerId: string
-  deliveryCharge: number
-  items: Item[]
-}
+import { api } from "@/api";
+import { BatchOrder, Order } from "./orders.model";
 
-export interface Item {
-  id: string
-  sizeId: string
-  quantity: number
-  cartId: string
-  isCheckedOut: boolean
-  deliveryStatus: string
-  paymentStatus: string
-  orderStatus: string
-  size: Size
-  createdAt: string
-}
+export const orderApi  = api.injectEndpoints({
+    endpoints: (build) => ({
+        getOrders: build.query<BatchOrder[][], void>({
+        query: () => "/cart/batch/all/get",
+        }),
+        getSingleOrder: build.query<Order, string>({
+        query: (id) => `/cart/checked-out/${id}`,
+        })
+    }),
+    overrideExisting: false,
+});
 
-export interface Size {
-  id: string
-  name: string
-  stock: number
-  productId: string
-  product: Product
-}
-
-export interface Product {
-  id: string
-  name: string
-  description: string
-  categoryId: string
-  imageUrl: string[]
-  details: string[]
-  sizeDescription: string[]
-  price: number
-  discountPrice: any
-  createdAt: string
-  updatedAt: string
-  continued: boolean
-}
+export const {
+    useGetOrdersQuery,
+    useGetSingleOrderQuery,
+    useLazyGetSingleOrderQuery
+} = orderApi;
