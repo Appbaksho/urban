@@ -137,7 +137,7 @@ const CategoryAdapter = (props:Category) => {
               </TableCell>
               <TableCell>{props.name}</TableCell>
               <TableCell>{String(props.description).substring(0,20)}...</TableCell>
-              <TableCell>{String(data?.name)}</TableCell>
+              <TableCell>{props.parentCategoryId}</TableCell>
               <TableCell className="flex items-center justify-end gap-2">
                
                 <Dialog>
