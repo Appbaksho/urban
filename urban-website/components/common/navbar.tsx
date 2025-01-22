@@ -35,7 +35,9 @@ const Navbar = () => {
       console.log(cartError)
     }
     if(isCartSuccess){
-      settotal(cart?.items.reduce((acc,v)=>acc+v.size.product.price*v.quantity,0))
+      settotal(cart?.items.reduce((acc,v)=>
+        v.size.product.discountPrice?acc+v.size.product.discountPrice*v.quantity:
+      acc+v.size.product.price*v.quantity,0))
     }
   }, [isCartError,isCartSuccess])
 
@@ -81,7 +83,9 @@ const Navbar = () => {
 
     useEffect(() => {
       if(cart){
-        settotal(cart?.items.reduce((acc,v)=>acc+v.size.product.price*v.quantity,0))
+        settotal(cart?.items.reduce((acc,v)=>
+          v.size.product.discountPrice?acc+v.size.product.discountPrice*v.quantity:
+        acc+v.size.product.price*v.quantity,0)) 
       }
     }, [cart])
     

@@ -12,7 +12,7 @@ const CheckoutProduct = (props:Item) => {
                       <p className='text-xs'>Quantity: {props.quantity}</p>
                     </div>
                   </div>
-                  <p className='font-semibold'>{props.size.product.price} BDT</p>
+                  <p className='font-semibold'>{props.size.product.discountPrice?props.size.product.discountPrice:props.size.product.price} BDT</p>
                 </div>
   )
 }

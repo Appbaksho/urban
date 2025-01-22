@@ -36,7 +36,7 @@ const CartProduct = (props:Item) => {
             <p className="text-xs ml-2 text-right">Qty : {props.quantity}</p>
             </div>
             
-            <p className="text-sm font-semibold mt-2 text-primary">{Number(props.size.product.price)*Number(props.quantity)} BDT</p>
+            <p className="text-sm font-semibold mt-2 text-primary">{props.size.product.discountPrice?Number(props.size.product.discountPrice)*Number(props.quantity):Number(props.size.product.price)*Number(props.quantity)} BDT</p>
         </div>
         <div className='flex justify-end'>
             <Button size="icon" className='h-[20px] w-[20px] bg-red-200 hover:bg-red-200/70 text-red-500' onClick={e=> setremoveOpen(true)}>
