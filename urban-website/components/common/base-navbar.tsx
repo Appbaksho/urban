@@ -27,34 +27,36 @@ import { cn } from '@/lib/utils'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../ui/accordion'
 import {  useLazyGetCartQuery } from '@/components/api/cart/cart.api'
 import { auth } from '@/firebase/firebase'
+import { useGetMetadataQuery } from '../api/metadata/metadata.api'
+import { useGetCategoriesQuery } from '../api/category/category.api'
 
-const components: { title: string; href: string; description: string }[] = [
-    {
-      "title": "Winter Collection",
-      "href": "/category/winter-collection",
-      "description": "Cozy up with our latest winter styles.",
-    },
-    {
-      "title": "New Arrivals",
-      "href": "/category/new-arrivals",
-      "description": "Fresh fashion pieces for the season."
-    },
-    {
-      "title": "Winter Accessories",
-      "href": "/category/winter-accessories",
-      "description": "Scarves, gloves, and more to keep you warm."
-    },
-    {
-      "title": "Outerwear",
-      "href": "/category/outerwear",
-      "description": "Jackets, coats, and layers for chilly days."
-    },
-    {
-      "title": "Knitwear",
-      "href": "/category/knitwear",
-      "description": "Comfortable and stylish sweaters for winter."
-    }
-  ]
+// const components: { title: string; href: string; description: string }[] = [
+//     {
+//       "title": "Winter Collection",
+//       "href": "/category/winter-collection",
+//       "description": "Cozy up with our latest winter styles.",
+//     },
+//     {
+//       "title": "New Arrivals",
+//       "href": "/category/new-arrivals",
+//       "description": "Fresh fashion pieces for the season."
+//     },
+//     {
+//       "title": "Winter Accessories",
+//       "href": "/category/winter-accessories",
+//       "description": "Scarves, gloves, and more to keep you warm."
+//     },
+//     {
+//       "title": "Outerwear",
+//       "href": "/category/outerwear",
+//       "description": "Jackets, coats, and layers for chilly days."
+//     },
+//     {
+//       "title": "Knitwear",
+//       "href": "/category/knitwear",
+//       "description": "Comfortable and stylish sweaters for winter."
+//     }
+//   ]
   
 
 
@@ -67,6 +69,31 @@ interface BaseNavbarProps {
 }
 
 const BaseNavbar = (props:BaseNavbarProps) => {
+  const {data:metadata,
+    error:metadataError,
+    isError:isMetadataError
+  } = useGetMetadataQuery()
+
+  const {data:categories,
+    error:categoriesError,
+    isError:isCategoriesError
+  } = useGetCategoriesQuery()
+
+
+
+
+  useEffect(() => {
+    if(isMetadataError){
+      console.log(metadataError)
+    }
+  }, [isMetadataError])
+
+  useEffect(() => {
+    if(isCategoriesError){
+      console.log(categoriesError)
+    }
+  }, [isCategoriesError])
+  
   
 
 
@@ -78,90 +105,49 @@ const BaseNavbar = (props:BaseNavbarProps) => {
         
     <NavigationMenu className='hidden md:flex md:col-span-4'>
       <NavigationMenuList>
-      <NavigationMenuItem>
-  <NavigationMenuTrigger>Shop Fashion</NavigationMenuTrigger>
-  <NavigationMenuContent>
-    <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-      <li className="row-span-3">
-        <NavigationMenuLink asChild>
-          <div className="h-full w-full relative bg-[url('/products/hoodie-3.png')] bg-cover rounded-md">
-            <Link
-              className="flex h-full absolute top-0 left-0 right-0 bottom-0 w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-transparent to-black p-6 no-underline outline-none focus:shadow-md"
-              href="/category/winter-collection"
-            >
-              <div className="mb-2 mt-4 text-lg font-medium text-white">
-                Winter Collection
-              </div>
-              <p className="text-sm leading-tight text-gray-200">
-                Cozy up with our latest winter styles.
-              </p>
-            </Link>
-          </div>
-        </NavigationMenuLink>
-      </li>
-      <ListItem href="/category/new-arrivals" title="New Arrivals">
-        Fresh fashion pieces for the season.
-      </ListItem>
-      <ListItem href="/category/winter-accessories" title="Winter Accessories">
-        Scarves, gloves, and more to keep you warm.
-      </ListItem>
-      <ListItem href="/category/outerwear" title="Outerwear">
-        Jackets, coats, and layers for chilly days.
-      </ListItem>
-    </ul>
-  </NavigationMenuContent>
-</NavigationMenuItem>
-
-
-        <NavigationMenuItem>
-          <NavigationMenuTrigger>Men</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-              {components.map((component) => (
-                <ListItem
-                  key={component.title}
-                  title={component.title}
-                  href={component.href}
-                >
-                  {component.description}
-                </ListItem>
-              ))}
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuTrigger>Women</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-              {components.map((component) => (
-                <ListItem
-                  key={component.title}
-                  title={component.title}
-                  href={component.href}
-                >
-                  {component.description}
-                </ListItem>
-              ))}
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuTrigger>Kids</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-              {components.map((component) => (
-                <ListItem
-                  key={component.title}
-                  title={component.title}
-                  href={component.href}
-                >
-                  {component.description}
-                </ListItem>
-              ))}
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-        
+        {
+          metadata?.parentCategory.map((category,i)=>(
+            <NavigationMenuItem key={i}>
+              <NavigationMenuTrigger>{category.name}</NavigationMenuTrigger>
+              <NavigationMenuContent>
+              <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+                {i==0&&categories&&<li className="row-span-3">
+                  <NavigationMenuLink asChild>
+                    <div className="h-full w-full relative bg-cover rounded-md"
+                    style={{
+                      backgroundImage: `url(${categories[0].imageUrl})`,
+                    }}
+                    >
+                      <Link
+                        className="flex h-full absolute top-0 left-0 right-0 bottom-0 w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-transparent to-black p-6 no-underline outline-none focus:shadow-md"
+                        href={`/category/${categories[0].id}`}
+                      >
+                        <div className="mb-2 mt-4 text-lg font-medium text-white">
+                          {categories[0].name}
+                        </div>
+                        <p className="text-sm leading-tight text-gray-200">
+                          {categories[0].description}
+                        </p>
+                      </Link>
+                    </div>
+                  </NavigationMenuLink>
+                </li>}
+                {
+                  categories?.filter((cat,j)=>i==0?j!=0&&cat.parentCategoryId==category.name:cat.parentCategoryId==category.name).map((cat,i)=>(
+                    <ListItem
+                      key={i}
+                      title={cat.name}
+                      href={`/category/${cat.id}`}
+                    >
+                      {cat.description}
+                    </ListItem>
+                  ))
+                }
+              </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+          ))
+        }
       </NavigationMenuList>
     </NavigationMenu>   
         {/* <ul className='hidden md:flex items-center justify-center gap-5 text-sm font-semibold hover:[&>li>a]:border-b-2 [&>li>a]:border-b-0 [&>li>a]:border-b-black md:col-span-3 '>
@@ -202,7 +188,27 @@ const BaseNavbar = (props:BaseNavbarProps) => {
       <SheetDescription>
         <ul>
             <Accordion type="single" collapsible>
-              <AccordionItem value="item-1">
+              {
+                metadata?.parentCategory.map((category,i)=>(
+                  <AccordionItem value={`item-${i}`}>
+                    <AccordionTrigger>
+                        <Link href={`/category/${category.id}`} className='text-black font-semibold'>{category.name}</Link>
+                    </AccordionTrigger>
+                    <AccordionContent>
+                        <ul>
+                            {
+                              categories?.filter((cat,j)=>cat.parentCategoryId==category.name).map((cat,i)=>(
+                                <li className='py-2 text-right' key={i}>
+                                    <Link href={`/category/${cat.id}`} className='text-black font-semibold'>{cat.name}</Link>
+                                </li>
+                              ))
+                            }
+                        </ul>      
+                    </AccordionContent>
+                  </AccordionItem>
+                ))
+              }
+              {/* <AccordionItem value="item-1">
                 <AccordionTrigger>
                     <Link href='/winter-collection' className='text-black font-semibold'>Winter Collection</Link>
                 </AccordionTrigger>
@@ -267,7 +273,7 @@ const BaseNavbar = (props:BaseNavbarProps) => {
                         ))}
                     </ul>      
                 </AccordionContent>
-              </AccordionItem>
+              </AccordionItem> */}
 
             </Accordion>
             

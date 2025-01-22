@@ -25,7 +25,7 @@ const HeroSection = () => {
         </p>
         <div className="flex mt-5 gap-3"> 
         {/* <Button variant='primary' className='rounded-full'>Shop Now</Button> */}
-        <Link href="/category/winter-collection" className={buttonVariants({variant:'secondary',className:'rounded-full'})}>Explore</Link>
+        {/* <Link href="/category/winter-collection" className={buttonVariants({variant:'secondary',className:'rounded-full'})}>Explore</Link> */}
         <Link href="/product" className={buttonVariants({variant:'default',className:'rounded-full'})}>All Products</Link>
         </div>
         
