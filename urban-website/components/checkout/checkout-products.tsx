@@ -1,5 +1,5 @@
 import React, { use, useEffect, useState } from 'react'
-import { Card, CardContent, CardDescription, CardFooter } from '../ui/card'
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../ui/card'
 import { ScrollArea } from '../ui/scroll-area'
 import CheckoutProduct from './checkout-product'
 import { useLazyGetCartQuery } from '@/components/api/cart/cart.api'
@@ -16,6 +16,7 @@ const CheckoutProducts = () => {
   const [offlineProducts, setofflineProducts] = useState<AddToCartPayload[]>([])
   const {toast} = useToast()
   const [total, settotal] = useState(0)
+  const [deliveryOption, setdeliveryOption] = useState('inside')
 
   useEffect(() => {
     if(isError){
@@ -27,7 +28,7 @@ const CheckoutProducts = () => {
       console.log(error)
     }
     if(isSuccess){
-      settotal(cart?.items.reduce((acc,v)=>acc+v.size.product.price*v.quantity,0))
+      settotal(cart?.items.reduce((acc,v)=>v.size.product.discountPrice?acc+v.size.product.discountPrice*v.quantity:acc+v.size.product.price*v.quantity,0))
     }
   }, [isError,isSuccess])
 
@@ -55,6 +56,10 @@ const CheckoutProducts = () => {
     }
   }, [isOffline])
 
+
+  
+  
+
   
 
   return (
@@ -73,9 +78,24 @@ const CheckoutProducts = () => {
               })
             }
           </ScrollArea>
+          <p className="text-sm font-semibold">Delivery Option</p>
+          <div className="grid grid-cols-2 gap-5 mt-3">
+            <Card className={deliveryOption==='inside'?'border bg-primary/10 border-primary/50':''} onClick={()=>setdeliveryOption('inside')}>
+              <CardHeader>
+                <CardTitle>Inside Dhaka</CardTitle>
+                <CardDescription>60 Tk</CardDescription>
+              </CardHeader>
+            </Card>
+            <Card className={deliveryOption==='outside'?'border bg-primary/10 border-primary/50':''} onClick={()=>setdeliveryOption('outside')}>
+              <CardHeader>
+                <CardTitle>Outside Dhaka</CardTitle>
+                <CardDescription>120 Tk</CardDescription>
+              </CardHeader>
+            </Card>
+          </div>
         </CardContent>
         <CardFooter>
-          <p className='text-right flex-1 w-full'>Total : <span className="font-bold">{total} BDT</span></p>
+          <p className='text-right flex-1 w-full'>Total : <span className="font-bold">{total+(deliveryOption=='inside'?60:120)} BDT</span></p>
         </CardFooter>
       </Card>
     </div>
