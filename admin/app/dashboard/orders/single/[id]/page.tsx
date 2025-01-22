@@ -18,6 +18,7 @@ const SingleOrderPage = () => {
         isSuccess,
         isError
     }] = useLazyGetSingleOrderQuery()
+    
     useEffect(() => {
       if(param){
         getOrder(String(param.id))
@@ -45,7 +46,7 @@ const SingleOrderPage = () => {
     
   return (
     <div className='p-5 grid grid-cols-1 md:grid-cols-2 gap-5'>
-        <CustomerInfo/>
+        {data?.cart&&<CustomerInfo {...data?.cart.customer}/>}
         <div>
         <DeliveryStatusContainer/>
         <UpdateDeliveryStatus/>
