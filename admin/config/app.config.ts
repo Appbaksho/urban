@@ -1,3 +1,3 @@
 export const env = {
-    apiUrl:'http://localhost:2001'
+    apiUrl:'https://urban-backend-lime.vercel.app'
 }
