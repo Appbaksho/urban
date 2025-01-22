@@ -60,7 +60,7 @@ export class CartController {
   }
 
   @Get('checked-out/:id')
-  @UseGuards(AccessTokenGuard)
+  //@UseGuards(AccessTokenGuard)
   async getCheckedOutById(@Param('id') id: string) {
     return await this.cartService.getOrderedSingleItem(id);
   }
