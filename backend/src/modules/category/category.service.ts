@@ -49,6 +49,10 @@ export class CategoryService {
     });
   }
 
+  async getParentcategories() {
+    return await this.databaseService.parentCategory.findMany({});
+  }
+
   async createParentCategory(createCategoryDto: CreateCategoryDto) {
     const metadata = await this.databaseService.metadata.findFirst({});
     const category = await this.databaseService.parentCategory.create({

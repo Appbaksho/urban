@@ -20,6 +20,11 @@ export class CategoryController {
     return this.categoryService.create(createCategoryDto);
   }
 
+  @Get('parent')
+  async getParentcategories() {
+    return this.categoryService.getParentcategories();
+  }
+
   @Post('parent')
   async createParentCategory(@Body() createCategoryDto: CreateCategoryDto) {
     return this.categoryService.createParentCategory(createCategoryDto);

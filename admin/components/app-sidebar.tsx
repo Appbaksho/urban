@@ -89,15 +89,16 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarContent>
         <SidebarGroup>
           <SidebarMenu>
+          <SidebarMenuItem>
+                  <Link href="/dashboard/metadata" className="text-sm ml-2">Meta Data</Link>
+                </SidebarMenuItem>
             {data.navMain.map((item, index) => (
               <Collapsible
                 key={item.title}
                 defaultOpen={index === 1}
                 className="group/collapsible"
               >
-                <SidebarMenuItem>
-                  <Link href="/dashboard/metadata" className="text-sm ml-2">Meta Data</Link>
-                </SidebarMenuItem>
+                
                 <SidebarMenuItem>
                   <CollapsibleTrigger asChild>
                     <SidebarMenuButton>

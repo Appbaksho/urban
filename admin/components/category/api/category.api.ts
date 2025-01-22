@@ -16,6 +16,16 @@ export const categoryApi = api.injectEndpoints({
             body: data,
         }),
         }),
+        createParentCategory: build.mutation<Category,CreateCategory>({
+            query: (data: CreateCategory) => ({
+                url: "/category/parent",
+                method: "POST",
+                body: data,
+            }),
+        }),
+        getParentCategories: build.query<Category[],void>({
+            query: () => "/category/parent",
+        }),
         updateCategory: build.mutation<Category,Category>({
         query: (data: Category) => ({
             url: `/category/${data.id}`,
@@ -27,4 +37,4 @@ export const categoryApi = api.injectEndpoints({
     overrideExisting: true,
 })
 
-export const { useGetCategoriesQuery, useCreateCategoryMutation,useGetSingleCategoryQuery,useUpdateCategoryMutation } = categoryApi;
+export const { useGetCategoriesQuery, useCreateCategoryMutation,useGetSingleCategoryQuery,useUpdateCategoryMutation,useCreateParentCategoryMutation,useGetParentCategoriesQuery } = categoryApi;
