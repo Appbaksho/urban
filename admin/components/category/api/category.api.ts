@@ -1,5 +1,6 @@
 import { api } from "@/api";
 import { Category, CreateCategory } from "./category.model";
+import { ParentCategory } from "@/components/metadata/api/metadata.model";
 
 export const categoryApi = api.injectEndpoints({
     endpoints: (build) => ({
@@ -16,14 +17,14 @@ export const categoryApi = api.injectEndpoints({
             body: data,
         }),
         }),
-        createParentCategory: build.mutation<Category,CreateCategory>({
+        createParentCategory: build.mutation<ParentCategory,CreateCategory>({
             query: (data: CreateCategory) => ({
                 url: "/category/parent",
                 method: "POST",
                 body: data,
             }),
         }),
-        getParentCategories: build.query<Category[],void>({
+        getParentCategories: build.query<ParentCategory[],void>({
             query: () => "/category/parent",
         }),
         updateCategory: build.mutation<Category,Category>({

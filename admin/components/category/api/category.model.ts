@@ -16,3 +16,10 @@ export interface Category {
     refetch?: () => void;
 }
   
+
+export interface parentCategory {
+        name: string
+        description: string
+        imageUrl: string
+        metadataId: string
+}

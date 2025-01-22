@@ -6,7 +6,7 @@ import { Loader2 } from 'lucide-react'
 import { Label } from '../ui/label'
 import { Input } from '../ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
-import { useCreateCategoryMutation, useGetCategoriesQuery } from './api/category.api'
+import { useCreateCategoryMutation, useGetCategoriesQuery, useGetParentCategoriesQuery } from './api/category.api'
 import { useToast } from '@/hooks/use-toast'
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from '../ui/breadcrumb'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
@@ -14,7 +14,7 @@ import { storage } from '@/firebase/firebase'
 import { useUploadImageMutation } from '../products/api/products.api'
 
 const AddCategoryForm = () => {
-    const {data,isError,isLoading,error} = useGetCategoriesQuery()
+    const {data,isError,isLoading,error} = useGetParentCategoriesQuery()
     const [createCategory,{isLoading:createLoading,isError:isCreateError,isSuccess:createSuccess,data:createData,error:createError}] = useCreateCategoryMutation()
     const [uploadImage,{data:imageData,isError:isImageError,isSuccess:imageSuccess}] = useUploadImageMutation()
     const [name, setname] = useState<string>('')
@@ -22,98 +22,99 @@ const AddCategoryForm = () => {
     const [image, setimage] = useState<File|null>(null)
     const [parentCategoryId, setparentCategoryId] = useState<string>('')
     const [loading , setloading ] = useState(false)
+    const [parent, setparent] = useState<string>('')
 
     const {toast} = useToast()
 
-    useEffect(() => {
-      toast({
-        title: 'Error',
-        description: "Cannot get categories",
-        variant:'destructive',
-        duration: 5000
-      })
-      console.log('fetch error',error)
-    }, [isError,error])
-
-    useEffect(() => {
-        if(isCreateError){
+      useEffect(() => {
         toast({
-            title: 'Error',
-            description: "Cannot create category",
-            variant:'destructive',
-            duration: 5000
-        })
-        console.log('create error',createError)
-        }
-    }, [isCreateError,createError])
-
-    useEffect(() => {
-      if(createSuccess){
-        toast({
-          title: 'Success',
-          description: "Category created successfully",
+          title: 'Error',
+          description: "Cannot get categories",
+          variant:'destructive',
           duration: 5000
         })
-      }
-    }, [createSuccess])
+        console.log('fetch error',error)
+      }, [isError,error])
 
-    
-
-    const sendToDB = async () => {
-      setloading(true)
-        if (!name || !desc || !image) {
-            toast({
-                title: 'Error',
-                description: "All fields are required",
-                variant: 'destructive',
-                duration: 5000
-            })
-            setloading(false)
-            return
-        }
-
-        try {
-          
-            const imageForm = new FormData()
-            imageForm.append('image',image)
-
-            uploadImage(imageForm).then(async res=>{
-            await createCategory({
-                name,
-                description: desc,
-                imageUrl: String(res.data?.imageUrl),
-                parentCategoryId
-            }).unwrap()
-            setloading(false)
-            setname('')
-            setdesc('')
-            setimage(null)
-            setparentCategoryId('')
-          }).catch(err=>{
-            console.error('Error uploading image:', err)
-            setloading(false)
-            toast({
-                title: 'Error',
-                description: "Failed to upload image",
-                variant: 'destructive',
-                duration: 5000
-            })
+      useEffect(() => {
+          if(isCreateError){
+          toast({
+              title: 'Error',
+              description: "Cannot create category",
+              variant:'destructive',
+              duration: 5000
           })
-        } catch (error) {
-            setloading(false)
-            console.error('Error creating category:', error)
-            toast({
-                title: 'Error',
-                description: "Failed to create category",
-                variant: 'destructive',
-                duration: 5000
-            })
+          console.log('create error',createError)
+          }
+      }, [isCreateError,createError])
+
+      useEffect(() => {
+        if(createSuccess){
+          toast({
+            title: 'Success',
+            description: "Category created successfully",
+            duration: 5000
+          })
         }
-    }
-    
+      }, [createSuccess])
+
+      
+
+      const sendToDB = async () => {
+        setloading(true)
+          if (!name || !desc || !image) {
+              toast({
+                  title: 'Error',
+                  description: "All fields are required",
+                  variant: 'destructive',
+                  duration: 5000
+              })
+              setloading(false)
+              return
+          }
+
+          try {
+            
+              const imageForm = new FormData()
+              imageForm.append('image',image)
+
+              uploadImage(imageForm).then(async res=>{
+              await createCategory({
+                  name,
+                  description: desc,
+                  imageUrl: String(res.data?.imageUrl),
+                  parentCategoryId
+              }).unwrap()
+              setloading(false)
+              setname('')
+              setdesc('')
+              setimage(null)
+              setparentCategoryId('')
+            }).catch(err=>{
+              console.error('Error uploading image:', err)
+              setloading(false)
+              toast({
+                  title: 'Error',
+                  description: "Failed to upload image",
+                  variant: 'destructive',
+                  duration: 5000
+              })
+            })
+          } catch (error) {
+              setloading(false)
+              console.error('Error creating category:', error)
+              toast({
+                  title: 'Error',
+                  description: "Failed to create category",
+                  variant: 'destructive',
+                  duration: 5000
+              })
+          }
+      }
+      
 
 
-    
+      
 
   return (
     <Card>
@@ -146,28 +147,9 @@ const AddCategoryForm = () => {
                 <SelectValue placeholder="Category" />
               </SelectTrigger>
               <SelectContent>
-                {data?.map(category=>(
-                    <SelectItem key={category.id} value={category.id}>
-                        <Breadcrumb>
-                          <BreadcrumbList>
-                            <BreadcrumbItem>
-                              <BreadcrumbLink href="#">{category.name}</BreadcrumbLink>
-                            </BreadcrumbItem>
-                            {category.childrenCategories?.map(child => (
-                                <>
-                                <BreadcrumbItem key={child.id}>
-                                    <BreadcrumbLink href="#">{child.name}</BreadcrumbLink>
-                                    {child.childrenCategories?.map(grandChild => (
-                                        <BreadcrumbItem key={grandChild.id}>
-                                            <BreadcrumbLink href="#">{grandChild.name}</BreadcrumbLink>
-                                        </BreadcrumbItem>
-                                    ))}
-                                </BreadcrumbItem>
-                                {child.childrenCategories && <BreadcrumbSeparator />}
-                                </>
-                            ))}
-                          </BreadcrumbList>
-                        </Breadcrumb>
+                {data?.map((category,i)=>(
+                    <SelectItem key={i} value={category.name}>
+                        {category.name}
                     </SelectItem>
                 ))}
               </SelectContent>
