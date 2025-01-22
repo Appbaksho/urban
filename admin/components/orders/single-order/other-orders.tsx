@@ -2,7 +2,7 @@ import React from 'react'
 
 const OtherOrdersOfCustomer = () => {
   return (
-    <div>OtherOrdersOfCustomer</div>
+    <div></div>
   )
 }
 

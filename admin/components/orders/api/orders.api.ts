@@ -9,7 +9,7 @@ export const orderApi  = api.injectEndpoints({
         getSingleOrder: build.query<Order, string>({
         query: (id) => `/cart/checked-out/${id}`,
         }),
-        getSingleBatchOrder: build.query<BatchOrder, string>({
+        getSingleBatchOrder: build.query<BatchOrder[], string>({
         query: (id) => `/cart/batch/${id}`,
         })
     }),
