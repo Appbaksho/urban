@@ -4,6 +4,8 @@ import { Item, Order } from './api/orders.api'
 import { Button } from '../ui/button'
 import { Copy } from 'lucide-react'
 import { toast } from '@/hooks/use-toast'
+import dayjs from 'dayjs'
+import Link from 'next/link'
 
 const OrdersAdapter = (props:Item) => {
   return (
@@ -23,17 +25,18 @@ const OrdersAdapter = (props:Item) => {
         </TableCell>
               <TableCell className='flex gap-2 items-center'><img src={props.size.product.imageUrl[0]} className='h-[50px] w-[100px] object-cover rounded-md'/> 
               <div>
-                <p className='font-bold'>{props.size.product.name}</p>
+                <Link href={`/dashboard/orders/single/${props.id}`} className='font-bold'>{props.size.product.name}</Link>
                 <p className='mt-1'>Size: <span className='bg-primary-foreground text-primary py-1 px-2 rounded-md text-xs'>{props.size.name}</span> </p>
               </div>
               </TableCell>
-              <TableCell>Credit Card</TableCell>
+              <TableCell>{dayjs(props.createdAt).format("DD-MM-YY hh:mm A")}</TableCell>
               <TableCell>
               <span className='bg-primary-foreground text-primary py-1 px-2 rounded-md text-xs italic'>{props.deliveryStatus.toLowerCase().replace("_"," ")}</span>
               </TableCell>
-              <TableCell>{props.paymentStatus}</TableCell>
-              <TableCell>{props.size.product.price} BDT</TableCell>
-              <TableCell className="text-right">.00</TableCell>
+              <TableCell>
+              <span className='bg-primary-foreground text-primary py-1 px-2 rounded-md text-xs italic'>{props.paymentStatus.toLowerCase().replace("_"," ")}</span>
+              </TableCell>
+              <TableCell className='text-right'>{props.size.product.price} BDT</TableCell>
     </TableRow>
   )
 }

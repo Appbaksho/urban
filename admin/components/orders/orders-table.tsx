@@ -24,7 +24,7 @@ const OrdersTable = () => {
               <TableHead>Product</TableHead>
               <TableHead>Orderd On</TableHead>
               <TableHead>Delivery Status</TableHead>
-              <TableHead>Payment Method</TableHead>
+              <TableHead>Payment Status</TableHead>
               <TableHead className="text-right">Amount</TableHead>
             </TableRow>
           </TableHeader>
