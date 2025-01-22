@@ -28,9 +28,14 @@ const SingleOrderPage = () => {
         isError:batchIsError
     }] = useLazyGetSingleBatchOrderQuery()
     
+    const refetch = () => {
+        getOrder(String(param.id))
+    }
+
+
     useEffect(() => {
       if(param){
-        getOrder(String(param.id))
+        refetch()
       }
     }, [param])
 
@@ -83,7 +88,7 @@ const SingleOrderPage = () => {
         {batchIsLoading?<Skeleton className='h-[250px]'/>:batchData&&<ProductsInfo deliveryCharge={Number(data?.cart.deliveryCharge)} products={batchData} />}
         <div>
         {isLoading?<Skeleton className='h-[250px]'/>:data?.deliveryStatus&&<DeliveryStatusContainer props={data.deliveryStatus}/>}
-        <UpdateDeliveryStatus/>
+        {isLoading?<Skeleton className='h-[100px]'/>:data?.deliveryStatus&&<UpdateDeliveryStatus refetch={refetch} status={data?.deliveryStatus} id={data.batchId}/>}
         </div>
         {isLoading?<Skeleton className='h-[250px]'/>:data?.cart&&<CustomerInfo {...data?.cart.customer}/>}
         <OtherOrdersOfCustomer/>

@@ -168,3 +168,12 @@
     continued: boolean
   }
   
+
+
+export interface UpdateCartPayload {
+    id:string
+    isCheckedOut?: boolean;
+    deliveryStatus?: string;
+    paymentStatus?: string;
+    orderStatus?: string;
+  }
