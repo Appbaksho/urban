@@ -8,12 +8,13 @@ export const orderApi  = api.injectEndpoints({
         }),
         getSingleOrder: build.query<Order, string>({
         query: (id) => `/cart/checked-out/${id}`,
+        
         }),
         getSingleBatchOrder: build.query<BatchOrder[], string>({
         query: (id) => `/cart/batch/${id}`,
         }),
         updateOrder: build.mutation<Order, UpdateCartPayload>({
-        query: (payload:UpdateCartPayload) => ({
+        query: (payload) => ({
             url: `/cart/batch-update/${payload.id}`,
             method: "PUT",
             body: {

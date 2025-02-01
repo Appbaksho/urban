@@ -27,7 +27,7 @@ export const productsApi = api.injectEndpoints({
             body: product,
         }),
         }),
-        deleteProduct: build.mutation<Product, number>({
+        deleteProduct: build.mutation<Product, string>({
         query: (id) => ({
             url: `product/${id}`,
             method: "DELETE",

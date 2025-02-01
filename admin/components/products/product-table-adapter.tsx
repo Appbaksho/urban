@@ -1,18 +1,52 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { TableCell, TableRow } from '../ui/table'
 import Image from 'next/image'
 import { Product } from './api/products.model'
 import dayjs from 'dayjs'
 import { Button } from '../ui/button'
-import { Edit2, Trash2 } from 'lucide-react'
+import { Edit2, Loader2, Trash2 } from 'lucide-react'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '../ui/dialog'
 import EditProductDialog from './edit-product-dialog'
+import { useDeleteProductMutation } from './api/products.api'
+import { toast } from '@/hooks/use-toast'
 
 
 const ProductTableAdapter = (props:Product) => {
   const [editOpen, seteditOpen] = useState<boolean>(false)
   const [deleteOpen, setdeleteOpen] = useState<boolean>(false)
+  const [deleteSingleProduct,{
+    error,
+    isLoading,
+    isSuccess,
+    isError
+  }] = useDeleteProductMutation()
+
+  const deleteProduct = () => {
+    deleteSingleProduct(String(props.id))
+  }
+
+  useEffect(() => {
+    if(isError){
+      toast({
+        title:'Error',
+        description:'Error deleting product',
+        variant:'destructive'
+      })
+      console.error(error)
+    }
+    if(isSuccess){
+      toast({
+        title:'Success',
+        description:'Product deleted successfully'
+      })
+      setdeleteOpen(false)
+      if(props.refetch){
+        props.refetch()
+      }
+    }
+  }, [isError,isSuccess])
+  
   return (
     <TableRow>
           <TableCell>
@@ -43,7 +77,7 @@ const ProductTableAdapter = (props:Product) => {
                   and remove the data from our servers.
                   <div className="flex items-center justify-end gap-2">
                     <Button variant="outline" size="sm" onClick={()=>setdeleteOpen(false)}>Cancel</Button>
-                    <Button variant="destructive" size="sm">Delete</Button>
+                    <Button variant="destructive" size="sm" onClick={deleteProduct} disabled={isLoading}>{isLoading&&<Loader2 className='animate-spin' size={15}/>}Delete</Button>
                   </div>
                 </DialogDescription>
               </DialogHeader>

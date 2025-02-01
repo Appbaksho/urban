@@ -6,7 +6,9 @@ import OtherOrdersOfCustomer from '@/components/orders/single-order/other-orders
 import ProductsInfo from '@/components/orders/single-order/product-info'
 import UpdateDeliveryStatus from '@/components/orders/single-order/update-delivery-status'
 import { Skeleton } from '@/components/ui/skeleton'
+import { auth } from '@/firebase/firebase'
 import { toast } from '@/hooks/use-toast'
+import { onAuthStateChanged } from 'firebase/auth'
 import { useParams } from 'next/navigation'
 import React, { useEffect } from 'react'
 
@@ -34,9 +36,14 @@ const SingleOrderPage = () => {
 
 
     useEffect(() => {
-      if(param){
-        refetch()
-      }
+        onAuthStateChanged(auth, (user) => {
+            if(user){
+                if(param){
+                    refetch()
+                }
+            }
+        })
+      
     }, [param])
 
     useEffect(() => {

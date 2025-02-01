@@ -7,7 +7,7 @@ import { useToast } from '@/hooks/use-toast'
 import { Skeleton } from '../ui/skeleton'
 
 const ProductTable = ({query}:{query:string}) => {
-  const {data,isLoading,isSuccess,isError,error} = useGetProductsQuery()
+  const {data,isLoading,isSuccess,isError,error,refetch} = useGetProductsQuery()
   const {toast} = useToast()
   
 
@@ -44,7 +44,7 @@ const ProductTable = ({query}:{query:string}) => {
             <Skeleton className='w-full h-[50px]' key={i}/>
           </TableCell>
         </TableRow>):data?.filter(v=>v.name.toLowerCase().trim().includes(query.toLowerCase().trim())).sort((a,b)=>new Date(b.createdAt).getTime()-new Date(a.createdAt).getTime()).map(product => (
-          <ProductTableAdapter key={product.id} {...product}/>
+          <ProductTableAdapter refetch={refetch} key={product.id} {...product}/>
         ))}
       </TableBody>
     </Table>

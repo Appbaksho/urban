@@ -12,6 +12,7 @@ export interface Product {
   updatedAt?: string
   continued?: boolean
   sizes: Size[]
+  refetch?: ()=>void
 }
 
 export interface ImageResponse{

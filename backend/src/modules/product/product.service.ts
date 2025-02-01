@@ -48,6 +48,9 @@ export class ProductService {
         sizes: true,
         Category: true,
       },
+      where:{
+        continued:true
+      }
     });
   }
 
@@ -154,7 +157,7 @@ export class ProductService {
         sizeDescription:
           updateProductDto.sizeDescription || previosuProduct.sizeDescription,
         price: updateProductDto.price || previosuProduct.price,
-        discountPrice: Number(updateProductDto.discountPrice) || previosuProduct.discountPrice,
+        discountPrice: Number(updateProductDto.discountPrice) || previosuProduct.discountPrice
       },
       include: {
         sizes: true,
@@ -264,7 +267,8 @@ export class ProductService {
     };
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} product`;
+  async remove(id: string) {
+    const product = await this.databaseService.product.update({data:{continued:false},where:{id:id}});
+    return product;
   }
 }
