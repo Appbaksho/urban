@@ -12,14 +12,11 @@ const cartApi = api.injectEndpoints({
             };
         },
         }),
-        getOrders: build.query<UserOrders, string>({
-            query: (token:string) => {
+        getOrders: build.query<UserOrders,void>({
+            query: () => {
                 return {
                     url: "/cart/checked-out",
-                    method: "GET",
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
+                    method: "GET"
                 };
             },
         }),

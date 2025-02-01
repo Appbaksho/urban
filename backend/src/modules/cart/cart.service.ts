@@ -22,6 +22,9 @@ export class CartService {
                 include: { product: true },
               },
             },
+            orderBy: {
+              createdAt: 'desc',
+            },
           },
         },
       });
@@ -39,6 +42,9 @@ export class CartService {
               size: {
                 include: { product: true },
               },
+            },
+            orderBy: {
+              createdAt: 'desc',
             },
           },
         },
@@ -64,6 +70,9 @@ export class CartService {
                 include: { product: true },
               },
             },
+            orderBy: {
+              createdAt: 'desc',
+            },
           },
         },
       });
@@ -82,6 +91,9 @@ export class CartService {
               size: {
                 include: { product: true },
               },
+            },
+            orderBy: {
+              createdAt: 'desc',
             },
           },
         },
@@ -106,6 +118,9 @@ export class CartService {
                 include: { product: true },
               },
             },
+            orderBy: {
+              createdAt: 'desc',
+            },
           },
         },
       });
@@ -128,9 +143,9 @@ export class CartService {
       const cartItemPre = await this.databaseService.orderItem.findUnique({
         where: { id: orderItemId },
       });
-      const items = await this.databaseService.orderItem.findMany({
-        where: { batchId: cartItemPre.batchId },
-      });
+      // const items = await this.databaseService.orderItem.findMany({
+      //   where: { batchId: cartItemPre.batchId },
+      // });
       const cartItem = await this.databaseService.orderItem.findUnique({
         where: { id: orderItemId },
         include: {
