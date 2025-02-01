@@ -11,7 +11,7 @@ import { ChevronDown, Share2Icon, Star } from "lucide-react-native";
 import React, { Key, useEffect, useLayoutEffect, useState } from "react";
 import { Dimensions, ImageBackground, NativeScrollEvent, NativeSyntheticEvent, ScrollView, View, StyleSheet, Image, ToastAndroid } from "react-native";
 import { TouchableOpacity } from "react-native";
-import { Text } from "react-native-paper";
+import { ActivityIndicator, Text } from "react-native-paper";
 import { black } from "react-native-paper/lib/typescript/styles/themes/v2/colors";
 import { SafeAreaView } from "react-native-safe-area-context";
 const { width: viewportWidth } = Dimensions.get('window');
@@ -32,7 +32,7 @@ const ProductLayout = () => {
     const [addToBag, {data: bagData, isLoading: isBagLoading}] = useAddToCartMutation();
     const [addToFavourite, {data: favouriteData, isLoading: isFavouriteLoading}] = useAddToWishlistMutation();
     const {data: favourites, refetch: reFetchWishList } = useGetWishlistQuery();
-    const { data: products, isLoading: isProductsLoading } = useGetProductsQuery();
+    const { data: products, isLoading: isProductsLoading, error } = useGetProductsQuery();
     const openMenu = () => setMenuVisible(true);
     const closeMenu = () => setMenuVisible(false);
     const [isFav, setIsFav] = useState(false);
@@ -51,13 +51,31 @@ const ProductLayout = () => {
         setActiveSlide(slideIndex);
     };
 
-    if (isLoading) {
-        return <Text>Loading...</Text>
-    }
 
-    if (!product) {
-        return <Text>Product not found</Text>
-    }
+    if (isLoading) {
+        return (
+          <SafeAreaView className="flex-1 bg-white">
+            <TopBarV2 name="Product" />
+            <View className="flex-1 items-center justify-center">
+              {/* Loading bar black  */}
+              <ActivityIndicator size={20} className={"mr-3"} color={"#000000"} />
+            </View>
+          </SafeAreaView>
+        );
+      }
+    
+      if (error) {
+        return (
+          <SafeAreaView className="flex-1 bg-white">
+            <TopBarV2 name="Bag" />
+            <View className="flex-1 items-center justify-center">
+              {/* Loading bar black  */}
+    
+              <Text variant="labelLarge">Something went wrong</Text>
+            </View>
+          </SafeAreaView>
+        );
+      } 
 
     return (
         <SafeAreaView className="bg-white w-full">

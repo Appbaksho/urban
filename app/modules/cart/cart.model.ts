@@ -14,18 +14,31 @@ export interface OrderCart {
     items: Item[]
 }
   
-  export interface Item {
-    id: string
-    sizeId: string
-    quantity: number
-    cartId: string
-    isCheckedOut: boolean
-    deliveryStatus: string
-    paymentStatus: string
-    orderStatus: string
-    size: Size
-    refetch?: () => void
-  }
+export interface Item {
+  id: string;
+  sizeId: string;
+  quantity: number;
+  cartId: string;
+  isCheckedOut: boolean;
+  deliveryStatus: string;
+  paymentStatus: string;
+  orderStatus: string;
+  batchId: string;
+  createdAt: string;
+  orderDetail: OrderDetail;
+  size: Size;
+  refetch?: () => void;
+}
+
+export interface OrderDetail {
+  id: string;
+  quantity: number;
+  size: string;
+  price: number;
+  productName: string;
+  imageUrl: string;
+  orderItemId: string;
+}
   
   export interface Size {
     id: string
