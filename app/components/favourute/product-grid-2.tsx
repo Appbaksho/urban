@@ -1,3 +1,4 @@
+import { Wishlist } from "@/modules/products/products.model";
 import { theme } from "@/theme/theme";
 import { router } from "expo-router";
 import { Heart } from "lucide-react-native";
@@ -7,6 +8,7 @@ import { Text } from "react-native-paper";
 
 interface ProductGrid2Props {
     products?: any[];
+    wishlist?: Wishlist[];
     title: string;
 }
 const ProductGrid2 = (props:ProductGrid2Props) => {
@@ -55,4 +57,29 @@ const ProductGrid2 = (props:ProductGrid2Props) => {
     )
 }
 
-export default ProductGrid2;
+const FavouriteProductsGrid = (props:ProductGrid2Props) => {
+    return (
+        <ScrollView >
+            <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', width: '100%' }}>
+                {props.wishlist && props.wishlist.map((wishlist) => (
+                    <TouchableOpacity onPress={()=>{router.push(`/product?productId=${wishlist.product.id}`)}} key={wishlist.product.id} style={{ width: '49%',  marginBottom: 16 }}>
+                        <ImageBackground  source={{ uri: wishlist.product.imageUrl[0] }} className="w-full h-[48vw]" style={{ borderRadius: 2 }}>
+                            <TouchableOpacity className="absolute top-2 right-2  bg-white rounded-full p-1" >
+                            {props.title!==''&&<Heart size={20} color="white" fill={theme.colors.primary} />}
+                            </TouchableOpacity>
+                         </ImageBackground>
+                        <View className="ml-2">
+                        <Text variant="labelSmall" style={{ marginTop: 8 }}>{wishlist.product.name}</Text>
+                        <Text variant="bodySmall" style={{ color: 'gray' }}>{wishlist.product.Category?.name}</Text>
+                        <Text variant="labelSmall" style={{ marginTop: 4, color: theme.colors.primary }}>{
+                        wishlist.product.discountPrice || wishlist.product.price
+                        } BDT</Text>
+                        </View>
+                    </TouchableOpacity>
+                ))}
+            </View>
+        </ScrollView>
+    )
+}
+
+export default FavouriteProductsGrid;
