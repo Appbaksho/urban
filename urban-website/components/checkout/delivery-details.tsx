@@ -11,8 +11,8 @@ const DeliveryDetails = (props:MetaData) => {
     <Card>
       <CardContent className='pt-5'>
         <p className='text-xs font-semibold'>
-          Inside Dhaka : 60tk <br/>
-          All Over Bangladesh : 120tk
+          Inside Dhaka : {props.deliveryCharge}tk <br/>
+          All Over Bangladesh : {props.deliveryChargeOutsideDhaka}tk
         </p>
         <div className="flex items-center gap-1 mt-5">
           <p className="italic text-sm">Currently Cash on delivery is available only</p>
