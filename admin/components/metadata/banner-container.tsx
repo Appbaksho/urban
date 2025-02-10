@@ -63,7 +63,7 @@ const BannerContainer = (props:MetaData) => {
               title:"Success!",
               description:"Image uploaded successfully"
           })
-          editBanner({bannerImage:image,bannerUrl:link,title,description})
+          editBanner({bannerImage:imageData?.imageUrl,bannerUrl:link,title,description})
       }
       if(isImageUploadError){
           toast({
