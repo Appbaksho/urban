@@ -1,20 +1,27 @@
 import { api } from "@/api";
-import { MetaData } from "./metadata.model";
+import { BannerUpdatePayload, DeliveryChargeUpdatePayload, MetaData } from "./metadata.model";
 
 export const metadataApi = api.injectEndpoints({
     endpoints: (build) => ({
         getMetadata: build.query<MetaData, void>({
         query: () => "/metadata",
         }),
-        updateMetadata: build.mutation<MetaData, Partial<MetaData>>({
-        query: (body) => ({
-            url: "/metadata",
+        updateBannerData: build.mutation<MetaData, BannerUpdatePayload>({
+        query: (data) => ({
+            url: "/metadata/top-banner",
             method: "PUT",
-            body,
+            body: data,
         }),
-        })
+        }),
+        updateDeliveryCharges: build.mutation<MetaData, DeliveryChargeUpdatePayload>({
+        query: (data) => ({
+            url: "/metadata/delivery-charges",
+            method: "PUT",
+            body: data,
+        }),
+        }),
     }),
     overrideExisting: false,
     });
 
-export const { useGetMetadataQuery, useUpdateMetadataMutation } = metadataApi;
+export const { useGetMetadataQuery, useUpdateBannerDataMutation,useUpdateDeliveryChargesMutation } = metadataApi;

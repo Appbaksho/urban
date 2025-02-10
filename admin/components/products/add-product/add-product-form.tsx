@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
 import { useToast } from '@/hooks/use-toast'
-import { Trash2 } from 'lucide-react'
+import { Loader2, Trash2 } from 'lucide-react'
 import React, { useState } from 'react'
 import { useAddProductMutation, useUploadImageMutation } from '../api/products.api'
 import { Size } from '../api/products.model'
@@ -256,7 +256,7 @@ const AddProductForm = () => {
                 </div>
                 
                 <div className='md:col-span-2 flex items-center justify-end gap-2'>
-                    <Button onClick={handleAddProduct} disabled={isLoading} className="btn">Add Product</Button>
+                    <Button onClick={handleAddProduct} disabled={isLoading||isImageUploading} className="btn">{(isImageUploading||isLoading)&&<Loader2 size={15} className='animate-spin'/>} Add Product</Button>
                 </div>
             </div>
         </CardContent>
