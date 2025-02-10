@@ -1,6 +1,10 @@
 export class CreateMetadatumDto {
-  deliveryCharge: number;
-  bannerUrl: string;
-  title: string;
-  description: string;
+  deliveryCharge?: {
+    inside: number;
+    outside: number;
+  }
+  bannerUrl?: string;
+  bannerImage?: string;
+  title?: string;
+  description?: string;
 }

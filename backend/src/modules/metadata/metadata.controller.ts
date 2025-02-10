@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Put,
 } from '@nestjs/common';
 import { MetadataService } from './metadata.service';
 import { CreateMetadatumDto } from './dto/create-metadatum.dto';
@@ -20,11 +21,15 @@ export class MetadataController {
     return this.metadataService.findOne();
   }
 
-  @Patch(':id')
+  @Put('top-banner')
+  updateTopBanner(@Body() updateMetadatumDto: UpdateMetadatumDto) {
+    return this.metadataService.updateTopBanner(updateMetadatumDto);
+  }
+
+  @Put('delivery-charges')
   update(
-    @Param('id') id: string,
     @Body() updateMetadatumDto: UpdateMetadatumDto,
   ) {
-    return this.metadataService.update(+id, updateMetadatumDto);
+    return this.metadataService.updateDeliveryCharge(updateMetadatumDto);
   }
 }

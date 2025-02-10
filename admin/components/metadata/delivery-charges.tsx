@@ -31,4 +31,4 @@ const DeliveryCharges = (props:MetaData) => {
   )
 }
 
-export default DeliveryCharges
+export default DeliveryCharges  
