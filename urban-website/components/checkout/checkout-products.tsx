@@ -9,8 +9,9 @@ import { auth } from '@/firebase/firebase'
 import { Skeleton } from '../ui/skeleton'
 import CheckoutProductOffline from './checkout-product-offline'
 import { AddToCartPayload } from '@/components/api/cart/cart.model'
+import { MetaData } from '../api/metadata/metadata.model'
 
-const CheckoutProducts = () => {
+const CheckoutProducts = (props:MetaData) => {
   const [getCart,{data:cart,isError,isSuccess,isLoading,error}] = useLazyGetCartQuery()
   const [isOffline, setisOffline] = useState<boolean>(false)
   const [offlineProducts, setofflineProducts] = useState<AddToCartPayload[]>([])
@@ -83,19 +84,19 @@ const CheckoutProducts = () => {
             <Card className={deliveryOption==='inside'?'border bg-primary/10 border-primary/50':''} onClick={()=>setdeliveryOption('inside')}>
               <CardHeader>
                 <CardTitle>Inside Dhaka</CardTitle>
-                <CardDescription>60 Tk</CardDescription>
+                <CardDescription>{props.deliveryCharge} Tk</CardDescription>
               </CardHeader>
             </Card>
             <Card className={deliveryOption==='outside'?'border bg-primary/10 border-primary/50':''} onClick={()=>setdeliveryOption('outside')}>
               <CardHeader>
                 <CardTitle>Outside Dhaka</CardTitle>
-                <CardDescription>120 Tk</CardDescription>
+                <CardDescription>{props.deliveryChargeOutsideDhaka} Tk</CardDescription>
               </CardHeader>
             </Card>
           </div>
         </CardContent>
         <CardFooter>
-          <p className='text-right flex-1 w-full'>Total : <span className="font-bold">{total+(deliveryOption=='inside'?60:120)} BDT</span></p>
+          <p className='text-right flex-1 w-full'>Total : <span className="font-bold">{total+(deliveryOption=='inside'?props.deliveryCharge:props.deliveryChargeOutsideDhaka)} BDT</span></p>
         </CardFooter>
       </Card>
     </div>
