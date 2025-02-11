@@ -24,7 +24,7 @@ const HeroSection = () => {
             {data?.description}
         </p>
         <div className="flex mt-5 gap-3"> 
-        <Link href={data?.bannerUrl?data.bannerUrl:"#"} className={buttonVariants({variant:'default',className:'rounded-full'})}>All Products</Link>
+        <Link href={data?.bannerUrl?data.bannerUrl:"#"} className={buttonVariants({variant:'default',className:'rounded-full'})}>Explore</Link>
         </div>
         
         </div>

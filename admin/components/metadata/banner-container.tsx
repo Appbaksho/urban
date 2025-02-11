@@ -58,7 +58,6 @@ const BannerContainer = (props:MetaData) => {
     useEffect(() => {
       if(isImageUploadSuccess){
           setimage(imageData?.imageUrl)
-          console.log("IMAGE DATA",imageData)
           toast({
               title:"Success!",
               description:"Image uploaded successfully"
