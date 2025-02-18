@@ -20,7 +20,7 @@ const Footer = () => {
     <div className='mt-5 md:px-20 px-5 border-t border-border grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 pt-10 gap-10'>
       <div className="">
         <p className="text-primary font-semibold text-sm">Popular Categories</p>
-        <ul className='[&>*]:my-2 text-xs font-medium text-gray-500 mt-7'>
+        <ul className='[&>*]:my-1 grid grid-cols-2 text-xs font-medium text-gray-500 mt-7'>
           {
             categories?.slice(0,5).map((category) => (
               <li key={category.id}>

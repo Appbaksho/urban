@@ -1,6 +1,7 @@
 "use client"
 import { useCreateUserMutation } from '@/components/api/auth/auth.api'
 import { useAddManyToCartMutation, useCheckoutProductMutation } from '@/components/api/cart/cart.api'
+import { useGetMetadataQuery } from '@/components/api/metadata/metadata.api'
 import AlreadyLoggedIn from '@/components/checkout/already-loggedin'
 import CheckoutForm from '@/components/checkout/checkout-form'
 import CheckoutProducts from '@/components/checkout/checkout-products'
@@ -43,6 +44,7 @@ const CheckoutPage = () => {
   const [addManyToCart, {data, error, isLoading:addingCartLoading, isSuccess, isError}] = useAddManyToCartMutation()
   const [createCustomer, {data:customerData, error:customerError, isLoading:creatingCustomerLoading, isSuccess:customerSuccess, isError:customerIsError}] = useCreateUserMutation()
   const [checkOutProductServer,{data:checkoutData,isLoading:checkoutLoading,isSuccess:checkoutSuccess,isError:checkoutError}] = useCheckoutProductMutation()
+  const {data:metaData} = useGetMetadataQuery()
   const [isLoggedIn, setisLoggedIn] = useState(false)
   const router = useRouter()
   const {toast} = useToast()
@@ -313,8 +315,8 @@ const CheckoutPage = () => {
             
         </div>
         <div>
-            <CheckoutProducts/>
-            <DeliveryDetails/>
+            {metaData&&<CheckoutProducts {...metaData}/>}
+            {metaData&&<DeliveryDetails {...metaData}/>}
             <div className="flex justify-end mt-3">
                 <Button disabled={checkingOut} onClick={checkOutProducts}>{checkingOut&&<Loader2 size={15} className='animate-spin'/>} Place Order</Button>
             </div>

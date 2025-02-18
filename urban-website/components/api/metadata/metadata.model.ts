@@ -1,14 +1,16 @@
 export interface MetaData {
-    id: string
-    deliveryCharge: number
-    deliveryChargeOutsideDhaka: number
-    bannerUrl: string
-    title: string
-    description: string
-    createdAt: string
-    updatedAt: string
-    parentCategory: ParentCategory[]
-  }
+  id: string
+  deliveryCharge: number
+  deliveryChargeOutsideDhaka: number
+  bannerImage: string
+  bannerUrl: string
+  title: string
+  description: string
+  createdAt: string
+  updatedAt: string
+  parentCategory: ParentCategory[]
+  refetch?: () => void
+}
   
   export interface ParentCategory {
     name: string
