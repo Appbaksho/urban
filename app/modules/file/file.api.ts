@@ -4,11 +4,14 @@ import { ImageResponse } from "./file.model";
 const fileApi = api.injectEndpoints({
     endpoints: (build) => ({
         uploadImage: build.mutation<ImageResponse, FormData>({
-            query: (image:FormData) => ({
-                url: "product/upload-image",
+            query: (body) => ({
+                url: "/product/upload-image",
                 method: "POST",
-                body: image,
-            }),
+                body: body,
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            })
         }),
     }),
     overrideExisting: false,

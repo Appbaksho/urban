@@ -12,6 +12,7 @@ import { Platform, StatusBar } from "react-native";
 import Constants from "expo-constants";
 import { getAuth } from '@react-native-firebase/auth';
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { useGetSelfMutation } from "@/modules/customer/customer.api";
 
 SplashScreen.preventAutoHideAsync().then(r => console.log(r));
 
@@ -52,6 +53,7 @@ export default function RootLayout() {
     poppinsExtraBold: require('@/assets/fonts/Poppins-ExtraBold.ttf'),
     poppinsExtraBoldItalic: require('@/assets/fonts/Poppins-ExtraBoldItalic.ttf')
   });
+  const [getSelf] = useGetSelfMutation();
 
   useEffect(() => {
     registerForPushNotificationsAsync().then(r => console.log(r));
@@ -74,14 +76,19 @@ export default function RootLayout() {
 
   useEffect(() => {
     if (loaded) {
-      SplashScreen.hideAsync().then(r => console.log(r));
-      if (getAuth().currentUser) {
-        // if (getAuth().currentUser?.displayName) {
-        //   router.push("/(tabs)");
-        // }else router.push("/create-profile");
-        router.push("/(tabs)");
-      }
-      else router.push("/login");
+      getSelf().then(r => {
+        if (getAuth().currentUser) {
+          if (r.data) {
+            SplashScreen.hideAsync().then(r => console.log(r));
+            router.push("/(tabs)");
+          }else {
+            SplashScreen.hideAsync().then(r => console.log(r));
+            router.push("/create-profile");
+          }
+        }
+        else router.push("/login");
+      });
+      
     }
   }, [loaded]);
 

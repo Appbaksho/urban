@@ -1,22 +1,33 @@
-import React, { useLayoutEffect } from "react";
+import React, { useEffect, useLayoutEffect } from "react";
 import { router, useNavigation} from "expo-router";
 import {  SafeAreaView } from "react-native-safe-area-context";
 import { ScrollView, Text, Image, View, TouchableOpacity } from "react-native";
 import TopBarV2 from "@/components/drawer/top-bar-v2";
 import { theme } from "@/theme/theme";
 import { Package, Settings, ShoppingCart, Calendar, ChevronRight } from "lucide-react-native";
+import { useGetSelfMutation } from "@/modules/customer/customer.api";
 
 
 export default function ProfileTab() {
   const navigation = useNavigation();
+  const [getSelf,{data:self}] = useGetSelfMutation();
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: false,
     });
   }, [navigation]);
-  const profileImageUri = "https://i.pinimg.com/736x/d3/68/50/d36850a37f999852c69a34b2cad4b35d.jpg"; // Replace with actual image URI
-    
 
+     const [profileImageUri, setProfileImageUri] = React.useState<string>('');
+      const [name, setName] = React.useState<string>('');
+      useEffect(() => {
+          getSelf().then((res) => {
+              console.log(res);  
+              if (res.data) {
+                  setProfileImageUri(res.data.photoUrl || '');
+                  setName(res.data.name || '');
+              }
+          });
+      }, []);
   return (
     <SafeAreaView>
      <TopBarV2 name="Profile" />
@@ -25,7 +36,7 @@ export default function ProfileTab() {
               <View className={"mt-6"}/>
               <Image className={'w-[30vw] h-[30vw]'} source={{ uri: profileImageUri }} style={{ borderRadius: 1000 }} />
               <View className={"mt-3.5"}/>
-              <Text className={'text-lg'} style={{fontFamily:'poppins',fontWeight:"semibold", color:theme.colors.primary}}>Md. Kaif Ibn Zaman</Text>
+              <Text className={'text-lg'} style={{fontFamily:'poppins',fontWeight:"semibold", color:theme.colors.primary}}>{name}</Text>
               <View className={"mt-4"}/>
                 <TouchableOpacity style={{ borderColor: theme.colors.primary, borderWidth: 1, borderRadius: 50, padding: 10 }}>
                   <Text className={'text-sm'} style={{fontFamily:'poppins',fontWeight:"semibold", color:theme.colors.primary}}>Edit Profile</Text>
@@ -82,7 +93,7 @@ export default function ProfileTab() {
             <View className={'mt-8'}/>
             <View className={"bg-gray-300 mx-4 h-full"} style={{ height: 1}}/>
             <View className={'mt-8'}/>
-            <View className={'flex-col mx-4'}>
+            {/* <View className={'flex-col mx-4'}>
               <Text className={'text-base'} style={{fontFamily:'poppins',fontWeight:"semibold",color:theme.colors.primary}}>Recent Orders</Text>
               <View className={'mt-4'}/>
               <View className={'flex-row justify-between items-center'}>
@@ -106,7 +117,7 @@ export default function ProfileTab() {
                 <Text className={'text-sm'} style={{fontFamily:'poppins',fontWeight:"semibold",color:theme.colors.primary}}>$19.99</Text>
                 <Text className={'text-sm'} style={{fontFamily:'poppins',fontWeight:"semibold",color:theme.colors.primary}}>Processing</Text>
               </View>
-            </View>
+            </View> */}
             <View className={'mt-20'}/>
      </ScrollView>
     </SafeAreaView>

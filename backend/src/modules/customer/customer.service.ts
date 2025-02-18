@@ -26,6 +26,12 @@ export class CustomerService {
     };
   }
 
+  async getSelf(firebaseUser: any) {
+    return await this.databaseService.customer.findUnique({
+      where: { firebaseId: firebaseUser.uid },
+    });
+  }
+
   async findAll() {
     return await this.databaseService.customer.findMany();
   }

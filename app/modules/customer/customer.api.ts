@@ -13,8 +13,11 @@ export const customerApi = api.injectEndpoints({
                 body: data,
             }),
         }),
+        getSelf: build.mutation<UserPayload, void>({
+            query: () => `/customer/me`,
+        }),
     }),
     overrideExisting: false,
 });
 
-export const { useGetCustomerQuery,useLazyGetCustomerQuery,useUpdateUserMutation } = customerApi;
+export const { useGetCustomerQuery,useLazyGetCustomerQuery,useUpdateUserMutation, useGetSelfMutation } = customerApi;

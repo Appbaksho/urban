@@ -24,6 +24,13 @@ export class CustomerController {
     return this.customerService.findAll();
   }
 
+  @Get('me')
+  async getSelf(
+    @User() firebaseUser,
+  ) {
+    return this.customerService.getSelf(firebaseUser);
+  }
+
   @Get(':id')
   async findOne(@Param('id') id: string) {
     return await this.customerService.findOne(id);
