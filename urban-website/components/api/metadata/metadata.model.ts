@@ -2,7 +2,7 @@ export interface MetaData {
   id: string
   deliveryCharge: number
   deliveryChargeOutsideDhaka: number
-  bannerImage: string
+  bannerImage: string[]
   bannerUrl: string
   title: string
   description: string

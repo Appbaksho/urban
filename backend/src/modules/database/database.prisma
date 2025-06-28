@@ -15,7 +15,7 @@ model Metadata {
   deliveryChargeOutsideDhaka Float  @default(120)
   parentCategory ParentCategory[]
   bannerUrl     String
-  bannerImage    String
+  bannerImage    String[] @default(["https://i.ibb.co/Wv3LTYzC/06611afe32a5.jpg"])
   title         String
   description   String
 

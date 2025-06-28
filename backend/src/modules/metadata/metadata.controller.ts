@@ -1,15 +1,5 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  Put,
-} from '@nestjs/common';
+import { Controller, Get, Body, Put } from '@nestjs/common';
 import { MetadataService } from './metadata.service';
-import { CreateMetadatumDto } from './dto/create-metadatum.dto';
 import { UpdateMetadatumDto } from './dto/update-metadatum.dto';
 
 @Controller('metadata')
@@ -27,9 +17,7 @@ export class MetadataController {
   }
 
   @Put('delivery-charges')
-  update(
-    @Body() updateMetadatumDto: UpdateMetadatumDto,
-  ) {
+  update(@Body() updateMetadatumDto: UpdateMetadatumDto) {
     return this.metadataService.updateDeliveryCharge(updateMetadatumDto);
   }
 }

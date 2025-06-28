@@ -5,23 +5,26 @@ import { DatabaseService } from '../database/database.service';
 @Injectable()
 export class MetadataService {
   constructor(private readonly databaseService: DatabaseService) {
-    this.databaseService.metadata.findFirst().then((data) =>{
-    if (!data) {
-      this.databaseService.metadata.create({
-        data: {
-          bannerUrl: '',
-          bannerImage: '',
-          title: 'Urban Shop',
-          description: 'Your lifestyle partner',
-          deliveryCharge: 60,
-          deliveryChargeOutsideDhaka: 120,
-        },
-      }).then(() => {
-        Logger.log('Metadata created');
-      }).catch((error) => {
-        Logger.error(error);
-      }); 
-    }
+    this.databaseService.metadata.findFirst().then((data) => {
+      if (!data) {
+        this.databaseService.metadata
+          .create({
+            data: {
+              bannerUrl: '',
+              bannerImage: ['https://i.ibb.co/Wv3LTYzC/06611afe32a5.jpg'],
+              title: 'Urban Shop',
+              description: 'Your lifestyle partner',
+              deliveryCharge: 60,
+              deliveryChargeOutsideDhaka: 120,
+            },
+          })
+          .then(() => {
+            Logger.log('Metadata created');
+          })
+          .catch((error) => {
+            Logger.error(error);
+          });
+      }
     });
   }
   async findOne() {
@@ -38,7 +41,7 @@ export class MetadataService {
 
   async updateTopBanner(updateMetadatumDto: UpdateMetadatumDto) {
     return this.databaseService.metadata.update({
-      where: { id: "cm6z9jb130000bthwz6d29zbf" },
+      where: { id: 'cm6z9jb130000bthwz6d29zbf' },
       data: {
         bannerUrl: updateMetadatumDto.bannerUrl,
         bannerImage: updateMetadatumDto.bannerImage,
@@ -50,10 +53,12 @@ export class MetadataService {
 
   async updateDeliveryCharge(updateMetadatumDto: UpdateMetadatumDto) {
     return this.databaseService.metadata.update({
-      where: { id: "cm6z9jb130000bthwz6d29zbf" },
+      where: { id: 'cm6z9jb130000bthwz6d29zbf' },
       data: {
-        deliveryCharge:Number(updateMetadatumDto.deliveryCharge.inside),
-        deliveryChargeOutsideDhaka:Number(updateMetadatumDto.deliveryCharge.outside)
+        deliveryCharge: Number(updateMetadatumDto.deliveryCharge.inside),
+        deliveryChargeOutsideDhaka: Number(
+          updateMetadatumDto.deliveryCharge.outside,
+        ),
       },
     });
   }
