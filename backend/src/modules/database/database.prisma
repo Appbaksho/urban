@@ -1,0 +1,214 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Metadata {
+  id        String   @id @default(cuid()) @map("_id")
+  
+  //config
+  deliveryCharge Float
+  deliveryChargeOutsideDhaka Float  @default(120)
+  parentCategory ParentCategory[]
+  bannerUrl     String
+  bannerImage    String
+  title         String
+  description   String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Customer {
+  firebaseId       String                       @id @map("_id")
+  name             String
+  email            String
+  photoUrl         String?
+  shippingAddress  String?
+  city             String?
+  zipCode          String?
+  contactNumbers   String[]
+  createdAt        DateTime                     @default(now())
+  updatedAt        DateTime                     @updatedAt
+
+  Cart Cart?
+  favorites Favorite[]
+}
+
+model Favorite {
+  id             String           @id @default(cuid()) @map("_id")
+  customerId       String
+  productId String
+  customer         Customer       @relation(fields: [customerId], references: [firebaseId])
+  product   Product @relation(fields: [productId], references: [id])
+
+  @@unique([customerId, productId])
+}
+
+model Cart {
+  id         String      @id @default(cuid()) @map("_id")
+  customerId String      @unique
+  deliveryCharge Float   @default(60)
+  items      OrderItem[]
+  customer   Customer    @relation(fields: [customerId], references: [firebaseId])
+}
+
+model OrderItem {
+  id             String               @id @default(cuid()) @map("_id")
+  sizeId         String
+  quantity       Int
+  cartId         String
+
+  isCheckedOut   Boolean              @default(false)
+  deliveryStatus DeliveryStatus       @default(PENDING)
+  paymentStatus  PaymentStatus        @default(PENDING)
+  orderStatus    OrderStatus          @default(PENDING)
+
+  transaction    TransactionHistory[]
+  size           Size                   @relation(fields: [sizeId], references: [id])
+  cart           Cart                 @relation(fields: [cartId], references: [id])
+  batchId        String?              @default("sheidhonerbatchid")
+  createdAt  DateTime    @default(now())
+
+  orderDetail    OrderDetail?
+}
+
+model OrderDetail {
+  id            String    @id @default(cuid()) @map("_id")
+  quantity      Int
+  size          String
+  price         Float
+  productName   String
+  imageUrl      String
+
+  orderItem     OrderItem @relation(fields: [orderItemId], references: [id])
+  orderItemId   String @unique
+}
+
+model TransactionHistory {
+  id            String    @id @default(cuid()) @map("_id")
+  orderItemId   String
+  timestamp     DateTime  @default(now())
+  amount        Float
+  paymentMethod PaymentMethod @default(CASH_ON_DELIVERY)
+  orderItem     OrderItem @relation(fields: [orderItemId], references: [id])
+}
+
+model Discount {
+  id          String              @id @default(cuid()) @map("_id")
+  name        String
+  description String
+  percentage  Float
+  bannerUrl   String
+  startDate   DateTime
+  endDate     DateTime
+  products    DiscountOnProduct[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model DiscountOnProduct {
+  id         String   @id @default(cuid()) @map("_id")
+  discountId String
+  productId  String
+  discount   Discount @relation(fields: [discountId], references: [id])
+  product    Product  @relation(fields: [productId], references: [id])
+
+  @@unique([discountId, productId])
+}
+
+model Product {
+  id          String   @id @default(cuid()) @map("_id")
+
+  //input
+  name        String
+  description String
+  categoryId String?
+  imageUrl   String[]
+  sizes      Size[] 
+  details    String[]
+  sizeDescription String[]
+
+  price       Float
+  discountPrice Float?
+
+  //automated
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  continued   Boolean  @default(true)
+
+  Category   Category?           @relation(fields: [categoryId], references: [id])
+  discounts  DiscountOnProduct[]
+  Favorite Favorite[]
+  
+}
+
+model Size {
+  id          String   @id @default(cuid()) @map("_id")
+  name        String
+  stock       Int
+  productId   String
+
+  product    Product @relation(fields: [productId], references: [id])
+  OrderItem  OrderItem[]
+}
+
+model ParentCategory {
+  name        String   @id @default(cuid()) @map("_id")
+  description String
+  imageUrl    String
+
+  metadataId  String
+  metadata    Metadata @relation(fields: [metadataId], references: [id])
+
+  categories  Category[]
+}
+
+model Category {
+  id               String     @id @default(cuid()) @map("_id")
+  name             String
+  description      String
+  imageUrl         String
+  parentCategoryId String
+
+  parentCategory ParentCategory @relation(fields: [parentCategoryId], references: [name])
+  products         Product[]
+}
+
+enum Gender {
+  MALE
+  FEMALE
+}
+
+enum DeliveryStatus {
+  PENDING
+  DISPATCHED
+  DELIVERED
+  CANCELLED
+}
+
+enum OrderStatus {
+  PENDING
+  CHECKED_OUT
+  CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  REFUNDED
+  CANCELLED
+}
+
+enum PaymentMethod {
+  CASH_ON_DELIVERY
+  CREDIT_CARD
+  DEBIT_CARD
+  MOBILE_BANKING
+  OTHER
+}
