@@ -48,6 +48,11 @@ export class CategoryController {
     return this.categoryService.update(id, updateCategoryDto);
   }
 
+  @Delete('with-product/:id')
+  removeCategoryAlongWithProducts(@Param('id') id: string) {
+    return this.categoryService.removeCategoryAlongWithProducts(id);
+  }
+
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.categoryService.remove(+id);

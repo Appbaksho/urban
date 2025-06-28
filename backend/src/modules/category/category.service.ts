@@ -73,4 +73,25 @@ export class CategoryService {
   remove(id: number) {
     return `This action removes a #${id} category`;
   }
+
+  async removeCategoryAlongWithProducts(id: string) {
+    // First, delete all products associated with the category
+    await this.databaseService.product.deleteMany({
+      where: {
+        categoryId: id,
+      },
+    });
+
+    // Then, delete the category itself
+    const deletedCategory = await this.databaseService.category.delete({
+      where: {
+        id: id,
+      },
+    });
+
+    return {
+      message: 'Category and its products deleted successfully',
+      deletedCategory,
+    };
+  }
 }
