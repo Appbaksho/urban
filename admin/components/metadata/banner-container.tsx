@@ -81,7 +81,7 @@ const BannerContainer = (props:MetaData) => {
             imageUploadMutation(formData)
             return
         }
-        editBanner({bannerImage:image,bannerUrl:link,title:props.title,description:props.description})
+        editBanner({bannerImage:image,bannerUrl:link,title,description})
     }
 
 
