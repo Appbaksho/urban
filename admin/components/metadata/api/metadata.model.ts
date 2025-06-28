@@ -37,7 +37,7 @@ export interface MetaData {
   }
 
   export interface BannerUpdatePayload{
-    bannerImage: string
+    bannerImage: string[]
     bannerUrl: string
     title: string
     description: string
