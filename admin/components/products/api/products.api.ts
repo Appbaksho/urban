@@ -1,5 +1,5 @@
 import { api } from "@/api";
-import { ImageResponse, Product, ProductPayload } from "../products.model";
+import { ImageResponse, Product } from "./products.model";
 
 export const productsApi = api.injectEndpoints({
     endpoints: (build) => ({
