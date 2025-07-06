@@ -8,19 +8,30 @@ import { Item } from '@radix-ui/react-dropdown-menu'
 import { onAuthStateChanged } from 'firebase/auth'
 import { usePathname, useRouter } from 'next/navigation'
 import path from 'path'
-import React, { PropsWithChildren, useEffect } from 'react'
+import React, { PropsWithChildren, useEffect, useMemo } from 'react'
 
 const DashboardLayout = ({children}:PropsWithChildren) => {
     const pathname = usePathname()
 
     const navigate = useRouter()
-    useEffect(() => {
-        onAuthStateChanged(auth, (user) => {
-          if (!user) {
-            navigate.push('/login')
-          }
-        })
-      }, [])
+ // Calculate breadcrumb segments
+  const breadcrumbSegments = useMemo(() => {
+    if (!pathname) return [];
+    
+    const segments = pathname.split('/').filter(segment => segment !== '');
+    return segments.map((segment, index) => ({
+      name: segment,
+      path: '/' + segments.slice(0, index + 1).join('/')
+    }));
+  }, [pathname]);
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        navigate.push('/login')
+      }
+    })
+  }, []) 
   return (
     <SidebarProvider>
     <AppSidebar />
@@ -36,14 +47,14 @@ const DashboardLayout = ({children}:PropsWithChildren) => {
                     Home
               </BreadcrumbLink>
             </BreadcrumbItem>
-          {pathname.split('/').map((item, index) => (
+          {breadcrumbSegments.map((segment, index) => (
             <>
-            <BreadcrumbItem className="hidden md:block">
-              <BreadcrumbLink href={`/${path.join(...pathname.split('/').slice(0, index + 1))}`}>
-                    {item}
+            <BreadcrumbItem className="hidden md:block" key={index}>
+              <BreadcrumbLink href={segment.path}>
+                    {segment.name}
               </BreadcrumbLink>
             </BreadcrumbItem>
-            {pathname.split('/').length!=(index+1)&&<BreadcrumbSeparator className="hidden md:block" />}
+            {breadcrumbSegments.length !== (index + 1) && <BreadcrumbSeparator className="hidden md:block" />}
             </>
           ))}
             

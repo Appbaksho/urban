@@ -7,7 +7,7 @@ import { Product, Size } from '@/components/api/products/products.model'
 import { useAddToWishlistMutation } from '@/components/api/products/products.api'
 import { useToast } from '@/hooks/use-toast'
 import { useAddToCartMutation } from '@/components/api/cart/cart.api'
-import { onAuthStateChanged } from 'firebase/auth'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { auth } from '@/firebase/firebase'
 
 
@@ -181,7 +181,18 @@ const ProductDescriptionSingle = (props:Product) => {
         </div>
         <div className='mt-5 flex items-center gap-2'> 
             <Button size="lg" disabled={addingCart} onClick={addToCartFiltered}>{addingCart?<Loader2 className='animate-spin mr-2' size={16}/>:<ShoppingBag size={16} className='mr-2'/>} Add to Cart</Button>
-            <Button size="icon" onClick={()=> addToFavorite(String(props.id))} variant="outline" disabled={addingWishlist}>{addingWishlist?<Loader2 size={17} className='animate-spin'/>:<Heart size={17}/>}</Button>
+            <Button size="icon" onClick={()=>{ 
+                const auth = getAuth()
+                if(auth.currentUser)
+                addToFavorite(String(props.id))
+                else {
+                    toast({
+                        title:'Login Required',
+                        description:"Please login to add to wishlist",
+                        variant:'destructive'
+                    })
+                }
+                }} variant="outline" disabled={addingWishlist}>{addingWishlist?<Loader2 size={17} className='animate-spin'/>:<Heart size={17}/>}</Button>
         </div>
         <div className="mt-10">
             <p className='font-semibold'>Description</p>
