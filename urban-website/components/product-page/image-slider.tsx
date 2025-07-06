@@ -28,12 +28,12 @@ const ProductImageSlider = (props:ProductImageSliderProps) => {
   return (
     <div className='overflow-hidden'>
         <Swiper
-        modules={[Navigation, Pagination,EffectFade]}
+        modules={[Navigation, Pagination]}
             spaceBetween={10}   
             onSwiper={(swiper) => (swiperRef.current = swiper)}
             slidesPerView={1}
             navigation
-            effect='fade'
+            
             pagination={{ clickable: true }}
             loop={true}
         >
